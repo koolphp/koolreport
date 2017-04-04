@@ -6,7 +6,7 @@ KoolReport is an intuitive and flexible open-source PHP reporting framework for 
 
 1. Pull data from multiple sources: relational database MySQL, SQL Server, Oracle or nosql like MongoDB. It also can pull data from CSV or Excel files.
 2. Data process supports data transformation, join, group, filter and etc.
-3. Result data then be visualized through `koolphp\Table' and `google\chart`
+3. Result data then be visualized through `koolphp\Table` and `google\chart`
 4. Extended packages can be found at [KoolReport Extended Packages](https://www.koolreport.com/packages)
 
 # Get started
@@ -67,6 +67,8 @@ koolreport/
 ├── composer.json
 └── KoolReport.php
 ```
+## System Requirement
+1. PHP 5.3.x or higher
 
 # Installation
 Copy the folder `koolreport` into your project and it is ready to run. You can start creating report.
@@ -85,7 +87,7 @@ Make two file `SalesByCustomer.php` and `SalesByCustomer.view.php`
 ```
 
 `index.php`
-```
+```php
 <?php
 require_once "SalesByCustomer.php";
 
@@ -94,7 +96,7 @@ $salesByCustomer->run()->render();
 ```
 
 `SaleByCustomer.php`
-```
+```php
 <?php
 require_once "koolreport/autoload.php";
 use \koolreport\processes\Group;
@@ -133,7 +135,7 @@ class SalesByCustomer extends \koolreport\KoolReport
 ```
 
 `SalesByCustomer.view.php`
-```
+```php
 <?php 
     use \koolreport\widgets\koolphp\Table;
     use \koolreport\widgets\google\BarChart;
@@ -194,7 +196,7 @@ Result of this report can be [preview in here](https://www.koolreport.com/exampl
 3. [Sales By Customers And Products](https://www.koolreport.com/examples/reports/cube/sales_by_customers_products/index.php)
 
 # Licenses
-The project is licensed under MIT License
+The KoolReport is licensed under MIT License.
 
 # Author
 1. [KoolPHP Inc](https://www.koolphp.net) - A vendor of PHP components
