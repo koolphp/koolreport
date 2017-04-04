@@ -4,14 +4,14 @@ KoolReport is an intuitive and flexible open-source PHP reporting framework for 
 
 # Features
 
-1. Pull data from multiple sources: relational database MySQL, SQL Server, Oracle or nosql like MongoDB. It also can pull data from CSV or Excel files.
-2. Data process supports data transformation, join, group, filter and etc.
-3. Result data then be visualized through `koolphp\Table` and `google\chart`
+1. Various datasources including relational database MySQL, SQL Server, Oracle or nosql like MongoDB, CSV or Excel files.
+2. Various data processes: data transformation, join, group, filter and etc.
+3. Awesome visualization through widgets charts and tables.
 4. Extended packages can be found at [KoolReport Extended Packages](https://www.koolreport.com/packages)
 
 # Get started
 
-You can either clone our project or download directly from [KoolReport Download](https://www.koolreport.com/getting-started#download)
+You can either clone our project or download directly from [KoolReport Download](https://www.koolreport.com/getting-started#download).
 
 ## What's included
 
@@ -46,7 +46,7 @@ koolreport/
 │   ├── NumberBucket.php
 │   ├── NumberRange.php
 │   ├── TimeBucket.php
-│   └── ... many other process
+│   └── ... many other processes
 ├── vendor/
 │   ├── composer/
 │   ├── mongodb/
@@ -59,7 +59,7 @@ koolreport/
 │   │   ├── BarChart.php
 │   │   ├── ColumnChart.php
 │   │   ├── DonutChart.php
-│   │	  └── .. and many other charts from google :)
+│   │   └── .. and many other charts from google :)
 │   └── koolphp
 │      ├── Table.php 
 │      └── Table.tpl.php
@@ -197,6 +197,34 @@ Result of this report can be [preview in here](https://www.koolreport.com/exampl
 
 # Licenses
 The KoolReport is licensed under MIT License.
+
+# Our vision
+
+__"If you want to go fast, go alone. If you want to grow far, go together"__ - *African Proverb*
+
+We have learned above statement through years of software development. We choose open-source as software model for KoolReport because we understand that:
+
+1. Alone, we never keep up with all time-changing needs
+2. Alone, we never have enough man power to serve well.
+
+That's why we designed KoolReport to be simple and extensible. Simple to use and exntensible for change. We would like to grow it to be a solid framework supported by market of packages providing various datasources, data processes, visualization widgets and report templates where users can find solution right away.
+
+KoolReport wants to be foundation or ecosystem connecting people who need reporting solution and those who can provide it. All are invited to join us on market to provide excellent solutions. We believe people willing to pay for a good solution. And we are happy to share market and profit.
+
+Vision are big, we take the first step. Join us!
+
+# To-do-list
+
+Below are the things we are going to do:
+
+1. Evolve the structure of KoolReport and its functionalities
+2. Export to report to PDF and other formats
+3. Build market to push
+    a. Connection to various datasources
+    b. Data processing focus on: data cleaning, data analytics, data mining tecnique
+    c. More widgets to visualize data
+4. Build GUI for non technical users
+5. Build ecosystem to handle big-data
 
 # Author
 1. [KoolPHP Inc](https://www.koolphp.net) - A vendor of PHP components
