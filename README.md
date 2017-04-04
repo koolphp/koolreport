@@ -76,7 +76,7 @@ Copy the folder `koolreport` into your project and it is ready to run. You can s
 
 # Create your first report
 
-Make two file `SalesByCustomer.php` and `SalesByCustomer.view.php`
+Make two files `SalesByCustomer.php` and `SalesByCustomer.view.php`
 
 ```
 /
