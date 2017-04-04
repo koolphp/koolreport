@@ -1,0 +1,11 @@
+div.example
+{
+    background:#eee;
+    border: solid 1px #ccc;
+    padding: 15px;    
+}
+
+div.example:hover
+{
+    border:solid 1px #015483;
+}

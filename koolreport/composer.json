@@ -1,0 +1,19 @@
+{
+    "name": "KoolReport",
+    "version":"1.0.0",
+    "description": "KoolReport - PHP Reporting Tools - Create report from various data sources",
+    "keywords": ["PHP","Reporting Tools","Data Report","Charts"],
+    "homepage": "https://www.koolreport.com",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "KoolPHP Inc",
+            "homepage": "https://www.koolphp.net"
+        }
+    ], 
+    "require": {
+        "phpoffice/phpexcel": "1.8.1",
+        "mongodb/mongodb": "^1.1"
+    }
+}
