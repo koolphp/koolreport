@@ -220,9 +220,9 @@ Below are the things we are going to do:
 1. Evolve the structure of KoolReport and its functionalities
 2. Export to report to PDF and other formats
 3. Build market to push
-..a. Connection to various datasources
-..b. Data processing focus on: data cleaning, data analytics, data mining tecnique
-..c. More widgets to visualize data
+    ..* Connection to various datasources
+    ..* Data processing focus on: data cleaning, data analytics, data mining tecnique
+    ..* More widgets to visualize data
 4. Build GUI for non technical users
 5. Build ecosystem to handle big-data
 
