@@ -4,7 +4,7 @@ KoolReport is an intuitive and flexible open-source PHP reporting framework for 
 
 # Features
 
-1. Various datasources including relational database MySQL, SQL Server, Oracle or nosql like MongoDB, CSV or Excel files.
+1. Various datasources including relational database MySQL, SQL Server, Oracle or NoSQL like MongoDB, CSV or Excel files.
 2. Various data processes: data transformation, join, group, filter and etc.
 3. Awesome visualization through widgets charts and tables.
 4. Extended packages can be found at [KoolReport Extended Packages](https://www.koolreport.com/packages)
