@@ -86,18 +86,18 @@ Make two file `SalesByCustomer.php` and `SalesByCustomer.view.php`
 └── index.php
 ```
 
-`index.php`
 ```php
 <?php
+// index.php: Just a bootstrap file
 require_once "SalesByCustomer.php";
 
 $salesByCustomer = new SalesByCustomer;
 $salesByCustomer->run()->render();
 ```
 
-`SaleByCustomer.php`
 ```php
 <?php
+// SalesByCustomer.php - Report setup file
 require_once "koolreport/autoload.php";
 use \koolreport\processes\Group;
 
@@ -134,11 +134,11 @@ class SalesByCustomer extends \koolreport\KoolReport
 }
 ```
 
-`SalesByCustomer.view.php`
 ```php
 <?php 
-    use \koolreport\widgets\koolphp\Table;
-    use \koolreport\widgets\google\BarChart;
+// SalesByCustomer.view.php - Handle the report view
+use \koolreport\widgets\koolphp\Table;
+use \koolreport\widgets\google\BarChart;
 ?>
 
 <div class="text-center">
@@ -187,7 +187,7 @@ Table::create(array(
 ?>
 ```
 
-Result of this report can be [preview in here](https://www.koolreport.com/examples/reports/basic/sales_by_customer/index.php)
+Result of this report can be [preview in here](https://www.koolreport.com/examples/reports/basic/sales_by_customer/index.php).
 
 # More examples
 
@@ -220,9 +220,9 @@ Below are the things we are going to do:
 1. Evolve the structure of KoolReport and its functionalities
 2. Export to report to PDF and other formats
 3. Build market to push
-    a. Connection to various datasources
-    b. Data processing focus on: data cleaning, data analytics, data mining tecnique
-    c. More widgets to visualize data
+..* Connection to various datasources
+..* Data processing focus on: data cleaning, data analytics, data mining tecnique
+..* More widgets to visualize data
 4. Build GUI for non technical users
 5. Build ecosystem to handle big-data
 
