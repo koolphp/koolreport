@@ -187,7 +187,7 @@ Table::create(array(
 ?>
 ```
 
-Result of this report can be [preview in here](https://www.koolreport.com/examples/reports/basic/sales_by_customer/index.php).
+Result of this report can be [previewed in here](https://www.koolreport.com/examples/reports/basic/sales_by_customer/index.php).
 
 # More examples
 
@@ -221,9 +221,9 @@ Below are the things we are going to do:
 2. Export to report to PDF and other formats
 3. Build market to push
     1. Connection to various datasources
-    2. Data processing focus on: data cleaning, data analytics, data mining tecnique
+    2. Data processing focus on: data cleaning, data analytics, data mining techniques
     3. More widgets to visualize data
-4. Build GUI for non technical users
+4. Build GUI for non-technical users
 5. Build ecosystem to handle big-data
 
 # Author
