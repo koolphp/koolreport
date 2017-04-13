@@ -207,7 +207,7 @@ We have learned above statement through years of software development. We choose
 1. Alone, we never keep up with all time-changing needs
 2. Alone, we never have enough man power to serve well.
 
-That's why we designed KoolReport to be simple and extensible. Simple to use and exntensible for change. We would like to grow it to be a solid framework supported by market of packages providing various datasources, data processes, visualization widgets and report templates where users can find solution right away.
+That's why we designed KoolReport to be simple and extensible. Simple to use and extensible for change. We would like to grow it to be a solid framework supported by market of packages providing various datasources, data processes, visualization widgets and report templates where users can find solution right away.
 
 KoolReport wants to be foundation or ecosystem connecting people who need reporting solution and those who can provide it. All are invited to join us on market to provide excellent solutions. We believe people willing to pay for a good solution. And we are happy to share market and profit.
 
