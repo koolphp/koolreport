@@ -106,7 +106,7 @@ class SalesByCustomer extends \koolreport\KoolReport
     public function settings()
     {
         return array(
-            "datasources"=>array(
+            "dataSources"=>array(
                 "sales"=>array(
                     "connectionString"=>"mysql:host=localhost;dbname=db_sales",
                     "username"=>"root",
