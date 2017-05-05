@@ -1,4 +1,12 @@
 <?php
+/**
+ * This file is wrapper class for Google Chart 
+ *
+ * @author KoolPHP Inc (support@koolphp.net)
+ * @link https://www.koolphp.net
+ * @copyright 2008-2017 KoolPHP Inc
+ * @license https://www.koolreport.com/license#mit-license
+ */
 
 namespace koolreport\widgets\google;
 use \koolreport\core\Widget;
@@ -14,6 +22,7 @@ class Chart extends Widget
 	protected $type;
 	protected $width;
 	protected $height;
+    protected $title;
   
 	protected function onInit()
 	{
@@ -27,7 +36,11 @@ class Chart extends Widget
 		$this->options = Utility::get($this->params,"options",array());
 		$this->width = Utility::get($this->params,"width","600px");
 		$this->height = Utility::get($this->params,"height","400px");
-		
+        $this->title = Utility::get($this->params,"title");
+        if($this->title)
+        {
+            $this->options["title"] = $this->title;
+        }
 		$this->type = Utility::getClassName($this);
 		if($this->type=="Chart")
 		{
@@ -57,8 +70,14 @@ class Chart extends Widget
         {
             foreach($this->columns as $cKey=>$cValue)
             {
-                $columns[$cKey]= (gettype($cValue)=="array")? 
-                    array_merge($meta["columns"][$cKey],$cValue) : $columns[$cValue] = $meta["columns"][$cKey];
+                if(gettype($cValue)=="array")
+                {
+                    $columns[$cKey] = array_merge($meta["columns"][$cKey],$cValue);
+                }
+                else
+                {
+                    $columns[$cValue] = $meta["columns"][$cValue];
+                }
             }
         }
         else

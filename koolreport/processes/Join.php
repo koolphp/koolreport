@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file contains class to join two data flow on a condition.
+ *
+ * @author KoolPHP Inc (support@koolphp.net)
+ * @link https://www.koolphp.net
+ * @copyright 2008-2017 KoolPHP Inc
+ * @license https://www.koolreport.com/license#mit-license
+ */
+
 /* Usage
  * (new Join(array($source1,source2,"id1"=>"id2")))
  * 

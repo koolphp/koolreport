@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file contains class to manage the js,css resources of widget
+ *
+ * @author KoolPHP Inc (support@koolphp.net)
+ * @link https://www.koolphp.net
+ * @copyright 2008-2017 KoolPHP Inc
+ * @license https://www.koolreport.com/license#mit-license
+ */
+
 
 namespace koolreport\core;
 use \koolreport\core\Utility;

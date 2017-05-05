@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file contains process to limit the rows return from datasource
+ *
+ * @author KoolPHP Inc (support@koolphp.net)
+ * @link https://www.koolphp.net
+ * @copyright 2008-2017 KoolPHP Inc
+ * @license https://www.koolreport.com/license#mit-license
+ */
+
 /* Usage
  * ->pipe(new Limit(array(10,5)))
  * 

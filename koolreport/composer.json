@@ -1,6 +1,6 @@
 {
     "name": "KoolReport",
-    "version":"1.0.0",
+    "version":"1.11.4",
     "description": "KoolReport - PHP Reporting Tools - Create report from various data sources",
     "keywords": ["PHP","Reporting Tools","Data Report","Charts"],
     "homepage": "https://www.koolreport.com",

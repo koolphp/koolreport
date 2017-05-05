@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file contains class to pull data from CSV file
+ *
+ * @author KoolPHP Inc (support@koolphp.net)
+ * @link https://www.koolphp.net
+ * @copyright 2008-2017 KoolPHP Inc
+ * @license https://www.koolreport.com/license#mit-license
+ */
+
 /*
  * The CSV will load the CSV data, breaking down to columns and try to determine
  * the type for the columns, the precision contain number of rows to run to determine

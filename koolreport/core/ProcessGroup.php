@@ -1,4 +1,14 @@
 <?php
+/**
+ * This file contains foundation class for grouping processes into one.
+ *
+ * @author KoolPHP Inc (support@koolphp.net)
+ * @link https://www.koolphp.net
+ * @copyright 2008-2017 KoolPHP Inc
+ * @license https://www.koolreport.com/license#mit-license
+ */
+
+
 /* Usage:
  * 
  * class MyGroup extends ProcessGroup

@@ -5,41 +5,30 @@ use \koolreport\processes\Limit;
 use \koolreport\processes\Sort;
 use \koolreport\processes\RemoveColumn;
 use \koolreport\processes\OnlyColumn;
+use \koolreport\processes\Filter;
 use \koolreport\processes\ValueMap;
 use \koolreport\cube\processes\Cube;
+use \koolreport\core\Utility;
 
 class SalesQuarters extends koolreport\KoolReport
 {
+  
   function settings()
   {
     return array(
       "dataSources"=>array(
-        // "sales"=>array(
-          // 'connectionString' => 'mysql:host=localhost;dbname=automaker',
-          // 'username' => 'root',
-          // 'password' => '',
-          // 'charset' => 'utf8',          
-        // ),
         "sales"=>array(
           'filePath' => '../../../databases/customer_product_dollarsales2.csv',
           'class' => "\koolreport\datasources\CSVDataSource",      
-          // 'filePath' => '../../../databases/customer_product_dollarsales2.xlsx',
-          // 'class' => "\koolreport\datasources\ExcelDataSource",      
           'fieldSeparator' => ';',
         ),
-        // "sales"=>array(
-          // 'connectionString' => 'mongodb://localhost:27017',
-          // 'database' => 'test',
-          // 'class' => "\koolreport\datasources\MongoDataSource"
-        // ),
       )
     );
   }
   function setup()
   {
-    // $node = $this->src('sales')
-    // ->query("SELECT customerName, productLine, productName, concat('Q', quarter(orderDate)) as orderQuarter, dollar_sales FROM customer_product_dollarsales2 WHERE orderDate <> '0000-00-00 00:00:00'");
-    
+    $salesYear = $this->params["salesYear"];
+
     $node = $this->src('sales')
     ->pipe(new ColumnMeta(array(
       "dollar_sales"=>array(
@@ -54,6 +43,14 @@ class SalesQuarters extends koolreport\KoolReport
         },
       )
     )));
+    
+    
+    $filters = array('or');
+    foreach ($salesYear as $year)
+      array_push($filters, array('orderYear', '=', ''.$year));
+    $node = $node->pipe(new Filter($filters));
+    
+    $node->pipe($this->dataStore('salesFilter'));
     
     $node->pipe(new Cube(array(
       "row" => "customerName",

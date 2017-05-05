@@ -49,7 +49,18 @@
                                 <p>Get the sale report by month.</p>
                                 <p><a class="btn btn-primary" href="reports/basic/sakila_rental/index.php">View example</a></p>
                             </div>
-                        </div>                        
+                        </div>
+                        <div class="col-md-4">
+                            <div class="example">
+                                <h4>Sales By Country</h4>
+                                <p>View sales by countries</p>
+                                <p><a class="btn btn-primary" href="reports/basic/sales_by_country/index.php">View example</a></p>
+                                <p><i>
+                                    You may view this example
+                                    <a href="https://www.koolreport.com/examples/reports/basic/sales_by_country/index.php">online</a>.
+                                </i></p>                            
+                            </div>
+                        </div>                                                
                     </div>            
                 </div>
                 

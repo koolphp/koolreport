@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file contains class to break the time series and put them in defined buckets.
+ *
+ * @author KoolPHP Inc (support@koolphp.net)
+ * @link https://www.koolphp.net
+ * @copyright 2008-2017 KoolPHP Inc
+ * @license https://www.koolreport.com/license#mit-license
+ */
+
 /* Usage
  * ->pipe(new TimeBucket(array(
  * 		"registerDate"=>array(

@@ -1,8 +1,17 @@
 <?php
+/**
+ * This file is template file of Google Chart 
+ *
+ * @author KoolPHP Inc (support@koolphp.net)
+ * @link https://www.koolphp.net
+ * @copyright 2008-2017 KoolPHP Inc
+ * @license https://www.koolreport.com/license#mit-license
+ */
+
 use \koolreport\core\Utility;
 ?>
 <?php $this->loadLibrary(); ?>
-<div id="<?php echo $chartId; ?>" style="width: <?php echo $this->width; ?>; height: <?php echo $this->height; ?>"></div>
+<div id="<?php echo $chartId; ?>" style="<?php if ($this->width) echo "width:".$this->width.";"; ?><?php if ($this->height) echo "height:".$this->height.";"; ?>"></div>
 
 <script type="text/javascript">
   function draw_<?php echo $chartId; ?>()

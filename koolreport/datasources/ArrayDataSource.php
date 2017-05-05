@@ -1,4 +1,13 @@
 <?php
+/**
+ * This file contains base class to pull data from array
+ *
+ * @author KoolPHP Inc (support@koolphp.net)
+ * @link https://www.koolphp.net
+ * @copyright 2008-2017 KoolPHP Inc
+ * @license https://www.koolreport.com/license#mit-license
+ */
+
 namespace koolreport\datasources;
 use \koolreport\core\DataSource;
 use \koolreport\core\Utility;

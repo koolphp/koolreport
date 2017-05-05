@@ -1,4 +1,12 @@
 <?php
+/**
+ * This file contains Table widget
+ *
+ * @author KoolPHP Inc (support@koolphp.net)
+ * @link https://www.koolphp.net
+ * @copyright 2008-2017 KoolPHP Inc
+ * @license https://www.koolreport.com/license#mit-license
+ */
 
 namespace koolreport\widgets\koolphp;
 use \koolreport\core\Widget;

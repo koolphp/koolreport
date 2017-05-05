@@ -1,6 +1,14 @@
 <?php
-namespace koolreport\core;
+/**
+ * This file contains foundation class for legos-like structure of KoolReport
+ *
+ * @author KoolPHP Inc (support@koolphp.net)
+ * @link https://www.koolphp.net
+ * @copyright 2008-2017 KoolPHP Inc
+ * @license https://www.koolreport.com/license#mit-license
+ */
 
+namespace koolreport\core;
 
 class Node extends Base
 {
