@@ -1,8 +1,8 @@
 {
     "name": "koolphp/koolreport",
     "version":"1.11.4",
-    "description": "Open Source PHP Reporting Framework for easier and faster report delivery.",
-    "keywords": ["PHP Reporting Framework","PHP Reporting Tools","Data Report","Charts"],
+    "description": "An Open Source PHP Reporting Framework for easier and faster report delivery.",
+    "keywords": ["php reporting framework","php reporting tools","data processing","data visualization","charts and graphs"],
     "homepage": "https://www.koolreport.com",
     "type": "library",
     "license": "MIT",
