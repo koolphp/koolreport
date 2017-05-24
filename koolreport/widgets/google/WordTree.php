@@ -15,11 +15,13 @@ class WordTree extends Chart
 {
 	protected function loadLibrary()
 	{
-		$this->template("LoadLibrary",array(
-			"chartId"=>$this->chartId,
-			"zone"=>"current",
-			"packages"=>array("wordtree")
-		));
+		// $this->template("LoadLibrary",array(
+			// "chartId"=>$this->chartId,
+			// "zone"=>"current",
+			// "packages"=>array("wordtree")
+		// ));
+    $this->getReport()->getResourceManager()
+      ->addScriptOnEnd("google.charts.load('current', {'packages':['wordtree']})");
 	}	
 	static function create($params)
 	{

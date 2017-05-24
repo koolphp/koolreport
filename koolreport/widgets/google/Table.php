@@ -20,6 +20,8 @@ class Table extends Chart
 			"zone"=>"current",
 			"packages"=>array("table")
 		));
+    $this->getReport()->getResourceManager()
+      ->addScriptOnEnd("google.charts.load('current', {'packages':['table']})");
 	}	
 	static function create($params)
 	{

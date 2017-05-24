@@ -8,6 +8,16 @@
  * @license https://www.koolreport.com/license#mit-license
  */
 
+/*
+ * To use the AssetManager, Widget will pulish its local asset folders by this command
+ * $this->assetManager->pulish("../widget_asset_folder");
+ * We use the relative path without and "/" at the end
+ * To access the file we use $this->assetManager->getAssetUrl(), for example:
+ * echo $this->assetManager()->getAssetUrl()."/jquery.js"
+ * The publish() must be called before call getAssetUrl() or it will return null
+ * On the Report itself, we need to declare the "assets"=>array("path"=>"relative path or full path","url"=>"url to asset");
+ * The url can contains hostname "http://hostname.com/assets"
+ */
 
 namespace koolreport\core;
 use \koolreport\core\Utility;
@@ -24,9 +34,16 @@ class AssetManager extends Base
 		$this->widget = $widget;
 	}
 	
-	public function getAssetUrl()
+	public function getAssetUrl($filepath=null)
 	{
-		return $this->assetUrl;
+		if($filepath)
+		{
+			return $this->assetUrl."/".$filepath;
+		}
+		else
+		{
+			return $this->assetUrl."/";
+		}
 	}
 	
 	public function publish($assetFolder)
@@ -44,11 +61,20 @@ class AssetManager extends Base
 				throw new \Exception("Could not find path to report's assets folder");
 			}
 			$reportClassFolder = dirname(Utility::getClassPath($this->widget->getReport()));
-			if(!is_dir($reportClassFolder."/".$targetAssetPath))
+			if(is_dir($reportClassFolder."/".$targetAssetPath))
+			{
+				//Check if relative targetAssetPath existed
+				$targetAssetPath = str_replace("\\","/",realpath($reportClassFolder."/".$targetAssetPath));
+			}
+			else if(is_dir($targetAssetPath))
+			{
+				//Check if full targetAssetPath existed
+				$targetAssetPath = str_replace("\\","/",realpath($targetAssetPath));
+			}
+			else
 			{
 				throw new \Exception("Report's assets folder not existed");
 			}
-			$targetAssetPath = str_replace("\\","/",realpath($reportClassFolder."/".$targetAssetPath));
 			//-----------------------
 			
 			$widgetClassFolder = dirname(Utility::getClassPath($this->widget));
@@ -59,9 +85,12 @@ class AssetManager extends Base
 			}
 			$widgetSourceAssetPath = str_replace("\\","/",realpath($widgetSourceAssetPath));
 			$widgetFolderName = str_replace(dirname($widgetSourceAssetPath)."/","",$widgetSourceAssetPath);
+			
+			$widgetHashFolderName = crc32($widgetSourceAssetPath.@filemtime($widgetSourceAssetPath));
+
 			//-------------------------
 
-			$widgetTargetPath = $targetAssetPath."/".$widgetFolderName;			
+			$widgetTargetPath = $targetAssetPath."/".$widgetHashFolderName;			
 			if(!is_dir($widgetTargetPath))
 			{
 				Utility::recurse_copy($widgetSourceAssetPath,$widgetTargetPath);
@@ -70,17 +99,17 @@ class AssetManager extends Base
 			{
 				//Do the check if file in widgetSourceAssetPath is changed,
 				//If there is then copy again.
+				//Currently do nothing for now
 			}
 			
 			if($targetAssetUrl)
 			{
-				$this->assetUrl = $targetAssetUrl."/".$widgetFolderName;
+				$this->assetUrl = $targetAssetUrl."/".$widgetHashFolderName;
 			}
 			else
 			{
 				$this->assetUrl = str_replace($document_root,"",$widgetTargetPath);	
-			}			
-			
+			}	
 		}
 		else
 		{
@@ -93,6 +122,5 @@ class AssetManager extends Base
 			$realAssetPath = str_replace("\\","/",$realAssetPath);
 			$this->assetUrl = str_replace($document_root,"",$realAssetPath);
 		}
-
 	}
 }

@@ -15,11 +15,13 @@ class Timeline extends Chart
 {
 	protected function loadLibrary()
 	{
-		$this->template("LoadLibrary",array(
-			"chartId"=>$this->chartId,
-			"zone"=>"current",
-			"packages"=>array("timeline")
-		));
+		// $this->template("LoadLibrary",array(
+			// "chartId"=>$this->chartId,
+			// "zone"=>"current",
+			// "packages"=>array("timeline")
+		// ));
+    $this->getReport()->getResourceManager()
+      ->addScriptOnEnd("google.charts.load('current', {'packages':['timeline']})");
 	}	
 	static function create($params)
 	{

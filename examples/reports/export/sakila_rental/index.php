@@ -5,7 +5,7 @@ $report = new SakilaRental;
 $report->run();
 ?>
 
-<!DOCTYPE >
+<!DOCTYPE html>
 <html>
     <head>
         <title>Sakila Rental</title>
@@ -19,3 +19,4 @@ $report->run();
         </div>
     </body>
 </html>
+

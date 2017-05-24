@@ -52,23 +52,39 @@
                         </div>
                         <div class="col-md-4">
                             <div class="example">
-                                <h4>Sales By Country</h4>
-                                <p>View sales by countries</p>
-                                <p><a class="btn btn-primary" href="reports/basic/sales_by_country/index.php">View example</a></p>
-                                <p><i>
-                                    You may view this example
-                                    <a href="https://www.koolreport.com/examples/reports/basic/sales_by_country/index.php">online</a>.
-                                </i></p>                            
+                                <h4>Sakila Rental Report With Database</h4>
+                                <p>Connect to Sakila database using PdoDataSource</p>
+                                <p><a class="btn btn-primary" href="reports/basic/database_connection/index.php">View example</a></p>
                             </div>
                         </div>                                                
                     </div>            
                 </div>
-                
+
+                <div class="bs-docs-section">
+                    <h1 id="export">Export package</h1>
+                    <p><code>Export</code> package helps to export your report to PDF and other formats.
+                        Get the <code>Export</code> package <a href="https://www.koolreport.com/packages/export">in here</a>.
+                    </p>                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="example">
+                                <h4>Export Sakila Rental Report</h4>
+                                <p>Export report to PDF</p>
+                                <p><a class="btn btn-primary" href="reports/export/sakila_rental/index.php">View example</a></p>
+                                <p><i>
+                                    You may view this example
+                                    <a href="https://www.koolreport.com/examples/reports/export/sakila_rental/index.php">online</a>.
+                                </i></p>
+                            </div>
+                        </div>
+                    </div>            
+                </div>
+
                
                 <div class="bs-docs-section">
                     <h1 id="cube">Cube package</h1>
                     <p><code>Cube</code> package helps to turn your data into two dimension cross-tab table.
-                        Get the <code>cube</code> package <a href="https://www.koolreport.com/packages/cube">in here</a>.
+                        Get the <code>Cube</code> package <a href="https://www.koolreport.com/packages/cube">in here</a>.
                     </p>
                     <div class="row">
                         <div class="col-md-4">
@@ -110,7 +126,49 @@
                                 
                 </div> 
 
-
+                <div class="bs-docs-section">
+                    <h1 id="pivot">Pivot package</h1>
+                    <p><code>Pivot</code> package you explore multi-dimension aggregated data in a hierarchical way.
+                        Get the <code>Pivot</code> package <a href="https://www.koolreport.com/packages/pivot">in here</a>.
+                    </p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="example">
+                                <h4>Customers - Categories - Products Pivot</h4>
+                                <p>Get pivot table for customers, categories and products.</p>
+                                <p><a class="btn btn-primary" href="reports/pivot/customers_categories_products/index.php">View example</a></p>
+                                <p><i>
+                                    You may view this example
+                                    <a href="https://www.koolreport.com/examples/reports/pivot/customers_categories_products/index.php">online</a>.
+                                </i></p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="example">
+                                <h4>Years - Months Pivot</h4>
+                                <p>Get pivot table for years and months.</p>
+                                <p><a class="btn btn-primary" href="reports/pivot/years_months/index.php">View example</a></p>
+                                <p><i>
+                                    You may view this example
+                                    <a href="https://www.koolreport.com/examples/reports/pivot/years_months/index.php">online</a>.
+                                </i></p>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="example">
+                                <h4>Years -Months - Customers - Categories Pivot</h4>
+                                <p>Get pivot table for years, months, customers and categories.</p>
+                                <p><a class="btn btn-primary" href="reports/pivot/years_months_customers_categories/index.php">View example</a></p>
+                                <p><i>
+                                    You may view this example
+                                    <a href="https://www.koolreport.com/examples/reports/pivot/years_months_customers_categories/index.php">online</a>.
+                                </i></p>
+                            </div>
+                        </div>
+                    </div>            
+                </div>
                 <div class="bs-docs-section">
                     <h1 id="instruction">Instruction</h1>
                     <h2 id="setup-databases">Setup databases</h2>
@@ -166,7 +224,9 @@ return array(
                 <nav class="bs-docs-sidebar hidden-print hidden-sm hidden-xs affix-top">
                     <ul class="nav bs-docs-sidenav">
                         <li><a href="#basic">Basic</a></li>
+                        <li><a href="#export">Export package</a></li>
                         <li><a href="#cube">Cube package</a></li>
+                        <li><a href="#pivot">Pivot package</a></li>
                         <li><a href="#instruction">Instruction</a>
                             <ul class="nav">
                                 <li><a href="#setup-databases">Setup databases</a></li>

@@ -146,17 +146,22 @@ class Chart extends Widget
 	
 	protected function loadLibrary()
 	{
-		$this->template("LoadLibrary",array(
-            "chartId"=>$this->chartId,
-			"zone"=>"current",
-			"packages"=>array("corechart"),
-		));
+		// $this->template("LoadLibrary",array(
+            // "chartId"=>$this->chartId,
+			// "zone"=>"current",
+			// "packages"=>array("corechart"),
+		// ));
+    $this->getReport()->getResourceManager()
+      ->addScriptOnEnd("google.charts.load('current', {'packages':['corechart']})");
 	}
 	
 	public function render()
 	{
 		if($this->dataStore->countData()>0)
 		{
+      $this->getReport()->getResourceManager()
+        ->addScriptFileOnBegin('https://www.gstatic.com/charts/loader.js');
+      
 			$this->template("Chart",array(
                 "chartId"=>$this->chartId,
                 "chartType"=>$this->type,

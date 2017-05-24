@@ -15,11 +15,13 @@ class TreeMap extends Chart
 {
 	protected function loadLibrary()
 	{
-		$this->template("LoadLibrary",array(
-			"chartId"=>$this->chartId,
-			"zone"=>"current",
-			"packages"=>array("treemap")
-		));
+		// $this->template("LoadLibrary",array(
+			// "chartId"=>$this->chartId,
+			// "zone"=>"current",
+			// "packages"=>array("treemap")
+		// ));
+    $this->getReport()->getResourceManager()
+      ->addScriptOnEnd("google.charts.load('current', {'packages':['treemap']})");
 	}	
 	static function create($params)
 	{

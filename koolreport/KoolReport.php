@@ -1,6 +1,7 @@
 <?php
 namespace koolreport;
 use \koolreport\core\Base;
+use \koolreport\core\ResourceManager;
 use \koolreport\core\Utility;
 
 class KoolReport extends Base
@@ -8,22 +9,90 @@ class KoolReport extends Base
 	protected $params;
 	protected $dataSources;
 	protected $dataStores;
+	protected $resourceManager;
+	protected $events;
 	
 	public function __construct($params=array())
 	{		
 		$this->params = $params;
 		$this->dataSources = array();
 		$this->dataStores = array();
+		$this->events = array();
 		$this->setup();
+		foreach($this->getTraitConstructs() as $traitConstruct)
+		{
+			$this->$traitConstruct();
+		}
+	}
+
+
+	public function registerEvent($name,$methodName)
+	{
+		if(!isset($this->events[$name]))
+		{
+			$this->events[$name] = array();
+		}
+		if(!in_array($methodName, $this->events[$name]))
+		{
+			array_push($this->events[$name],$methodName);
+		}
+	}
+
+	public function fireEvent($name,$params=null)
+	{
+		$handleList = Utility::get($this->events,$name,null);
+		$result = true;
+		if($handleList)
+		{
+			foreach($handleList as $methodName)
+			{
+				if(gettype($methodName)=="string")
+				{
+					$return = $this->$methodName($params);
+				}
+				else
+				{
+					$return = $methodName($params);
+				}
+				$result&=($return!==null)?$return:true;
+			}
+		}
+		return $result;
+	}
+
+	private function getTraitConstructs()
+	{
+		$traitConstructs = array();
+		$public_methods  = get_class_methods($this);
+		foreach($public_methods as $method)
+		{
+			if(strpos($method,"__construct")===0 && strlen($method)>11)
+			{
+				array_push($traitConstructs,$method);
+			}
+		}
+		return $traitConstructs;
 	}
 	
+	public function getResourceManager()
+	{
+		if(!$this->resourceManager)
+		{
+			$this->resourceManager = new ResourceManager;
+		}
+		return $this->resourceManager;
+	}
+
 	protected function setup()
 	{
-
+		//This function will be override by decendant to define
+		//how data will be executed.
 	}
 	
 	public function settings()
 	{
+		//This function will be override by decendant to define
+		//list of settings including dataSources.
 		return array();
 	}
 	
@@ -79,9 +148,13 @@ class KoolReport extends Base
 	
 	public function run()
 	{
-		foreach($this->dataSources as $dataSource)
+		if($this->fireEvent("OnBeforeRun"))
 		{
-			$dataSource->start();
+			foreach($this->dataSources as $dataSource)
+			{
+				$dataSource->start();
+			}
+			$this->fireEvent("OnRunEnd");
 		}
 		return $this;
 	}
@@ -102,19 +175,26 @@ class KoolReport extends Base
             }
         }
 		$currentDir = dirname(Utility::getClassPath($this));
+
 		ob_start();
+		$this->getResourceManager()->init();
 		$GLOBALS["__ACTIVE_KOOLREPORT__"] = $this;
+		$this->fireEvent("OnBeforeRender");
 		include($currentDir."/".$view.".view.php");
 		$content = ob_get_clean();
-		
+
+		//Adding resource to content
+		$this->getResourceManager()->process($content); 
+
 		if($return)
 		{
-			return $content;	
-			
+			$this->fireEvent("OnRenderEnd");
+			return $content;
 		}
 		else
 		{
 			echo $content;
+			$this->fireEvent("OnRenderEnd");
 		}
 	}
 }

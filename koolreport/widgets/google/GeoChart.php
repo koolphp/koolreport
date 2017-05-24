@@ -15,11 +15,13 @@ class GeoChart extends Chart
 {
 	protected function loadLibrary()
 	{
-		$this->template("LoadLibrary",array(
-			"chartId"=>$this->chartId,
-			"zone"=>"current",
-			"packages"=>array("geochart")
-		));
+		// $this->template("LoadLibrary",array(
+			// "chartId"=>$this->chartId,
+			// "zone"=>"current",
+			// "packages"=>array("geochart")
+		// ));
+    $this->getReport()->getResourceManager()
+      ->addScriptOnEnd("google.charts.load('current', {'packages':['geochart']})");
 	}	
 	static function create($params)
 	{

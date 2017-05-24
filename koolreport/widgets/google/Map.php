@@ -15,11 +15,13 @@ class Map extends Chart
 {
 	protected function loadLibrary()
 	{
-		$this->template("LoadLibrary",array(
-			"chartId"=>$this->chartId,
-			"zone"=>"current",
-			"packages"=>array("map")
-		));
+		// $this->template("LoadLibrary",array(
+			// "chartId"=>$this->chartId,
+			// "zone"=>"current",
+			// "packages"=>array("map")
+		// ));
+    $this->getReport()->getResourceManager()
+      ->addScriptOnEnd("google.charts.load('current', {'packages':['map']})");
 	}	
 	static function create($params)
 	{
