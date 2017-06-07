@@ -1,6 +1,6 @@
 {
     "name": "KoolReport",
-    "version":"1.15.4",
+    "version":"1.27.5",
     "description": "An Open Source PHP Reporting Framework for easier and faster report delivery",
     "keywords": ["php reporting framework","php reporting tools","data reporting","charts and graphs"],
     "homepage": "https://www.koolreport.com",
@@ -11,9 +11,5 @@
             "name": "KoolPHP Inc",
             "homepage": "https://www.koolphp.net"
         }
-    ], 
-    "require": {
-        "phpoffice/phpexcel": "1.8.1",
-        "mongodb/mongodb": "^1.1"
-    }
+    ]
 }

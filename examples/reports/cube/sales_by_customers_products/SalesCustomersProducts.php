@@ -13,30 +13,16 @@ class SalesCustomersProducts extends koolreport\KoolReport
   {
     return array(
       "dataSources"=>array(
-        // "sales"=>array(
-          // 'connectionString' => 'mysql:host=localhost;dbname=automaker',
-          // 'username' => 'root',
-          // 'password' => '',
-          // 'charset' => 'utf8',          
-        // ),
         "sales"=>array(
           'filePath' => '../../../databases/customer_product_dollarsales2.csv',
           'fieldSeparator' => ';',
           'class' => "\koolreport\datasources\CSVDataSource"      
         ),
-        // "sales"=>array(
-          // 'connectionString' => 'mongodb://localhost:27017',
-          // 'database' => 'test',
-          // 'class' => "\koolreport\datasources\MongoDataSource"
-        // ),
       )
     );
   }
   function setup()
   {
-    // $node = $this->src('sales')
-    // ->query("SELECT customerName, productLine, productName, dollar_sales FROM customer_product_dollarsales");
-    
     $node = $this->src('sales')
     ->pipe(new ColumnMeta(array(
       "dollar_sales"=>array(

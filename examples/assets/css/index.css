@@ -2,7 +2,8 @@ div.example
 {
     background:#eee;
     border: solid 1px #ccc;
-    padding: 15px;    
+    padding: 15px;
+    margin-bottom:15px;    
 }
 
 div.example:hover

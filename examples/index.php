@@ -13,7 +13,6 @@
     <link rel="stylesheet" type="text/css" href="assets/css/index.css" />
 
     <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="assets/css/site.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="assets/jquery/jquery-3.1.1.min.js"></script>
     <script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="assets/js/docs.min.js"></script>
@@ -21,6 +20,43 @@
 </head>
 <body>
     <div id="top" class="bs-docs-nav navbar-static-top"></div>
+
+<nav id="top" class="navbar bs-docs-nav navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+          <a class="navbar-brand" href="https://www.koolreport.com/"><i class="fa fa-bar-chart" style="color:#F9A825"></i> <span style="color:#0277BD">KoolReport</span></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li id="getstarted"><a href="https://www.koolreport.com/getting-started"><i class="fa fa-bolt"></i> Getting Started</a></li>
+            <li id="demo"><a href="https://www.koolreport.com/examples">Online Demos</a></li>  
+          	<li class="dropdown">
+          		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documentation <span class="caret"></span></a>
+          		 <ul class="dropdown-menu">
+                    <li id="datasources"><a href="https://www.koolreport.com/data-sources">Data Sources</a></li>
+                    <li id="processing"><a href="https://www.koolreport.com/data-processing">Data Processing</a></li>
+                    <li id="visualization"><a href="https://www.koolreport.com/data-visualization">Data Visualization</a></li>
+          		 	    <li id="class-reference"><a href="https://www.koolreport.com/class-reference">Class Reference</a></li>
+                     <li id="change-log"><a href="https://www.koolreport.com/updates">Updates</a></li>
+          		 </ul>
+          	</li>
+          	<li id="packages"><a href="https://www.koolreport.com/packages">Packages</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+          	<li id="forum"><a href="https://www.koolreport.com/forum/topics"><i class="fa fa-comments-o"></i> Forum</a></li>
+            <li id="blog"><a href="https://www.koolreport.com/blog"><i class="fa fa-feed"></i> Blog</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
     <div class="bs-docs-header">
         <div class="container">
             <h1 id="basic-examples">Examples</h1>
@@ -80,7 +116,7 @@
                     </div>            
                 </div>
 
-               
+
                 <div class="bs-docs-section">
                     <h1 id="cube">Cube package</h1>
                     <p><code>Cube</code> package helps to turn your data into two dimension cross-tab table.
@@ -167,6 +203,7 @@
                                 </i></p>
                             </div>
                         </div>
+                        
                     </div>            
                 </div>
                 <div class="bs-docs-section">

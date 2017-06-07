@@ -5,10 +5,10 @@ use \koolreport\pivot\widgets\PivotTable;
 <html>
   <head>
     <title>Pivot Table of Customers and Categories - Products</title>
-    <link rel='stylesheet' href='../../../assets/bootstrap/css/bootstrap.min.css'>
-    <link rel='stylesheet' href='../../../assets/bootstrap/css/bootstrap-theme.min.css'>
-    <link rel='stylesheet' href='../../../assets/font-awesome/css/font-awesome.min.css'>
-    <link rel='stylesheet' href='../../../assets/css/example.css' />
+    <link rel="stylesheet" href="../../../assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../assets/bootstrap/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../../../assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../../../assets/css/example.css" />
   </head>
   <style>
     .box-container {
@@ -16,21 +16,22 @@ use \koolreport\pivot\widgets\PivotTable;
     }
   </style>
   <body>
-    <div class='container box-container'>
+    <div class="container box-container">
           
       <h1>Sales By Years - Months - Customers - Categories</h1>
       <div>
         <?php
           $dataStore = $this->dataStore('sales');
           PivotTable::create(array(
-            'dataStore'=>$dataStore,
-            'rowDimension'=>'row',
-            'columnDimension'=>'column',
-            'measures'=>array(
-              'dollar_sales - sum', 
+            "dataStore"=>$dataStore,
+            "rowDimension"=>"row",
+            "columnDimension"=>"column",
+            "measures"=>array(
+              "dollar_sales - sum", 
+              // 'dollar_sales - count',
             ),
             'rowSort' => array(
-              'dollar_sales - sum' => 'desc',
+              'dollar_sales - count' => 'desc',
             ),
             'columnSort' => array(
               'orderMonth' => function($a, $b) {

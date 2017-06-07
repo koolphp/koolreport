@@ -16,57 +16,75 @@ use \koolreport\core\Utility;
 class Chart extends Widget
 {
     protected $chartId;
-	protected $dataStore;
-	protected $columns;
-	protected $options;
-	protected $type;
-	protected $width;
-	protected $height;
+    protected $dataStore;
+    protected $columns;
+    protected $options;
+    protected $type;
+    protected $width;
+    protected $height;
     protected $title;
+    protected $colorScheme;
   
-	protected function onInit()
-	{
+    protected function onInit()
+    {
         $this->chartId = "chart_".Utility::getUniqueId();
-		$this->dataStore = Utility::get($this->params,"dataStore",null);
+        $this->dataStore = Utility::get($this->params,"dataStore",null);
         if(!$this->dataStore)
         {
             throw \Exception("The dataStore property is required");
         }
-		$this->columns = Utility::get($this->params,"columns",null);
-		$this->options = Utility::get($this->params,"options",array());
-		$this->width = Utility::get($this->params,"width","600px");
-		$this->height = Utility::get($this->params,"height","400px");
+        $this->columns = Utility::get($this->params,"columns",null);
+        $this->options = Utility::get($this->params,"options",array());
+        $this->width = Utility::get($this->params,"width","600px");
+        $this->height = Utility::get($this->params,"height","400px");
         $this->title = Utility::get($this->params,"title");
-        if($this->title)
+        $this->type = Utility::getClassName($this);
+        if($this->type=="Chart")
         {
-            $this->options["title"] = $this->title;
+            $this->type = Utility::get($this->params,"type");
         }
-		$this->type = Utility::getClassName($this);
-		if($this->type=="Chart")
-		{
-			Utility::get($this->params,"type");
-		}
-	}
-	
-	protected function typeConvert($type)
-	{
-		$map = array(
-			"datetime"=>"datetime",
-			"unknown"=>"string",
-			"string"=>"string",
-			"number"=>"number",
-		);
-		return isset($map[$type])?$map[$type]:"string";
-	}	
-	protected function prepareData()
-	{
-	    //If there is the user input columns then parse them to columns from user input
-	    //If the user does not input collumns then take the default by looking at data
-	    // Then mixed with default in meta
-	    
-	    $meta = $this->dataStore->meta();
-	    $columns=array();
-	    if($this->columns!=null)
+        //Color Scheme
+        $colorScheme = Utility::get($this->params,"colorScheme");
+        if($colorScheme!==null)
+        {
+            switch(gettype($colorScheme))
+            {
+                case "string":
+                    $colorScheme = intval($colorScheme);
+                case "integer":
+                    //Get the color scheme from theme
+                    $this->colorScheme = $this->getReport()->getColorScheme($colorScheme);
+                break;
+                case "array":
+                    $this->colorScheme = $colorScheme;
+                break;
+            }
+        }
+        else
+        {
+            $this->colorScheme = $this->getReport()->getColorScheme();
+        }
+    }
+    
+    protected function typeConvert($type)
+    {
+        $map = array(
+            "datetime"=>"datetime",
+            "unknown"=>"string",
+            "string"=>"string",
+            "number"=>"number",
+        );
+        return isset($map[$type])?$map[$type]:"string";
+    }	
+    protected function prepareData()
+    {
+        //If there is the user input columns then parse them to columns from user input
+        //If the user does not input collumns then take the default by looking at data
+        // Then mixed with default in meta
+        
+        $meta = $this->dataStore->meta();
+        $columns=array();
+        if($this->columns!=null)
         {
             foreach($this->columns as $cKey=>$cValue)
             {
@@ -141,37 +159,44 @@ class Chart extends Widget
             }
             array_push($data,$gRow);
         }
-		return $data;
-	}
-	
-	protected function loadLibrary()
-	{
-		// $this->template("LoadLibrary",array(
-            // "chartId"=>$this->chartId,
-			// "zone"=>"current",
-			// "packages"=>array("corechart"),
-		// ));
-    $this->getReport()->getResourceManager()
-      ->addScriptOnEnd("google.charts.load('current', {'packages':['corechart']})");
-	}
-	
-	public function render()
-	{
-		if($this->dataStore->countData()>0)
-		{
-      $this->getReport()->getResourceManager()
-        ->addScriptFileOnBegin('https://www.gstatic.com/charts/loader.js');
+        return $data;
+    }
+    
+    protected function loadLibrary()
+    {
+        $this->getReport()->getResourceManager()
+        ->addScriptOnBegin("google.charts.load('current', {'packages':['corechart']});");
+    }
+    
+    public function render()
+    {
+        if($this->dataStore->countData()>0)
+        {
+            //Register loader
+            $this->getReport()->getResourceManager()
+                ->addScriptFileOnBegin('https://www.gstatic.com/charts/loader.js');
       
-			$this->template("Chart",array(
+            //Update options
+            $options = $this->options;
+            if($this->title)
+            {
+                $options["title"] = $this->title;
+            }
+            if($this->colorScheme)
+            {
+                $options["colors"] = $this->colorScheme;
+            }
+            //Render
+            $this->template("Chart",array(
                 "chartId"=>$this->chartId,
                 "chartType"=>$this->type,
-                "options"=>$this->options,
+                "options"=>$options,
                 "data"=>$this->prepareData(),
-			));			
-		}
-		else
-		{
-			$this->template("NoData");
-		}
-	}
+            ));			
+        }
+        else
+        {
+            $this->template("NoData");
+        }
+    }
 }

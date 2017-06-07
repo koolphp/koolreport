@@ -11,12 +11,14 @@ class KoolReport extends Base
 	protected $dataStores;
 	protected $resourceManager;
 	protected $events;
+	protected $colorSchemes;
 	
 	public function __construct($params=array())
 	{		
 		$this->params = $params;
 		$this->dataSources = array();
 		$this->dataStores = array();
+		$this->colorSchemes = array();
 		$this->events = array();
 		$this->setup();
 		foreach($this->getTraitConstructs() as $traitConstruct)
@@ -25,6 +27,14 @@ class KoolReport extends Base
 		}
 	}
 
+	public function getColorScheme($index=0)
+	{
+		if($index===null)
+		{
+			$index=0;
+		}
+		return Utility::get($this->colorSchemes,$index);
+	}
 
 	public function registerEvent($name,$methodName)
 	{
@@ -36,6 +46,7 @@ class KoolReport extends Base
 		{
 			array_push($this->events[$name],$methodName);
 		}
+		return $this;
 	}
 
 	public function fireEvent($name,$params=null)
@@ -82,6 +93,72 @@ class KoolReport extends Base
 		}
 		return $this->resourceManager;
 	}
+
+	public function publishAssetFolder($fullLocalPath)
+	{
+		$fullLocalPath = str_replace("\\", "/", $fullLocalPath);
+		$assets = Utility::get($this->settings(),"assets",array());
+		$document_root = str_replace("\\", "/", $_SERVER["DOCUMENT_ROOT"]);			
+		$assetUrl = "";
+		if($assets)
+		{
+			$targetAssetPath =  Utility::get($assets,"path");
+			$targetAssetUrl = Utility::get($assets,"url");
+			if(!$targetAssetPath)
+			{
+				throw new \Exception("Could not find path to report's assets folder");
+			}			
+			$reportClassFolder = dirname(Utility::getClassPath($this));
+			if(is_dir($reportClassFolder."/".$targetAssetPath))
+			{
+				//Check if relative targetAssetPath existed
+				$targetAssetPath = str_replace("\\","/",realpath($reportClassFolder."/".$targetAssetPath));
+			}
+			else if(is_dir($targetAssetPath))
+			{
+				//Check if full targetAssetPath existed
+				$targetAssetPath = str_replace("\\","/",realpath($targetAssetPath));
+			}
+			else
+			{
+				throw new \Exception("Report's assets folder not existed");
+			}
+			//-----------------------
+
+			$objectFolderName = str_replace(dirname($fullLocalPath)."/","",$fullLocalPath);
+			
+			$objectHashFolderName = crc32("koolreport".$fullLocalPath.@filemtime($fullLocalPath));
+			$objectHashFolderName = ($objectHashFolderName<0)?abs($objectHashFolderName)."0":"$objectHashFolderName";
+			//-------------------------
+
+			$objectTargetPath = $targetAssetPath."/".$objectHashFolderName;			
+			if(!is_dir($objectTargetPath))
+			{
+				Utility::recurse_copy($fullLocalPath,$objectTargetPath);
+			}
+			else
+			{
+				//Do the check if file in widgetSourceAssetPath is changed,
+				//If there is then copy again.
+				//Currently do nothing for now
+			}
+			
+			if($targetAssetUrl)
+			{
+				$assetUrl = $targetAssetUrl."/".$objectHashFolderName;
+			}
+			else
+			{
+				$assetUrl = str_replace($document_root,"",$objectTargetPath);	
+			}
+		}
+		else
+		{
+			$assetUrl = str_replace($document_root,"",$fullLocalPath);			
+		}
+		return $assetUrl;
+	}
+
 
 	protected function setup()
 	{
@@ -157,6 +234,14 @@ class KoolReport extends Base
 			$this->fireEvent("OnRunEnd");
 		}
 		return $this;
+	}
+
+	public function debug($params=array())
+	{
+		$GLOBALS["__ACTIVE_KOOLREPORT__"] = $this;
+		include(dirname(__FILE__)."/debug.view.php");
+		$content = ob_get_clean();
+		echo $content;
 	}
 	
 		

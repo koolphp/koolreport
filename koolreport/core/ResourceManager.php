@@ -18,6 +18,7 @@ class ResourceManager extends Base
     public function init()
     {
         $this->tags = array();
+        return $this;
     }
 
     public function addScriptFileOnBegin($src,$options=array())
@@ -42,13 +43,13 @@ class ResourceManager extends Base
     }
 
 
-    public function addScriptOnBegin($src,$options=array())
+    public function addScriptOnBegin($script,$options=array())
     {
-        return $this->addScript($src,$options,'begin');
+        return $this->addScript($script,$options,'begin');
     }
-    public function addScriptOnEnd($src,$options=array())
+    public function addScriptOnEnd($script,$options=array())
     {
-        return $this->addScript($src,$options,'end');
+        return $this->addScript($script,$options,'end');
     }
     protected function addScript($script,$options=array(),$at='begin')
     {

@@ -24,9 +24,7 @@ use \koolreport\core\Utility;
 
 class AssetManager extends Base
 {
-	protected $widget;
-	protected $assetFolder;
-	
+	protected $widget;	
 	protected $assetUrl;
 	
 	public function __construct($widget)
@@ -49,78 +47,12 @@ class AssetManager extends Base
 	public function publish($assetFolder)
 	{
 
-		$assets = Utility::get($this->widget->getReport()->settings(),"assets",array());
-		$document_root = str_replace("\\", "/", $_SERVER["DOCUMENT_ROOT"]);			
-				
-		if($assets)
+		$widgetSourceAssetPath = dirname(Utility::getClassPath($this->widget))."/".$assetFolder;
+		if(!is_dir($widgetSourceAssetPath))
 		{
-			$targetAssetPath =  Utility::get($assets,"path");
-			$targetAssetUrl = Utility::get($assets,"url");
-			if(!$targetAssetPath)
-			{
-				throw new \Exception("Could not find path to report's assets folder");
-			}
-			$reportClassFolder = dirname(Utility::getClassPath($this->widget->getReport()));
-			if(is_dir($reportClassFolder."/".$targetAssetPath))
-			{
-				//Check if relative targetAssetPath existed
-				$targetAssetPath = str_replace("\\","/",realpath($reportClassFolder."/".$targetAssetPath));
-			}
-			else if(is_dir($targetAssetPath))
-			{
-				//Check if full targetAssetPath existed
-				$targetAssetPath = str_replace("\\","/",realpath($targetAssetPath));
-			}
-			else
-			{
-				throw new \Exception("Report's assets folder not existed");
-			}
-			//-----------------------
-			
-			$widgetClassFolder = dirname(Utility::getClassPath($this->widget));
-			$widgetSourceAssetPath = $widgetClassFolder."/".$assetFolder;
-			if(!is_dir($widgetSourceAssetPath))
-			{
-				throw new \Exception("Widget's asset folder not found '$assetFolder'");
-			}
-			$widgetSourceAssetPath = str_replace("\\","/",realpath($widgetSourceAssetPath));
-			$widgetFolderName = str_replace(dirname($widgetSourceAssetPath)."/","",$widgetSourceAssetPath);
-			
-			$widgetHashFolderName = crc32($widgetSourceAssetPath.@filemtime($widgetSourceAssetPath));
-
-			//-------------------------
-
-			$widgetTargetPath = $targetAssetPath."/".$widgetHashFolderName;			
-			if(!is_dir($widgetTargetPath))
-			{
-				Utility::recurse_copy($widgetSourceAssetPath,$widgetTargetPath);
-			}
-			else
-			{
-				//Do the check if file in widgetSourceAssetPath is changed,
-				//If there is then copy again.
-				//Currently do nothing for now
-			}
-			
-			if($targetAssetUrl)
-			{
-				$this->assetUrl = $targetAssetUrl."/".$widgetHashFolderName;
-			}
-			else
-			{
-				$this->assetUrl = str_replace($document_root,"",$widgetTargetPath);	
-			}	
+			throw new \Exception("Widget's assets folder is not existed");
 		}
-		else
-		{
-			if(!is_dir(dirname(Utility::getClassPath($this->widget))."/".$assetFolder))
-			{
-				throw new \Exception("Widget's asset folder not found '$assetFolder'");
-			}
-			
-			$realAssetPath = realpath(dirname(Utility::getClassPath($this->widget))."/".$assetFolder);
-			$realAssetPath = str_replace("\\","/",$realAssetPath);
-			$this->assetUrl = str_replace($document_root,"",$realAssetPath);
-		}
+		$widgetSourceAssetPath = str_replace("\\", "/", realpath($widgetSourceAssetPath));
+		$this->assetUrl = $this->widget->getReport()->publishAssetFolder($widgetSourceAssetPath);
 	}
 }

@@ -32,16 +32,15 @@ class Sort extends Process
     usort($this->data, function($a, $b) use ($sorts) {
       $cmp = 0;
       foreach ($sorts as $sort => $direction) {
-        if ($a[$sort] < $b[$sort]) {
-          $cmp = $direction === 'asc' ? -1 : 1;
-          break;
+        if (is_string($direction)) {
+          $cmp = is_numeric($a[$sort]) && is_numeric($b[$sort]) ? 
+              $a[$sort] - $b[$sort] : strcmp($a[$sort], $b[$sort]);
+          $cmp = $direction === 'asc' ? $cmp : - $cmp;
         }
-        else if ($a[$sort] > $b[$sort]) {
-          $cmp = $direction === 'desc' ? -1 : 1;
-          break;
-        }      
+        else if (is_callable($direction)) 
+          $cmp = $direction($a[$sort], $b[$sort]);
+        if ($cmp !== 0) break;
       }
-      
       return $cmp;
     });
   }

@@ -32,6 +32,14 @@ class ValueMap extends Process
 {
 	protected $mapFuncs = array();
   
+  protected function OnInit() {
+    foreach($this->params as $cName => $cMap) {
+      $cFunc = Utility::get($cMap,"{func}");
+        if (is_callable($cFunc))
+          $this->mapFuncs[$cName] = $cFunc;
+    }
+  }
+  
 	protected function onMetaReceived($metaData)
 	{
 		foreach($this->params as $cName=>$cMap)
@@ -54,9 +62,6 @@ class ValueMap extends Process
             $metaData["columns"][$cName] = array_merge($metaData["columns"][$cName],$cMeta);
           }
         }
-        $cFunc = Utility::get($cMap,"{func}");
-        if (is_callable($cFunc))
-          $this->mapFuncs[$cName] = $cFunc;
       }
 		return $metaData;
 	}

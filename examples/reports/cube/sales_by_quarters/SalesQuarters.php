@@ -41,9 +41,11 @@ class SalesQuarters extends koolreport\KoolReport
         '{func}' => function ($value) {
           return 'Q' . $value;
         },
+        "{meta}" => array(
+          "type" => "string"
+  			),
       )
     )));
-    
     
     $filters = array('or');
     foreach ($salesYear as $year)
