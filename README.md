@@ -210,11 +210,11 @@ The KoolReport is licensed under MIT License.
 
 * [Cube](https://www.koolreport.com/packages/cube): Help to turn your data into two dimensions cross-tab table [__$9.00__]
 * [Pivot](https://www.koolreport.com/packages/pivot): Build multi-dimenstional pivot table [__$19.00__]
-* [Export](https://www.koolreport.com/packages/export) - Export your report to PDF, JPG, PNG and other formats [__$19.00__]
-* [Excel](https://www.koolreport.com/packages/excel) - Import and export data to Excel [__Free__]
-* [MongoDB](https://www.koolreport.com/packages/mongodb) - Build report from MongoDB [__Free__]
-* [Morris Chart](https://www.koolreport.com/packages/morris_chart) - Use morris charts in your report [__Free__]
-* [Inputs](https://www.koolreport.com/packages/inputs) - Help to build dynamic reports/dashboard with inputs [__Free__]
+* [Export](https://www.koolreport.com/packages/export): Export your report to PDF, JPG, PNG and other formats [__$19.00__]
+* [Excel](https://www.koolreport.com/packages/excel): Import and export data to Excel [__Free__]
+* [MongoDB](https://www.koolreport.com/packages/mongodb): Build report from MongoDB [__Free__]
+* [Morris Chart](https://www.koolreport.com/packages/morris_chart): Use morris charts in your report [__Free__]
+* [Inputs](https://www.koolreport.com/packages/inputs): Help to build dynamic reports/dashboard with inputs [__Free__]
 
 # Our vision
 
