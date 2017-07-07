@@ -206,7 +206,7 @@ Result of this report can be [previewed in here](https://www.koolreport.com/exam
 # Licenses
 The KoolReport is licensed under MIT License.
 
-# Available extended packages:
+# Extended packages:
 
 * [Cube](https://www.koolreport.com/packages/cube): Help to turn your data into two dimensions cross-tab table [__$9.00__]
 * [Pivot](https://www.koolreport.com/packages/pivot): Build multi-dimenstional pivot table [__$19.00__]
