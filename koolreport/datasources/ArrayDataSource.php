@@ -16,9 +16,11 @@ use \koolreport\core\Utility;
 class ArrayDataSource extends DataSource
 {	
 	protected $dataFormat;//"table"|"associate"	
+	protected $data;
+
 	protected function onInit()
 	{
-		$this->dataFormat = trim(strtolower(Utility::get($this->params,"dataFormat","associate"))); 
+		$this->dataFormat = trim(strtolower(Utility::get($this->params,"dataFormat","associate")));
 	}
 	
 	protected function guessType($value)
@@ -44,6 +46,13 @@ class ArrayDataSource extends DataSource
 		return "unknown";
 	}
 	
+	public function load($data,$dataFormat="associate")
+	{
+		$this->dataFormat = $dataFormat;
+		$this->params["data"] = $data;
+		return $this;
+	}
+
 	public function start()
 	{
 		$data = Utility::get($this->params,"data",array());

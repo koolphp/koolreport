@@ -19,8 +19,11 @@
  * 			"{meta}"=>array(
  * 				"type"=>"string"
  * 			)
- * 		)
+ * 		),
  * )))
+  ->pipe(new ValueMap(function($value, $columnName, $columnMeta, $columnPos){
+    return $newValue;
+  }))
  * 
  * 
  */
@@ -33,47 +36,59 @@ class ValueMap extends Process
 	protected $mapFuncs = array();
   
   protected function OnInit() {
-    foreach($this->params as $cName => $cMap) {
-      $cFunc = Utility::get($cMap,"{func}");
-        if (is_callable($cFunc))
-          $this->mapFuncs[$cName] = $cFunc;
-    }
+    if (is_array($this->params))
+      foreach($this->params as $cName => $cMap) {
+        $cFunc = Utility::get($cMap,"{func}");
+          if (is_callable($cFunc))
+            $this->mapFuncs[$cName] = $cFunc;
+      }
   }
   
 	protected function onMetaReceived($metaData)
 	{
-		foreach($this->params as $cName=>$cMap)
-      if (is_array($cMap))
-      {
-        $cMeta = Utility::get($cMap,"{meta}");
-        if($cMeta)
+    if (is_array($this->params))
+      foreach($this->params as $cName=>$cMap) {
+        if (is_array($cMap))
         {
-          $override = Utility::get($cMeta,"{override}",false);
-          if(isset($cMeta["{override}"]))
+          $cMeta = Utility::get($cMap,"{meta}");
+          if($cMeta)
           {
-            unset($cMeta["{override}"]);
-          }
-          if($override)
-          {
-            $metaData["columns"][$cName] = $cMeta;
-          }
-          else
-          {
-            $metaData["columns"][$cName] = array_merge($metaData["columns"][$cName],$cMeta);
+            $override = Utility::get($cMeta,"{override}",false);
+            if(isset($cMeta["{override}"]))
+            {
+              unset($cMeta["{override}"]);
+            }
+            if($override)
+            {
+              $metaData["columns"][$cName] = $cMeta;
+            }
+            else
+            {
+              $metaData["columns"][$cName] = array_merge($metaData["columns"][$cName],$cMeta);
+            }
           }
         }
       }
 		return $metaData;
 	}
 		
-	protected function onInput($data)
+	protected function onInput($row)
 	{
-		foreach($this->params as $cName=>$cMap) {
-      if (isset($this->mapFuncs[$cName]))
-        $data[$cName] = $this->mapFuncs[$cName]($data[$cName]);
-      else if (is_array($cMap)) 
-        $data[$cName] = Utility::get($cMap,$data[$cName],$data[$cName]);
-		}
-		$this->next($data);
+    if (is_array($this->params))
+      foreach($this->params as $cName=>$cMap) {
+        if (isset($this->mapFuncs[$cName]))
+          $row[$cName] = $this->mapFuncs[$cName]($row[$cName]);
+        else if (is_array($cMap)) 
+          $row[$cName] = Utility::get($cMap,$row[$cName],$row[$cName]);
+      }
+    else if (is_callable($this->params)) {
+      $func = $this->params;
+      $pos = 0;
+      foreach ($row as $cName => $value) {
+        $row[$cName] = $func($value, $cName, $this->metaData['columns'][$cName], $pos);
+        $pos++;
+      }
+    }
+		$this->next($row);
 	}
 }

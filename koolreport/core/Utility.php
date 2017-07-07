@@ -38,6 +38,17 @@ class Utility
     static function format($value,$format)
     {
         $type = Utility::get($format,"type","unknown");
+        $formatValue = Utility::get($format,"formatValue",null);
+
+        if(is_string($formatValue))
+        {
+            eval('$fv='.str_replace('@value','$value',$formatValue).';');
+            return $fv;
+        }
+        else if(is_callable($formatValue))
+        {
+            return $formatValue($value);
+        }
         switch($type)
         {
             case "number":
@@ -133,5 +144,10 @@ class Utility
     {
         $class_info = new \ReflectionClass($obj);
         return $class_info->getFileName();		
+    }
+    static function prettyPrint($arr) {
+      echo '<pre>';
+      echo json_encode($arr, JSON_PRETTY_PRINT), PHP_EOL;
+      echo '</pre>';  
     }
 }

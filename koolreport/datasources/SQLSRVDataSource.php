@@ -28,12 +28,12 @@ class SQLSRVDataSource extends DataSource
 	protected $query;
 	protected function onInit()
 	{		
-    $servername = Utility::get($this->params,"servername","");//serverName\instanceName
+    $host = Utility::get($this->params,"host","");//host\instanceName
     $username = Utility::get($this->params,"username","");
 		$password = Utility::get($this->params,"password","");
 		$dbname = Utility::get($this->params,"dbname","");
     $connectionInfo = array( "Database"=>$dbname, "UID"=>$username, "PWD"=>$password);
-    $conn = sqlsrv_connect( $servername, $connectionInfo);
+    $conn = sqlsrv_connect( $host, $connectionInfo);
 
     if( $conn ) 
       $this->connection = $conn;

@@ -98,11 +98,9 @@ class ColumnsSort extends Process
       ksort($sortedColumns);
       $this->sortedColumns = $sortedColumns;
     }
-    else {
-      $newRow = array();
-      foreach ($this->sortedColumns as $column)
-        $newRow[$column] = $row[$column];
-      $this->next($newRow);
-    }
+    $newRow = array();
+    foreach ($this->sortedColumns as $column)
+      $newRow[$column] = $row[$column];
+    $this->next($newRow);
 	}
 }

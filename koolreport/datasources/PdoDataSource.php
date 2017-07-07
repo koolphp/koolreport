@@ -18,6 +18,7 @@ class PdoDataSource extends DataSource
 	static $connections;
 	protected $connection;
 	protected $query;
+	protected $params;
 	protected function onInit()
 	{		
 		$connectionString = Utility::get($this->params,"connectionString","");
@@ -45,12 +46,42 @@ class PdoDataSource extends DataSource
 		}
 	}
 	
-	public function query($query)
+	public function query($query,$params=null)
 	{
 		$this->query = $query;
+		if($params!=null)
+		{
+			$this->params = $params;
+		}
+		return $this;
+	}
+
+	public function params($params)
+	{
+		$this->params = $params;
 		return $this;
 	}
 	
+	protected function bindParams($query,$params)
+	{
+		if($params!=null)
+		{
+			foreach($params as $key=>$value)
+			{
+				if(gettype($value)==="array")
+				{
+					$value = '"'.implode('","',$value).'"';
+					$query = str_replace($key,$value,$query);
+				}
+				else
+				{
+					$query = str_replace($key,"\"$value\"",$query);
+				}
+			}
+		}
+		return $query;
+	}
+
 	protected function guessType($native_type)
 	{
 		$map = array(
@@ -92,7 +123,9 @@ class PdoDataSource extends DataSource
 	
 	public function start()
 	{
-		$stm = $this->connection->prepare($this->query);
+		
+		$query = $this->bindParams($this->query,$this->params);
+		$stm = $this->connection->prepare($query);
 		$stm->execute();
 
 		$metaData = array("columns"=>array());

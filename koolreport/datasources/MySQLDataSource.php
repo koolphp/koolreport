@@ -8,7 +8,7 @@
  
  
  "mysql"=>array(
-    'servername' => 'localhost',
+    'host' => 'localhost',
     'username' => 'root',
     'password' => '',
     'dbname' => 'automaker',
@@ -28,13 +28,13 @@ class MySQLDataSource extends DataSource
 	protected $query;
 	protected function onInit()
 	{		
-		$servername = Utility::get($this->params,"servername","");
+		$host = Utility::get($this->params,"host","");
 		$username = Utility::get($this->params,"username","");
 		$password = Utility::get($this->params,"password","");
 		$dbname = Utility::get($this->params,"dbname","");
 		$charset = Utility::get($this->params,"charset");
 		
-    $this->connection = new \mysqli($servername, $username, $password, $dbname);
+    $this->connection = new \mysqli($host, $username, $password, $dbname);
     /* check connection */
     if ($this->connection->connect_errno) 
       echo "Failed to connect to MySQL: (" . 

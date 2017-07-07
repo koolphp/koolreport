@@ -92,7 +92,14 @@
                                 <p>Connect to Sakila database using PdoDataSource</p>
                                 <p><a class="btn btn-primary" href="reports/basic/database_connection/index.php">View example</a></p>
                             </div>
-                        </div>                                                
+                        </div>   
+                        <div class="col-md-4">
+                            <div class="example">
+                                <h4>Format value in column</h4>
+                                <p>Show how to format value in table's column</p>
+                                <p><a class="btn btn-primary" href="reports/basic/format_value/index.php">View example</a></p>
+                            </div>
+                        </div>                                                                     
                     </div>            
                 </div>
 
@@ -164,7 +171,7 @@
 
                 <div class="bs-docs-section">
                     <h1 id="pivot">Pivot package</h1>
-                    <p><code>Pivot</code> package you explore multi-dimension aggregated data in a hierarchical way.
+                    <p><code>Pivot</code> package helps you to explore multi-dimension aggregated data in a hierarchical way.
                         Get the <code>Pivot</code> package <a href="https://www.koolreport.com/packages/pivot">in here</a>.
                     </p>
                     <div class="row">
@@ -206,6 +213,37 @@
                         
                     </div>            
                 </div>
+                <div class="bs-docs-section">
+                    <h1 id="inputs">Inputs package</h1>
+                    <p><code>Inputs</code> package helps you to build dynamic reports with user's inputs
+                        Get the <code>Inputs</code> package <a href="https://www.koolreport.com/packages/inputs">in here</a>. It's FREE.
+                    </p>
+                    <div class="row">
+                        <div class="col-md-4">                        
+                            <div class="example">
+                                <h4>Introduce controls</h4>
+                                <p>List of all current controls in inputs </p>
+                                <p><a class="btn btn-primary" href="reports/inputs/intro/index.php">View example</a></p>
+                                <p><i>
+                                    You may view this example
+                                    <a href="https://www.koolreport.com/examples/reports/inputs/intro/index.php">online</a>.
+                                </i></p>
+                            </div>
+                        </div>                        
+                        <div class="col-md-4">                        
+                            <div class="example">
+                                <h4>List of orders</h4>
+                                <p>Get list of orders within date ranges and of selected customers</p>
+                                <p><a class="btn btn-primary" href="reports/inputs/order_list/index.php">View example</a></p>
+                                <p><i>
+                                    You may view this example
+                                    <a href="https://www.koolreport.com/examples/reports/inputs/order_list/index.php">online</a>.
+                                </i></p>
+                            </div>
+                        </div>                        
+                    </div>                            
+                </div>
+
                 <div class="bs-docs-section">
                     <h1 id="instruction">Instruction</h1>
                     <h2 id="setup-databases">Setup databases</h2>
@@ -264,6 +302,7 @@ return array(
                         <li><a href="#export">Export package</a></li>
                         <li><a href="#cube">Cube package</a></li>
                         <li><a href="#pivot">Pivot package</a></li>
+                        <li><a href="#inputs">Input package</a></li>
                         <li><a href="#instruction">Instruction</a>
                             <ul class="nav">
                                 <li><a href="#setup-databases">Setup databases</a></li>

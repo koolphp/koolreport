@@ -15,16 +15,23 @@ class KoolReport extends Base
 	
 	public function __construct($params=array())
 	{		
-		$this->params = $params;
-		$this->dataSources = array();
-		$this->dataStores = array();
-		$this->colorSchemes = array();
 		$this->events = array();
-		$this->setup();
 		foreach($this->getTraitConstructs() as $traitConstruct)
 		{
 			$this->$traitConstruct();
 		}
+		$this->params = $params;
+		$this->dataSources = array();
+		$this->dataStores = array();
+		$this->colorSchemes = array();
+		
+		$this->fireEvent("OnInit");
+		if($this->fireEvent("OnBeforeSetup"))
+		{
+			$this->setup();
+		}
+		$this->fireEvent("OnSetup");
+		$this->fireEvent("OnInitDone");
 	}
 
 	public function getColorScheme($index=0)

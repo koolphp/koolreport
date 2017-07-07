@@ -8,6 +8,15 @@
  * @license https://www.koolreport.com/license#mit-license
  */
 
+// "columns"=>array(
+// 	"type",
+// 	"{others}"=>array(
+// 		"type"=>"number",
+// 		""=>"" //Expression or function
+// 	)
+// )
+
+
 namespace koolreport\widgets\koolphp;
 use \koolreport\core\Widget;
 use \koolreport\core\Utility;
@@ -18,6 +27,8 @@ class Table extends Widget
 	protected $columns;
 	protected $cssClass;
     protected $removeDuplicate;
+	protected $excludedColumns;
+	protected $formatFunction;
 	
 	protected function onInit()
 	{
@@ -29,11 +40,16 @@ class Table extends Widget
 		$this->columns = Utility::get($this->params,"columns",array());
 		$this->removeDuplicate = Utility::get($this->params,"removeDuplicate",array());
 		$this->cssClass = Utility::get($this->params,"cssClass",array());
+		$this->excludedColumns = Utility::get($this->params,"excludedColumns",array());
 	}
 
 	public function render()
 	{
-		
+		if($this->dataStore->countData()<1)
+		{
+			return;
+		}
+
         $meta = $this->dataStore->meta();
         $showColumnKeys = array();
         
@@ -47,18 +63,52 @@ class Table extends Widget
         {
             foreach($this->columns as $cKey=>$cValue)
             {
-                if(gettype($cValue)=="array")
-                {
-                    $meta["columns"][$cKey] =  array_merge($meta["columns"][$cKey],$cValue);                
-                    array_push($showColumnKeys,$cKey);
-                }
-                else
-                {
-                    array_push($showColumnKeys,$cValue);
-                }
+				if($cKey==="{others}")
+				{
+					$this->dataStore->popStart();
+					$row = $this->dataStore->pop();
+					$allKeys = array_keys($row);
+					foreach($allKeys as $k)
+					{
+						if(!in_array($k,$showColumnKeys))
+						{
+							$meta["columns"][$k] = array_merge($meta["columns"][$k],$cValue);
+							array_push($showColumnKeys,$k);
+						}
+					}
+				}
+				else
+				{
+					if(gettype($cValue)=="array")
+					{
+						$meta["columns"][$cKey] =  array_merge($meta["columns"][$cKey],$cValue);                
+						if(!in_array($cKey,$showColumnKeys))
+						{
+							array_push($showColumnKeys,$cKey);
+						}
+					}
+					else
+					{
+						if(!in_array($cValue,$showColumnKeys))
+						{
+							array_push($showColumnKeys,$cValue);
+						}
+					}
+
+				}
             }            
         }
-        
+
+		$cleanColumnKeys = array();
+		foreach($showColumnKeys as $key)
+		{
+			if(!in_array($key,$this->excludedColumns))
+			{
+				array_push($cleanColumnKeys,$key);
+			}
+		}
+		$showColumnKeys = $cleanColumnKeys;
+
 		
 		//Remove Duplicate
         $span = null;
@@ -120,10 +170,5 @@ class Table extends Widget
 			"meta"=>$meta,
 		));
 	}	
-	
-	static function create($params)
-	{
-		$component = new Table($params);
-		$component->render();
-	}
+
 }

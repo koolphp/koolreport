@@ -46,7 +46,7 @@ class Widget extends Base
 
 	public function render()
 	{
-		return "[".get_class($this)."]";
+		$this->template(Utility::getClassName($this));
 	}
 	protected function template($template=null,$variables=null,$return=false)
 	{
@@ -78,7 +78,8 @@ class Widget extends Base
 	
 	static function create($params)
 	{
-		$component = new Widget($params);
+        $class = get_called_class();
+		$component = new $class($params);
 		$component->render();
-	}
+	}    
 }
