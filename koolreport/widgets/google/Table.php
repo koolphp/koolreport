@@ -21,7 +21,7 @@ class Table extends Chart
 			"packages"=>array("table")
 		));
     $this->getReport()->getResourceManager()
-      ->addScriptOnEnd("google.charts.load('current', {'packages':['table']})");
+      ->addScriptOnBegin("google.charts.load('current', {'packages':['table']})");
 	}	
 	static function create($params)
 	{

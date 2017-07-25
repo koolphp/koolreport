@@ -21,7 +21,7 @@ class TreeMap extends Chart
 			// "packages"=>array("treemap")
 		// ));
     $this->getReport()->getResourceManager()
-      ->addScriptOnEnd("google.charts.load('current', {'packages':['treemap']})");
+      ->addScriptOnBegin("google.charts.load('current', {'packages':['treemap']})");
 	}	
 	static function create($params)
 	{

@@ -21,7 +21,7 @@ class Timeline extends Chart
 			// "packages"=>array("timeline")
 		// ));
     $this->getReport()->getResourceManager()
-      ->addScriptOnEnd("google.charts.load('current', {'packages':['timeline']})");
+      ->addScriptOnBegin("google.charts.load('current', {'packages':['timeline']})");
 	}	
 	static function create($params)
 	{

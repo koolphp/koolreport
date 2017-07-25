@@ -21,7 +21,7 @@ class OrgChart extends Chart
 			// "packages"=>array("map")
 		// ));
     $this->getReport()->getResourceManager()
-      ->addScriptOnEnd("google.charts.load('current', {'packages':['map']})");
+      ->addScriptOnBegin("google.charts.load('current', {'packages':['map']})");
 	}	
 	static function create($params)
 	{

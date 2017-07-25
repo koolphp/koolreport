@@ -14,5 +14,3 @@ Please look at [KoolReport Get Started](https://www.koolreport.com/getting-start
 # Support
 
 Please use the Feedback functionality on our website or directly email us at support@koolphp.net
-
-

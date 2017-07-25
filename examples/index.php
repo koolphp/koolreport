@@ -100,7 +100,26 @@
                                 <p><a class="btn btn-primary" href="reports/basic/format_value/index.php">View example</a></p>
                             </div>
                         </div>                                                                     
+                        <div class="col-md-4">
+                            <div class="example">
+                                <h4>Sale By Country with GeoChart</h4>
+                                <p>Use Geochart in report</p>
+                                <p><a class="btn btn-primary" href="reports/basic/sales_by_country/index.php">View example</a></p>
+                            </div>
+                        </div>                                                                     
                     </div>            
+                </div>
+                <div class="bs-docs-section">
+                    <h1 id="advanced">Advanced examples</h1>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="example">
+                                <h4>Order List</h4>
+                                <p>View order of a customer, export report</p>
+                                <p><a class="btn btn-primary" href="https://www.koolreport.com/examples/reports/advanced/input_and_export/index.php">View example</a></p>
+                            </div>
+                        </div>                                                                                            
+                    </div>
                 </div>
 
                 <div class="bs-docs-section">
@@ -299,6 +318,7 @@ return array(
                 <nav class="bs-docs-sidebar hidden-print hidden-sm hidden-xs affix-top">
                     <ul class="nav bs-docs-sidenav">
                         <li><a href="#basic">Basic</a></li>
+                        <li><a href="#advanced">Advanced</a></li>
                         <li><a href="#export">Export package</a></li>
                         <li><a href="#cube">Cube package</a></li>
                         <li><a href="#pivot">Pivot package</a></li>

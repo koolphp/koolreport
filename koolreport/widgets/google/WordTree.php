@@ -21,7 +21,7 @@ class WordTree extends Chart
 			// "packages"=>array("wordtree")
 		// ));
     $this->getReport()->getResourceManager()
-      ->addScriptOnEnd("google.charts.load('current', {'packages':['wordtree']})");
+      ->addScriptOnBegin("google.charts.load('current', {'packages':['wordtree']})");
 	}	
 	static function create($params)
 	{

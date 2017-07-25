@@ -21,7 +21,7 @@ class Sankey extends Chart
 			// "packages"=>array("sankey")
 		// ));
     $this->getReport()->getResourceManager()
-      ->addScriptOnEnd("google.charts.load('current', {'packages':['sankey']})");
+      ->addScriptOnBegin("google.charts.load('current', {'packages':['sankey']})");
 	}	
 	static function create($params)
 	{

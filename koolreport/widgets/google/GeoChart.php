@@ -21,7 +21,7 @@ class GeoChart extends Chart
 			// "packages"=>array("geochart")
 		// ));
     $this->getReport()->getResourceManager()
-      ->addScriptOnEnd("google.charts.load('current', {'packages':['geochart']})");
+      ->addScriptOnBegin("google.charts.load('current', {'packages':['geochart']})");
 	}	
 	static function create($params)
 	{
