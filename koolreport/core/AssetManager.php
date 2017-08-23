@@ -46,7 +46,6 @@ class AssetManager extends Base
 	
 	public function publish($assetFolder)
 	{
-
 		$widgetSourceAssetPath = dirname(Utility::getClassPath($this->widget))."/".$assetFolder;
 		if(!is_dir($widgetSourceAssetPath))
 		{

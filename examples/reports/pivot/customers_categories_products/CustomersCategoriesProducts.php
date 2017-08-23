@@ -35,6 +35,7 @@ class CustomersCategoriesProducts extends koolreport\KoolReport
       'dollar_sales'=>array(
         'type' => 'number',
         'prefix' => '$',
+        'decimals'=>2,
       ),
     )))
     ->pipe(new Pivot(array(

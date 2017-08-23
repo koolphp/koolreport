@@ -49,10 +49,38 @@ class MySQLDataSource extends DataSource
       }
 	}
 	
-	public function query($query)
+	public function query($query, $params=null)
 	{
 		$this->query = $query;
+    if($params != null)
+			$this->params = $params;
 		return $this;
+	}
+  
+  public function params($params)
+	{
+		$this->params = $params;
+		return $this;
+	}
+  
+  protected function bindParams($query, $params)
+	{
+		if($params!=null)
+		{
+			foreach($params as $key=>$value)
+			{
+				if(gettype($value)==="array")
+				{
+					$value = "'".implode("','",$value)."'";
+					$query = str_replace($key,$value,$query);
+				}
+				else
+				{
+					$query = str_replace($key,"'$value'",$query);
+				}
+			}
+		}
+		return $query;
 	}
 	
   function map_field_type_to_bind_type($field_type) {
@@ -71,9 +99,12 @@ class MySQLDataSource extends DataSource
     case MYSQLI_TYPE_ENUM:
         return 'number';
 
-    case MYSQLI_TYPE_TIMESTAMP:
     case MYSQLI_TYPE_DATE:
+        return 'date';
+
     case MYSQLI_TYPE_TIME:
+        return 'time';
+    case MYSQLI_TYPE_TIMESTAMP:
     case MYSQLI_TYPE_DATETIME:
     case MYSQLI_TYPE_NEWDATE:
         return 'datetime';
@@ -95,16 +126,32 @@ class MySQLDataSource extends DataSource
 	
 	public function start()
 	{
-		$result = $this->connection->query($this->query);
+    $query = $this->bindParams($this->query, $this->params);
+		$result = $this->connection->query($query);
     
     $finfo = $result->fetch_fields();
 
 		$metaData = array("columns"=>array());
 		$numcols = count($finfo);
 		for($i=0; $i<$numcols; $i++) 
-			$metaData["columns"][$finfo[$i]->name] = array(
-				"type"=>$this->map_field_type_to_bind_type($finfo[$i]->type),
+		{
+      $type = $this->map_field_type_to_bind_type($finfo[$i]->type);
+    	$metaData["columns"][$finfo[$i]->name] = array(
+				"type"=>$type,
 			);
+      switch($type)
+      {
+        case "datetime":
+            $metaData["columns"][$finfo[$i]->name]["format"] = "Y-m-d H:i:s";
+          break;
+        case "date":
+            $metaData["columns"][$finfo[$i]->name]["format"] = "Y-m-d";
+          break;
+        case "time":
+            $metaData["columns"][$finfo[$i]->name]["format"] = "H:i:s";
+          break;          
+      }
+    }
 				
 		$this->sendMeta($metaData,$this);
     

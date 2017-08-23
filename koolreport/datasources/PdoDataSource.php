@@ -70,12 +70,12 @@ class PdoDataSource extends DataSource
 			{
 				if(gettype($value)==="array")
 				{
-					$value = '"'.implode('","',$value).'"';
+					$value = "'".implode("','",$value)."'";
 					$query = str_replace($key,$value,$query);
 				}
 				else
 				{
-					$query = str_replace($key,"\"$value\"",$query);
+					$query = str_replace($key,"'$value'",$query);
 				}
 			}
 		}
@@ -104,8 +104,8 @@ class PdoDataSource extends DataSource
 			"bit"=>"number",
 			"boolean"=>"number",
 			"datetime"=>"datetime",
-			"date"=>"datetime",
-			"time"=>"datetime",
+			"date"=>"date",
+			"time"=>"time",
 			"year"=>"datetime",
 		);
 		
@@ -133,9 +133,22 @@ class PdoDataSource extends DataSource
 		for($i=0;$i<$numcols;$i++)
 		{
 			$info = $stm->getColumnMeta($i);
+			$type = $this->guessType($info["native_type"]);
 			$metaData["columns"][$info["name"]] = array(
-				"type"=>$this->guessType($info["native_type"]),
+				"type"=>$type,
 			);
+			switch($type)
+			{
+				case "datetime":
+					$metaData["columns"][$info["name"]]["format"] = "Y-m-d H:i:s";
+					break;
+				case "date":
+					$metaData["columns"][$info["name"]]["format"] = "Y-m-d";
+					break;
+				case "time":
+					$metaData["columns"][$info["name"]]["format"] = "H:i:s";
+					break;
+			}
 		}
 				
 		$this->sendMeta($metaData,$this);

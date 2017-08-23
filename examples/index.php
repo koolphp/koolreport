@@ -107,6 +107,13 @@
                                 <p><a class="btn btn-primary" href="reports/basic/sales_by_country/index.php">View example</a></p>
                             </div>
                         </div>                                                                     
+                        <div class="col-md-4">
+                            <div class="example">
+                                <h4>Table Demo</h4>
+                                <p>This example demonstrates the capability and usage of table</p>
+                                <p><a class="btn btn-primary" href="reports/basic/table_demo/index.php">View example</a></p>
+                            </div>
+                        </div>                                                                     
                     </div>            
                 </div>
                 <div class="bs-docs-section">

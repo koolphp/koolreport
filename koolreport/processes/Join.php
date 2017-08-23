@@ -9,7 +9,7 @@
  */
 
 /* Usage
- * (new Join(array($source1,source2,"id1"=>"id2")))
+ * (new Join(array($source1,source2,array("id1"=>"id2"))))
  * 
  * 
  */

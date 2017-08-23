@@ -66,12 +66,18 @@ class Utility
             break;
             case "datetime":
                 $dateFormat = Utility::get($format,"format","Y-m-d H:i:s");
+            case "date":
+                $dateFormat = isset($dateFormat)?$dateFormat:Utility::get($format,"format","Y-m-d");
+            case "time":
+                $dateFormat = isset($dateFormat)?$dateFormat:Utility::get($format,"format","H:i:s");
                 $displayFormat = Utility::get($format,"displayFormat");
                 if($displayFormat)
                 {
                     return \DateTime::createFromFormat($dateFormat,$value)->format($displayFormat);
                 }
                 break;
+            
+
         }
         return $value;
     }

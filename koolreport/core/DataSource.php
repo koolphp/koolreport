@@ -13,10 +13,12 @@ namespace koolreport\core;
 class DataSource extends Node
 {
 	protected $params;
-	public function __construct($params)
+	protected $report;
+	public function __construct($params,$report)
 	{
 		parent::__construct();
 		$this->params = $params;
+		$this->report = $report;
 		$this->onInit();
 	}
 	protected function onInit()
@@ -26,5 +28,10 @@ class DataSource extends Node
 	public function start()
 	{
 		//Start pushing data
+	}
+
+	public function getReport()
+	{
+		return $this->report;
 	}
 }

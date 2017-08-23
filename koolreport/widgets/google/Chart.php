@@ -76,12 +76,12 @@ class Chart extends Widget
         );
         return isset($map[$type])?$map[$type]:"string";
     }	
-    protected function prepareData()
+
+    protected function getColumnSettings()
     {
         //If there is the user input columns then parse them to columns from user input
         //If the user does not input collumns then take the default by looking at data
         // Then mixed with default in meta
-        
         $meta = $this->dataStore->meta();
         $columns=array();
         if($this->columns!=null)
@@ -108,9 +108,14 @@ class Chart extends Widget
                 $columns[$ckey] = $meta["columns"][$ckey];
             }
         }
-        
+        return $columns;
+    }
+
+    protected function prepareData()
+    {
         //Now we have $columns contain all real columns settings
-        
+
+        $columns = $this->getColumnSettings();        
         
         $data = array();
         $header = array();

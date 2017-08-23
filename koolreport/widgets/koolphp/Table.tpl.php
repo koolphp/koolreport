@@ -12,25 +12,68 @@
 	$trClass = Utility::get($this->cssClass,"tr");
 	$tdClass = Utility::get($this->cssClass,"td");
 	$thClass = Utility::get($this->cssClass,"th");
+	$tfClass = Utility::get($this->cssClass,"tf");
 ?>
 <table <?php echo ($tableCss)?" class='table $tableCss'":"class='table'"; ?>>
+	<?php
+	if($this->showHeader)
+	{
+	?>
 	<thead>
 		<tr>
 		<?php 
 		foreach($showColumnKeys as $cKey)
 		{
 		    $label = Utility::get($meta["columns"][$cKey],"label",$cKey);
-			$align = Utility::get($meta["columns"][$cKey],"align",null);
+			$cssStyle = Utility::get($meta["columns"][$cKey],"cssStyle",null);
+			$thStyle = is_string($cssStyle)?$cssStyle:Utility::get($cssStyle,"th");
 			$class = "";
 			if($thClass)
 			{
 				$class = (gettype($thClass)=="string")?$thClass:$thClass($cKey);
 			}
-			echo "<th ".(($align)?"style='text-align:$align'":"")." class='$class'>$label</th>";
+			echo "<th ".(($thStyle)?"style='$thStyle'":"")." class='$class'>$label</th>";
 		}
 		?>
 		</tr>
 	</thead>
+	<?php	
+	}
+	?>
+	<?php
+	if($this->showFooter!==null)
+	{
+	?>
+	<tfoot <?php echo ($this->showFooter==="top")?"style='display:table-row-group'":""; ?>>
+		<tr>
+		<?php
+		foreach($showColumnKeys as $cKey)
+		{
+			$cssStyle = Utility::get($meta["columns"][$cKey],"cssStyle",null);
+			$tfStyle = is_string($cssStyle)?$cssStyle:Utility::get($cssStyle,"tf");
+		?>
+			<td <?php if($tfClass){echo " class='".((gettype($tfClass)=="string")?$tfClass:$tfClass($cKey))."'";} ?> <?php echo ($tfStyle)?"style='$tfStyle'":""; ?> >
+				<?php 
+					$footerValue = isset($this->footer[$cKey])?Utility::format($this->footer[$cKey],$meta["columns"][$cKey]):"";
+					$footerText = Utility::get($meta["columns"][$cKey],"footerText");
+					if($footerText!==null)
+					{
+						echo str_replace("@value",$footerValue,$footerText);
+					}
+					else
+					{
+						echo $footerValue;
+					}
+				?>
+			</td>	
+		<?php	
+		}
+		?>
+		</tr>
+	</tfoot>
+	<?php	
+	}
+	?>
 	<tbody>
 		<?php
         $this->dataStore->popStart(); 
@@ -42,15 +85,16 @@
 			<?php
 			foreach($showColumnKeys as $cKey)
 			{
-				$align = Utility::get($meta["columns"][$cKey],"align",null);
+				$cssStyle = Utility::get($meta["columns"][$cKey],"cssStyle",null);
+				$tdStyle = is_string($cssStyle)?$cssStyle:Utility::get($cssStyle,"td");
 
 				if($span && isset($span[$i][$cKey]))
 				{
 					if($span[$i][$cKey]>0)
 					{
 						?>
-							<td <?php echo ($align)?"style='text-align:$align'":""; ?> <?php if($tdClass){echo "class='".((gettype($tdClass)=="string")?$tdClass:$tdClass($row,$cKey))."'";} ?> rowspan="<?php echo $span[$i][$cKey]; ?>">
-								<?php echo Utility::format($row[$cKey],$meta["columns"][$cKey]);?>
+							<td <?php echo ($tdStyle)?"style='$tdStyle'":""; ?> <?php if($tdClass){echo "class='".((gettype($tdClass)=="string")?$tdClass:$tdClass($row,$cKey))."'";} ?> rowspan="<?php echo $span[$i][$cKey]; ?>">
+								<?php echo Utility::format(($cKey!=="#")?$row[$cKey]:($i+$meta["columns"][$cKey]["start"]),$meta["columns"][$cKey]);?>
 							</td>
 						<?php						
 					}
@@ -58,8 +102,8 @@
 				else
 				{
 					?>
-						<td <?php echo ($align)?"style='text-align:$align'":""; ?> <?php if($tdClass){echo " class='".((gettype($tdClass)=="string")?$tdClass:$tdClass($row,$cKey))."'";} ?>>
-							<?php echo Utility::format($row[$cKey],$meta["columns"][$cKey]);?>
+						<td <?php echo ($tdStyle)?"style='$tdStyle'":""; ?> <?php if($tdClass){echo " class='".((gettype($tdClass)=="string")?$tdClass:$tdClass($row,$cKey))."'";} ?>>
+							<?php echo Utility::format(($cKey!=="#")?$row[$cKey]:($i+$meta["columns"][$cKey]["start"]),$meta["columns"][$cKey]);?>
 						</td>
 					<?php					
 				}								

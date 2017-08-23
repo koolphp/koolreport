@@ -33,27 +33,34 @@ class Group extends Process
 	protected $gData;
 	protected $cData;//For average
 
+
+	protected function parseGroups($params)
+	{
+		if($params==null) 
+			return array();
+		if(is_array($params))
+			return $params;
+		if(is_string($params))
+		{
+			$list = explode(",",$params);
+			foreach($list as &$item)
+			{
+				$item = trim($item);
+			}
+			return $list;
+		}
+		return array();
+	}
+
 	protected  function onInit()
 	{
-		$list = Utility::get($this->params,"by");
-		$this->groupColumns = ($list)?explode(",",$list):array();
+		$this->groupColumns = $this->parseGroups(Utility::get($this->params,"by"));		
+		$this->sumColumns = $this->parseGroups(Utility::get($this->params,"sum"));
+		$this->countColumns = $this->parseGroups(Utility::get($this->params,"count"));
+		$this->avgColumns = $this->parseGroups(Utility::get($this->params,"avg"));
+		$this->minColumns = $this->parseGroups(Utility::get($this->params,"min"));
+		$this->maxColumns = $this->parseGroups(Utility::get($this->params,"max"));
 
-		$list = Utility::get($this->params,"sum");
-		$this->sumColumns = ($list)?explode(",",$list):array();
-
-		$list = Utility::get($this->params,"count");
-		$this->countColumns = ($list)?explode(",",$list):array();
-
-		$list = Utility::get($this->params,"avg");
-		$this->avgColumns = ($list)?explode(",",$list):array();
-			
-
-		$list = Utility::get($this->params,"min");
-		$this->minColumns = ($list)?explode(",",$list):array();
-
-		$list = Utility::get($this->params,"max");
-		$this->maxColumns = ($list)?explode(",",$list):array();
-		
 		$this->sort = Utility::get($this->params,"sort",true);
 		
 	}

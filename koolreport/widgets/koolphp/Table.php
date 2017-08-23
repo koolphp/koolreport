@@ -30,6 +30,10 @@ class Table extends Widget
 	protected $excludedColumns;
 	protected $formatFunction;
 	
+	protected $showFooter;
+	protected $showHeader;
+	protected $footer;
+
 	protected function onInit()
 	{
 		$this->dataStore = Utility::get($this->params,"dataStore",null);
@@ -41,6 +45,9 @@ class Table extends Widget
 		$this->removeDuplicate = Utility::get($this->params,"removeDuplicate",array());
 		$this->cssClass = Utility::get($this->params,"cssClass",array());
 		$this->excludedColumns = Utility::get($this->params,"excludedColumns",array());
+
+		$this->showFooter = Utility::get($this->params,"showFooter");
+		$this->showHeader = Utility::get($this->params,"showHeader",true);
 	}
 
 	public function render()
@@ -63,6 +70,7 @@ class Table extends Widget
         {
             foreach($this->columns as $cKey=>$cValue)
             {
+
 				if($cKey==="{others}")
 				{
 					$this->dataStore->popStart();
@@ -81,6 +89,15 @@ class Table extends Widget
 				{
 					if(gettype($cValue)=="array")
 					{
+						if($cKey==="#")
+						{
+							$meta["columns"][$cKey] = array(
+								"type"=>"number",
+								"label"=>"#",
+								"start"=>1,
+							);
+						}
+
 						$meta["columns"][$cKey] =  array_merge($meta["columns"][$cKey],$cValue);                
 						if(!in_array($cKey,$showColumnKeys))
 						{
@@ -89,6 +106,14 @@ class Table extends Widget
 					}
 					else
 					{
+						if($cValue==="#")
+						{
+							$meta["columns"][$cValue] = array(
+								"type"=>"number",
+								"label"=>"#",
+								"start"=>1,
+							);
+						}
 						if(!in_array($cValue,$showColumnKeys))
 						{
 							array_push($showColumnKeys,$cValue);
@@ -159,6 +184,73 @@ class Table extends Widget
 					}
 				}
 				array_push($span,$sRow);
+			}
+		}
+
+		if($this->showFooter)
+		{
+			$this->footer = array();
+			foreach($showColumnKeys as $cKey)
+			{
+				$storage[$cKey]=null;
+			}
+			
+			$this->dataStore->popStart();
+			while($row = $this->dataStore->pop())
+			{
+				foreach($showColumnKeys as $cKey)
+				{
+					$method = Utility::get($meta["columns"][$cKey],"footer");
+					if($method!==null)
+					{
+						switch(strtolower($method))
+						{
+							case "sum":
+							case "avg":
+								if($storage[$cKey]===null)
+								{
+									$storage[$cKey] = 0;
+								}
+								$storage[$cKey]+=$row[$cKey];
+							break;
+							case "min":
+								if($storage[$cKey]===null)
+								{
+									$storage[$cKey] = INF;
+								}
+								if($storage[$cKey]>$row[$cKey])
+								{
+									$storage[$cKey]=$row[$cKey];
+								}
+							break;
+							case "max":
+								if($storage[$cKey]===null)
+								{
+									$storage[$cKey] = -INF;
+								}
+								if($storage[$cKey]<$row[$cKey])
+								{
+									$storage[$cKey]=$row[$cKey];
+								}
+							break;
+						}
+					}
+				}
+			}
+			foreach($showColumnKeys as $cKey)
+			{
+				$method = Utility::get($meta["columns"][$cKey],"footer");
+				switch(strtolower($method))
+				{
+					case "sum":
+					case "min":
+					case "max":
+						$this->footer[$cKey] = $storage[$cKey];	
+					break;
+					case "avg":
+						$this->footer[$cKey] = $storage[$cKey]/$this->dataStore->countData();
+					break;
+				}
 			}
 		}
 		

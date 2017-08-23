@@ -90,6 +90,9 @@ class CSVDataSource extends DataSource
         $this->next(array_combine($columnNames, $row), $this);
       }
     }
+    else {
+      echo 'fopen failed<br>';
+    }
     $this->endInput(null);
 	}
 }

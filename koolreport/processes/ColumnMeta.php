@@ -34,7 +34,7 @@ class ColumnMeta extends Process
   protected $nameMap = array();
 	
 	protected function onInit()
-	{
+	{    
     if (is_array($this->params))
       $this->override = Utility::get($this->params,"{override}",false);
 	}

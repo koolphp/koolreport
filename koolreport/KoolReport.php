@@ -190,7 +190,7 @@ class KoolReport extends Base
 		}
 		$dataSourceClass = Utility::get($dataSourceSetting,"class","\koolreport\datasources\PdoDataSource");
 		$dataSourceClass = str_replace("/","\\",$dataSourceClass);
-		$dataSource = new $dataSourceClass($dataSourceSetting);
+		$dataSource = new $dataSourceClass($dataSourceSetting,$this);
 		array_push($this->dataSources,$dataSource);
 		return $dataSource;
 	}

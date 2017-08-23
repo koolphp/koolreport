@@ -146,5 +146,12 @@ class Node extends Base
 		return $metaData;		
 	}
 	
-	
+	public function getReport()
+	{
+		if(isset($this->sources[0]))
+		{	
+			return $this->sources[0]->getReport();
+		}
+		return null;
+	}	
 }

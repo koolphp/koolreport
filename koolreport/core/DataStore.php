@@ -32,7 +32,7 @@ class DataStore extends Node
 		
 	}
 
-	public function onInput($data)
+	protected function onInput($data)
 	{
 		array_push($this->dataset,$data);
 	}
@@ -51,6 +51,7 @@ class DataStore extends Node
     {
         // Start poping data, reset the index  to -1
         $this->index = -1;
+		return $this;
     }
     public function getPopIndex()
     {
@@ -61,5 +62,10 @@ class DataStore extends Node
     {
         $this->index++;
         return Utility::get($this->dataset,$this->index);
-    }	
+	}
+	
+	public function getReport()
+	{
+		return $this->report;
+	}
 }

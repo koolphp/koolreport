@@ -1,3 +1,18 @@
+# Version 1.47.3
+    1. New `AggregatedColumn` process
+    2. Table is now able to show footer
+    3. Make footer show on top with `showFooter` property
+    4. Add `footerText` property
+    5. Add `showHeader` to `Table` widget
+    6. Ability to set `cssStyle` for each columns. `cssStyle` can be string or array containing components `td`,`th` and `tf`.
+    7. Improve `DataSource` class
+    8. New process `Transpose` to tranpose column and row of data flow
+    9. Fix double quote issue of `PDODataSource`
+    10. The Node now has getReport() function which return the report.
+    11.Fix the Timeline google charts
+    12. Fix the Group process by removing the space in column name 
+    13. Add params() function to MySQLDataSource and MSSQLDataSource 
+
 # Version 1.34.9
     1. Fixed Fix Google Chart due to change in core library.
     2. Add load() function for ArrayDataSource.
