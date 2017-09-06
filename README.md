@@ -26,7 +26,7 @@ You can either clone our project or download directly from [KoolReport Download]
 If you use `composer`, you can run following command to install the latest version
 
 ```
-composer require koolphp/koolreport
+$ composer require koolphp/koolreport
 ```
 
 ## What's included
