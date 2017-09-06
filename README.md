@@ -23,6 +23,12 @@ KoolReport is an intuitive and flexible open-source PHP reporting framework for 
 
 You can either clone our project or download directly from [KoolReport Download](https://www.koolreport.com/getting-started#download).
 
+If you use `composer`, you can run following command to install the latest version
+
+```
+composer require koolphp/koolreport
+```
+
 ## What's included
 
 ```
@@ -78,7 +84,7 @@ koolreport/
 └── KoolReport.php
 ```
 ## System Requirement
-1. PHP 5.3.x or higher
+1. PHP 5.4 or higher
 
 # Installation
 Copy the folder `koolreport` into your project and it is ready to run. You can start creating report.
@@ -238,7 +244,6 @@ Vision are big, we take the first step. Join us!
 Below are the things we are going to do:
 
 1. Evolve the structure of KoolReport and its functionalities
-2. Export to report to PDF and other formats
 3. Build market to push
     1. Connection to various datasources
     2. Data processing focus on: data cleaning, data analytics, data mining techniques
