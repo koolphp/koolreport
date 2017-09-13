@@ -221,8 +221,10 @@ The KoolReport is licensed under MIT License.
 * [Export](https://www.koolreport.com/packages/export): Export your report to PDF, JPG, PNG and other formats [__$19.00__]
 * [Excel](https://www.koolreport.com/packages/excel): Import and export data to Excel [__Free__]
 * [MongoDB](https://www.koolreport.com/packages/mongodb): Build report from MongoDB [__Free__]
-* [Morris Chart](https://www.koolreport.com/packages/morris_chart): Use morris charts in your report [__Free__]
-* [Inputs](https://www.koolreport.com/packages/inputs): Help to build dynamic reports/dashboard [__Free__]
+* [Morris Chart](https://www.koolreport.com/packages/morris_chart): Use morris charts in your report [__$5__]
+* [Inputs](https://www.koolreport.com/packages/inputs): Help to build dynamic reports/dashboard [__$9__]
+* [Cache](https://www.koolreport.com/packages/cache): Drive the speed and responsiveness of your report to the max [__$9__]
+
 
 # Our vision
 
