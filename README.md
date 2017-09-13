@@ -225,6 +225,19 @@ The KoolReport is licensed under MIT License.
 * [Inputs](https://www.koolreport.com/packages/inputs): Help to build dynamic reports/dashboard [__$9__]
 * [Cache](https://www.koolreport.com/packages/cache): Drive the speed and responsiveness of your report to the max [__$9__]
 
+# KoolReport Pro
+
+[KoolReport Pro](https://www.koolreport.com/get-koolreport-pro) is a special version of KoolReport. It includes latest KoolReport version plus all available advanced packages from KoolPHP Inc. It costs __$89__ for Developer License and __$169__ for Enterprise License. The licenses come with following benefits:
+
+1. __Life-time license__, means that you buy once and use forever.
+2. Deploying on __unlimited servers or projects__.
+3. __Royal free__ (no extra charged) when you delivered the KoolReport Pro with your commercial product.
+4. __1 year subscription__ to get free upgrades, bug fixed and new releaed packages regardless price.
+5. __1 year priority support__ on forum, fatest response time by our expert.
+6. Enterprise License allows __unlimitted number of developers__ in organization.
+7. __50% discount__ on the next subscription.
+
+If you have further inquiry on this special version, please go to our [forum](https://www.koolreport.com/forum/topics) or email us at [support@koolreport.com](mailto:support@koolreport.com). We will get back to you in no time.
 
 # Our vision
 
