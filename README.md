@@ -232,12 +232,17 @@ The KoolReport is licensed under MIT License.
 1. __Life-time license__, means that you buy once and use forever.
 2. Deploying on __unlimited servers or projects__.
 3. __Royal free__ (no extra charged) when you delivered the KoolReport Pro with your commercial product.
-4. __1 year subscription__ to get free upgrades, bug fixed and new releaed packages regardless price.
-5. __1 year priority support__ on forum, fatest response time by our expert.
+4. __1 year subscription__ to get free upgrades, bugs fixed and new released packages regardless price.
+5. __1 year priority support__ on forum. Your post will be marked with star and got fatest response by our expert.
 6. Enterprise License allows __unlimitted number of developers__ in organization.
 7. __50% discount__ on the next subscription.
 
 If you have further inquiry on this special version, please go to our [forum](https://www.koolreport.com/forum/topics) or email us at [support@koolreport.com](mailto:support@koolreport.com). We will get back to you in no time.
+
+# Some thoughts
+
+Please consider the purchase of extended packages or subscription as a donation to the project. In exchange, we would like to send you some gifts which are package codes or services. __We are helping each others.__ We love this KoolReport very much and want it to be alive. __Being alive means that the code continues to evolve, more solutions are added, and everything is back with professional support.__ So please support us!
+
 
 # Our vision
 
