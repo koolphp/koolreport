@@ -15,7 +15,7 @@ trait Bootstrap
 {
     public function __constructBootstrap()
     {
-        $this->registerEvent('OnBeforeRender',function(){
+        $this->registerEvent('OnResourceInit',function(){
             $bootstrapAssetUrl = $this->publishAssetFolder(dirname(__FILE__)."/bootstrap");
             $jqueryAssetUrl = $this->publishAssetFolder(dirname(__FILE__)."/jquery");
             $this->getResourceManager()->addCssFile($bootstrapAssetUrl."/css/bootstrap.min.css");

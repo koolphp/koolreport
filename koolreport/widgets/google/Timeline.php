@@ -62,24 +62,6 @@ class Timeline extends Chart
 
 		$columns = $this->getColumnSettings();
 
-		// $columnByRoles = array(
-		// 	"rowLabel"=>null,
-		// 	"barLabel"=>null,
-		// 	"tooltip"=>null,
-		// 	"start"=>null,
-		// 	"end"=>null,
-		// );
-
-		// foreach($columns as $cKey=>$cSettings)
-		// {
-		// 	$role = Utility::get($cSettings,"role",null);
-		// 	if(isset($columnByRoles[$role])===false)
-		// 	{
-		// 		$columnByRoles[$role] =$cSettings;
-		// 		$columnByRoles[$role]["name"] = $cKey;
-		// 	}
-		// }
-
 		//Update options
 		$options = $this->options;
 		if($this->title)

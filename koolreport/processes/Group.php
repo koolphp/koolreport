@@ -54,15 +54,16 @@ class Group extends Process
 
 	protected  function onInit()
 	{
-		$this->groupColumns = $this->parseGroups(Utility::get($this->params,"by"));		
+		$this->groupColumns = $this->parseGroups(Utility::get($this->params,"by"));
 		$this->sumColumns = $this->parseGroups(Utility::get($this->params,"sum"));
 		$this->countColumns = $this->parseGroups(Utility::get($this->params,"count"));
 		$this->avgColumns = $this->parseGroups(Utility::get($this->params,"avg"));
 		$this->minColumns = $this->parseGroups(Utility::get($this->params,"min"));
 		$this->maxColumns = $this->parseGroups(Utility::get($this->params,"max"));
-
-		$this->sort = Utility::get($this->params,"sort",true);
 		
+		$this->sort = Utility::get($this->params,"sort",true);
+		$this->gData = array();
+		$this->cData = array();
 	}
 	
 	protected function onMetaReceived($metaData)
@@ -73,6 +74,7 @@ class Group extends Process
 		}
 		foreach($this->sumColumns as $column)
 		{
+
 			$metaData["columns"][$column]["method"] = "sum";
 		}
 		foreach($this->countColumns as $column)
@@ -93,12 +95,6 @@ class Group extends Process
 			$metaData["columns"][$column]["method"] = "max";
 		}
 		return $metaData;
-	}
-	
-	protected function onInputStart()
-	{
-		$this->gData = array();
-		$this->cData = array();
 	}
 
 	protected function onInput($row)

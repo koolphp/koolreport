@@ -15,17 +15,8 @@ class TreeMap extends Chart
 {
 	protected function loadLibrary()
 	{
-		// $this->template("LoadLibrary",array(
-			// "chartId"=>$this->chartId,
-			// "zone"=>"current",
-			// "packages"=>array("treemap")
-		// ));
-    $this->getReport()->getResourceManager()
-      ->addScriptOnBegin("google.charts.load('current', {'packages':['treemap']})");
+		$this->getReport()->getResourceManager()
+		->addScriptOnBegin("google.charts.load('current', {'packages':['treemap']})");
 	}	
-	static function create($params)
-	{
-		$component = new TreeMap($params);
-		$component->render();
-	}
+
 }

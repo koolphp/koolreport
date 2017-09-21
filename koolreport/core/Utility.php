@@ -19,7 +19,32 @@ class Utility
         Utility::$_uniqueId++;
         return uniqid().Utility::$_uniqueId;
     }
+
+    static function guessType($value)
+	{
+		$map = array(
+			"float"=>"number",
+			"double"=>"number",
+			"int"=>"number",
+			"integer"=>"number",
+			"bool"=>"number",
+			"numeric"=>"number",
+			"string"=>"string",
+		);
+
+		$type = strtolower(gettype($value));
+		foreach($map as $key=>$value)
+		{
+			if(strpos($type,$key)!==false)
+			{
+				return $value;
+			}			
+		}
+		return "unknown";
+	}
     
+
+
     static function recurse_copy($src,$dst) { 
         $dir = opendir($src); 
         @mkdir($dst); 

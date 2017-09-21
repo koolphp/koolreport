@@ -15,17 +15,8 @@ class WordTree extends Chart
 {
 	protected function loadLibrary()
 	{
-		// $this->template("LoadLibrary",array(
-			// "chartId"=>$this->chartId,
-			// "zone"=>"current",
-			// "packages"=>array("wordtree")
-		// ));
-    $this->getReport()->getResourceManager()
-      ->addScriptOnBegin("google.charts.load('current', {'packages':['wordtree']})");
+		$this->getReport()->getResourceManager()
+		->addScriptOnBegin("google.charts.load('current', {'packages':['wordtree']})");
 	}	
-	static function create($params)
-	{
-		$component = new WordTree($params);
-		$component->render();
-	}
+
 }

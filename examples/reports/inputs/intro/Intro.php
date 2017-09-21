@@ -20,7 +20,9 @@ class Intro extends KoolReport
             "radioList"=>"",
             "checkBoxList"=>array(),
             "startDatePicker"=>date("Y-m-d 00:00:00"),
-            "endDatePicker"=>date("Y-m-d 23:59:59")
+            "endDatePicker"=>date("Y-m-d 23:59:59"),
+            "rangeSliderOne"=>array(50),
+            "rangeSliderTwo"=>array(20,80),
         );
     }
 
@@ -35,6 +37,12 @@ class Intro extends KoolReport
             "checkBoxList",
             "startDatePicker",
             "endDatePicker",
+            "singleSelect2",
+            "multipleSelect2",
+            "singleBSelect",
+            "multipleBSelect",
+            "rangeSliderOne",
+            "rangeSliderTwo",
         );
     }
 

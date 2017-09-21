@@ -15,7 +15,7 @@ trait jQuery
 {
     public function __constructjQuery()
     {
-        $this->registerEvent('OnBeforeRender',function(){
+        $this->registerEvent('OnResourceInit',function(){
             $publicAssetUrl = $this->publishAssetFolder(dirname(__FILE__)."/jquery");
             $this->getResourceManager()->addScriptFileOnBegin($publicAssetUrl."/jquery.min.js");
         });

@@ -18,6 +18,53 @@
     <script type="text/javascript" src="assets/js/docs.min.js"></script>
 
 </head>
+<style type="text/css">
+    a.pk
+    {
+        color:#333;
+        text-decoration:none;
+    }
+    div.thumbnail:hover
+    {
+        box-shadow: 0 6px 10px 0 rgba(0,0,0,.14), 0 1px 18px 0 rgba(0,0,0,.12), 0 3px 5px -1px rgba(0,0,0,.2);
+    }
+    div.thumbnail div.img img
+    {
+        width:200px;
+    }
+    div.thumbnail div.img
+    {
+        text-align:center;
+        padding-top:15px;
+    }    
+    div.thumbnail span.price
+    {
+        margin-top:2px;
+        font-weight:bold;
+    }
+    div.thumbnail .pk-info
+    {
+        text-align:center;
+    }
+    div.thumbnail .pk-extra
+    {
+        color:#777;
+        font-size:12px;
+        font-weight:bold;
+    }
+    div.thumbnail .pk-extra .author-name
+    {
+        margin-bottom:3px;
+    }
+    div.thumbnail .download
+    {
+        color:#777;
+        font-weight:normal;
+    } 
+    div.thumbnail {
+        background-color: #fffeef;
+    }
+</style>
 <body>
     <div id="top" class="bs-docs-nav navbar-static-top"></div>
 
@@ -36,7 +83,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li id="getstarted"><a href="https://www.koolreport.com/getting-started"><i class="fa fa-bolt"></i> Getting Started</a></li>
-            <li id="demo"><a href="https://www.koolreport.com/examples">Online Demos</a></li>  
+            <li id="demo"><a href="https://www.koolreport.com/examples">Online Examples</a></li>  
           	<li class="dropdown">
           		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Documentation <span class="caret"></span></a>
           		 <ul class="dropdown-menu">
@@ -68,64 +115,128 @@
         <div class="row">
             <div class="col-md-9">
 
-
                 <div class="bs-docs-section">
                     <h1 id="basic">Basic</h1>
                     <div class="row">
+                    
                         <div class="col-md-4">
-                            <div class="example">
-                                <h4>Sales By Customer</h4>
-                                <p>Get the top ten customers who pay the most.</p>
-                                <p><a class="btn btn-primary" href="reports/basic/sales_by_customer/index.php">View example</a></p>
-                            </div>
+                            <a href="reports/basic/sales_by_customer/index.php" class="pk">
+                                <div class="thumbnail">
+                                    <div class="img">
+                                        <img src="assets/images/basic1.png" alt="...">
+                                    </div>
+                                    <div class="caption">
+                                        <div class="pk-info">
+                                            <h3><strong>Sales By Customer</strong></h3>
+                                            <p>Get the top ten customers who pay the most.</p>
+                                        </div>
+                                        
+                                    </div>                        
+                                </div>
+                            </a>
                         </div>
+                        
                         <div class="col-md-4">
-                            <div class="example">
-                                <h4>Sakila Rental Report</h4>
-                                <p>Get the sale report by month.</p>
-                                <p><a class="btn btn-primary" href="reports/basic/sakila_rental/index.php">View example</a></p>
-                            </div>
+                            <a href="reports/basic/sakila_rental/index.php" class="pk">
+                                <div class="thumbnail">
+                                    <div class="img">
+                                        <img src="assets/images/basic2.png" alt="...">
+                                    </div>
+                                    <div class="caption">
+                                        <div class="pk-info">
+                                            <h3><strong>Sakila Rental Report</strong></h3>
+                                            <p>Get the sale report by month.</p>
+                                        </div>
+                                    </div>                        
+                                </div>
+                            </a>
                         </div>
+                        
                         <div class="col-md-4">
-                            <div class="example">
-                                <h4>Sakila Rental Report With Database</h4>
-                                <p>Connect to Sakila database using PdoDataSource</p>
-                                <p><a class="btn btn-primary" href="reports/basic/database_connection/index.php">View example</a></p>
-                            </div>
-                        </div>   
+                            <a href="reports/basic/database_connection/index.php" class="pk">
+                                <div class="thumbnail">
+                                    <div class="img">
+                                        <img src="assets/images/basic3.png" alt="...">
+                                    </div>
+                                    <div class="caption">
+                                        <div class="pk-info">
+                                            <h3><strong>Sakila Rental Report With Database</strong></h3>
+                                            <p>Connect to Sakila database using PdoDataSource.</p>
+                                        </div>
+                                    </div>                        
+                                </div>
+                            </a>
+                        </div> 
+                        
                         <div class="col-md-4">
-                            <div class="example">
-                                <h4>Format value in column</h4>
-                                <p>Show how to format value in table's column</p>
-                                <p><a class="btn btn-primary" href="reports/basic/format_value/index.php">View example</a></p>
-                            </div>
-                        </div>                                                                     
+                            <a href="reports/basic/database_connection/index.php" class="pk">
+                                <div class="thumbnail">
+                                    <div class="img">
+                                        <img src="assets/images/basic6.png" alt="...">
+                                    </div>
+                                    <div class="caption">
+                                        <div class="pk-info">
+                                            <h3><strong>Format value in column</strong></h3>
+                                            <p>Show how to format value in table's column.</p>
+                                        </div>
+                                    </div>                        
+                                </div>
+                            </a>
+                        </div>                                                                 
                         <div class="col-md-4">
-                            <div class="example">
-                                <h4>Sale By Country with GeoChart</h4>
-                                <p>Use Geochart in report</p>
-                                <p><a class="btn btn-primary" href="reports/basic/sales_by_country/index.php">View example</a></p>
-                            </div>
-                        </div>                                                                     
+                            <a href="reports/basic/sales_by_country/index.php" class="pk">
+                                <div class="thumbnail">
+                                    <div class="img">
+                                        <img src="assets/images/basic4.png" alt="...">
+                                    </div>
+                                    <div class="caption">
+                                        <div class="pk-info">
+                                            <h3><strong>Sale By Country with GeoChart</strong></h3>
+                                            <p>Use Geochart in report.</p>
+                                        </div>
+                                    </div>                        
+                                </div>
+                            </a>
+                        </div>
+                        
                         <div class="col-md-4">
-                            <div class="example">
-                                <h4>Table Demo</h4>
-                                <p>This example demonstrates the capability and usage of table</p>
-                                <p><a class="btn btn-primary" href="reports/basic/table_demo/index.php">View example</a></p>
-                            </div>
-                        </div>                                                                     
+                            <a href="reports/basic/table_demo/index.php" class="pk">
+                                <div class="thumbnail">
+                                    <div class="img">
+                                        <img src="assets/images/basic5.png" alt="...">
+                                    </div>
+                                    <div class="caption">
+                                        <div class="pk-info">
+                                            <h3><strong>Table Demo</strong></h3>
+                                            <p>This example demonstrates the capability and usage of table.</p>
+                                        </div>
+                                    </div>                        
+                                </div>
+                            </a>
+                        </div>
+                        
                     </div>            
                 </div>
                 <div class="bs-docs-section">
                     <h1 id="advanced">Advanced examples</h1>
                     <div class="row">
+                    
                         <div class="col-md-4">
-                            <div class="example">
-                                <h4>Order List</h4>
-                                <p>View order of a customer, export report</p>
-                                <p><a class="btn btn-primary" href="https://www.koolreport.com/examples/reports/advanced/input_and_export/index.php">View example</a></p>
-                            </div>
-                        </div>                                                                                            
+                            <a href="reports/advanced/input_and_export/index.php" class="pk">
+                                <div class="thumbnail">
+                                    <div class="img">
+                                        <img src="assets/images/advance1.png" alt="...">
+                                    </div>
+                                    <div class="caption">
+                                        <div class="pk-info">
+                                            <h3><strong>Order List</strong></h3>
+                                            <p>View order of a customer, export report.</p>
+                                        </div>
+                                    </div>                        
+                                </div>
+                            </a>
+                        </div>
+                        
                     </div>
                 </div>
 
@@ -135,17 +246,23 @@
                         Get the <code>Export</code> package <a href="https://www.koolreport.com/packages/export">in here</a>.
                     </p>                    
                     <div class="row">
+                    
                         <div class="col-md-4">
-                            <div class="example">
-                                <h4>Export Sakila Rental Report</h4>
-                                <p>Export report to PDF</p>
-                                <p><a class="btn btn-primary" href="reports/export/sakila_rental/index.php">View example</a></p>
-                                <p><i>
-                                    You may view this example
-                                    <a href="https://www.koolreport.com/examples/reports/export/sakila_rental/index.php">online</a>.
-                                </i></p>
-                            </div>
+                            <a href="reports/export/sakila_rental/index.php" class="pk">
+                                <div class="thumbnail">
+                                    <div class="img">
+                                        <img src="assets/images/export1.png" alt="...">
+                                    </div>
+                                    <div class="caption">
+                                        <div class="pk-info">
+                                            <h3><strong>Export Sakila Rental Report</strong></h3>
+                                            <p>Export report to PDF.</p>
+                                        </div>
+                                    </div>                        
+                                </div>
+                            </a>
                         </div>
+                        
                     </div>            
                 </div>
 
@@ -156,43 +273,56 @@
                         Get the <code>Cube</code> package <a href="https://www.koolreport.com/packages/cube">in here</a>.
                     </p>
                     <div class="row">
+                    
                         <div class="col-md-4">
-                            <div class="example">
-                                <h4>Sales By Quarter</h4>
-                                <p>Get sales by the quarters.</p>
-                                
-                                <p><a class="btn btn-primary" href="reports/cube/sales_by_quarters/index.php">View example</a></p>
-                                <p><i>
-                                    You may view this example
-                                    <a href="https://www.koolreport.com/examples/reports/cube/sales_by_quarters/index.php">online</a>.
-                                </i></p>
-                            </div>
+                            <a href="reports/cube/sales_by_quarters/index.php" class="pk">
+                              <div class="thumbnail">
+                                  <div class="img">
+                                      <img src="assets/images/cube1.png" alt="...">
+                                  </div>
+                                  <div class="caption">
+                                      <div class="pk-info">
+                                          <h3><strong>Sales by Quarters</strong></h3>
+                                          <p>Get sales by the quarters.</p>
+                                      </div>
+                                  </div>                        
+                              </div>
+                            </a>
                         </div>
+                        
                         <div class="col-md-4">
-                            <div class="example">
-                                <h4>Sales By Months and Years</h4>
-                                <p>Get sales by months and years.</p>
-                                <p><a class="btn btn-primary" href="reports/cube/sales_by_months_years/index.php">View example</a></p>
-                                <p><i>
-                                    You may view this example
-                                    <a href="https://www.koolreport.com/examples/reports/cube/sales_by_months_years/index.php">online</a>.
-                                </i></p>
-                            </div>
+                            <a href="reports/cube/sales_by_months_years/index.php" class="pk">
+                              <div class="thumbnail">
+                                  <div class="img">
+                                      <img src="assets/images/cube2.png" alt="...">
+                                  </div>
+                                  <div class="caption">
+                                      <div class="pk-info">
+                                          <h3><strong>Sales by Months and Years</strong></h3>
+                                          <p>Get sales by months and years.</p>
+                                      </div>
+                                  </div>                        
+                              </div>
+                            </a>
                         </div>
+                        
                         <div class="col-md-4">
-                            <div class="example">
-                                <h4>Sales By Customers And Products</h4>
-                                <p>Get sales by customers and products.</p>
-                                <p><a class="btn btn-primary" href="reports/cube/sales_by_customers_products/index.php">View example</a></p>
-                                <p><i>
-                                    You may view this example
-                                    <a href="https://www.koolreport.com/examples/reports/cube/sales_by_customers_products/index.php">online</a>.
-                                </i></p>
-                            </div>
+                            <a href="reports/cube/sales_by_customers_products/index.php" class="pk">
+                              <div class="thumbnail">
+                                  <div class="img">
+                                      <img src="assets/images/cube3.png" alt="...">
+                                  </div>
+                                  <div class="caption">
+                                      <div class="pk-info">
+                                          <h3><strong>Sales by Customers And Products</strong></h3>
+                                          <p>Get sales by customers and products.</p>
+                                      </div>
+                                  </div>                        
+                              </div>
+                            </a>
                         </div>
                         
                     </div>
-                                
                 </div> 
 
                 <div class="bs-docs-section">
@@ -201,72 +331,125 @@
                         Get the <code>Pivot</code> package <a href="https://www.koolreport.com/packages/pivot">in here</a>.
                     </p>
                     <div class="row">
+                    
                         <div class="col-md-4">
-                            <div class="example">
-                                <h4>Customers - Categories - Products Pivot</h4>
-                                <p>Get pivot table for customers, categories and products.</p>
-                                <p><a class="btn btn-primary" href="reports/pivot/customers_categories_products/index.php">View example</a></p>
-                                <p><i>
-                                    You may view this example
-                                    <a href="https://www.koolreport.com/examples/reports/pivot/customers_categories_products/index.php">online</a>.
-                                </i></p>
-                            </div>
+                             <a href="reports/pivot/customers_categories_products/index.php" class="pk">
+                              <div class="thumbnail">
+                                  <div class="img">
+                                      <img src="assets/images/pivot1.png" alt="...">
+                                  </div>
+                                  <div class="caption">
+                                      <div class="pk-info">
+                                          <h3><strong>Customers - Categories - Products Pivot</strong></h3>
+                                          <p>Get pivot table for customers, categories and products.</p>
+                                      </div>
+                                  </div>                        
+                              </div>
+                            </a>
                         </div>
                         
                         <div class="col-md-4">
-                            <div class="example">
-                                <h4>Years - Months Pivot</h4>
-                                <p>Get pivot table for years and months.</p>
-                                <p><a class="btn btn-primary" href="reports/pivot/years_months/index.php">View example</a></p>
-                                <p><i>
-                                    You may view this example
-                                    <a href="https://www.koolreport.com/examples/reports/pivot/years_months/index.php">online</a>.
-                                </i></p>
-                            </div>
+                            <a href="reports/pivot/years_months/index.php" class="pk">
+                              <div class="thumbnail">
+                                  <div class="img">
+                                      <img src="assets/images/pivot2.png" alt="...">
+                                  </div>
+                                  <div class="caption">
+                                      <div class="pk-info">
+                                          <h3><strong>Years - Months Pivot</strong></h3>
+                                          <p>Get pivot table for years and months.</p>
+                                      </div>
+                                      
+                                  </div>                        
+                              </div>
+                            </a>
                         </div>
                         
                         <div class="col-md-4">
-                            <div class="example">
-                                <h4>Years -Months - Customers - Categories Pivot</h4>
-                                <p>Get pivot table for years, months, customers and categories.</p>
-                                <p><a class="btn btn-primary" href="reports/pivot/years_months_customers_categories/index.php">View example</a></p>
-                                <p><i>
-                                    You may view this example
-                                    <a href="https://www.koolreport.com/examples/reports/pivot/years_months_customers_categories/index.php">online</a>.
-                                </i></p>
-                            </div>
+                            <a href="reports/pivot/years_months_customers_categories/index.php" class="pk">
+                              <div class="thumbnail">
+                                  <div class="img">
+                                      <img src="assets/images/pivot3.png" alt="...">
+                                  </div>
+                                  <div class="caption">
+                                      <div class="pk-info">
+                                          <h3><strong>Years -Months - Customers - Categories Pivot</strong></h3>
+                                          <p>Get pivot table for years, months, customers and categories.</p>
+                                      </div>
+                                  </div>                        
+                              </div>
+                            </a>
                         </div>
                         
-                    </div>            
+                    </div>           
                 </div>
+                
                 <div class="bs-docs-section">
                     <h1 id="inputs">Inputs package</h1>
                     <p><code>Inputs</code> package helps you to build dynamic reports with user's inputs
-                        Get the <code>Inputs</code> package <a href="https://www.koolreport.com/packages/inputs">in here</a>. It's FREE.
+                        Get the <code>Inputs</code> package <a href="https://www.koolreport.com/packages/inputs">in here</a>.
                     </p>
                     <div class="row">
-                        <div class="col-md-4">                        
-                            <div class="example">
-                                <h4>Introduce controls</h4>
-                                <p>List of all current controls in inputs </p>
-                                <p><a class="btn btn-primary" href="reports/inputs/intro/index.php">View example</a></p>
-                                <p><i>
-                                    You may view this example
-                                    <a href="https://www.koolreport.com/examples/reports/inputs/intro/index.php">online</a>.
-                                </i></p>
-                            </div>
-                        </div>                        
-                        <div class="col-md-4">                        
-                            <div class="example">
-                                <h4>List of orders</h4>
-                                <p>Get list of orders within date ranges and of selected customers</p>
-                                <p><a class="btn btn-primary" href="reports/inputs/order_list/index.php">View example</a></p>
-                                <p><i>
-                                    You may view this example
-                                    <a href="https://www.koolreport.com/examples/reports/inputs/order_list/index.php">online</a>.
-                                </i></p>
-                            </div>
-                        </div>                        
+                    
+                        <div class="col-md-4">  
+                            <a href="reports/inputs/intro/index.php" class="pk">
+                              <div class="thumbnail">
+                                  <div class="img">
+                                      <img src="assets/images/input1.png" alt="...">
+                                  </div>
+                                  <div class="caption">
+                                      <div class="pk-info">
+                                          <h3><strong>Introduce controls</strong></h3>
+                                          <p>List of all current controls in inputs.</p>
+                                      </div>
+                                  </div>                        
+                              </div>
+                            </a>
+                        </div>    
+                        
+                        <div class="col-md-4">  
+                            <a href="reports/inputs/order_list/index.php" class="pk">
+                              <div class="thumbnail">
+                                  <div class="img">
+                                      <img src="assets/images/input2.png" alt="...">
+                                  </div>
+                                  <div class="caption">
+                                      <div class="pk-info">
+                                          <h3><strong>List of orders</strong></h3>
+                                          <p>Get list of orders within date ranges and of selected customers.</p>
+                                      </div>
+                                      
+                                  </div>                        
+                              </div>
+                            </a>
+                        </div>  
+                        
+                    </div>                            
+                </div>
+                
+                <div class="bs-docs-section">
+                    <h1 id="barcode">Barcode package</h1>
+                    <p><code>Barcode</code> package helps you to generate multiple types of barcode and qrcode
+                        Get the <code>Barcode</code> package <a href="https://www.koolreport.com/packages/barcode">in here</a>.
+                    </p>
+                    <div class="row">
+                    
+                        <div class="col-md-4">  
+                            <a href="reports/barcode/products/index.php" class="pk">
+                              <div class="thumbnail">
+                                  <div class="img">
+                                      <img src="assets/images/barcode1.png" alt="...">
+                                  </div>
+                                  <div class="caption">
+                                      <div class="pk-info">
+                                          <h3><strong>Products' barcode</strong></h3>
+                                          <p>Catalogs of products' barcode and infomation.</p>
+                                      </div>
+                                  </div>                        
+                              </div>
+                            </a>
+                        </div>    
+                        
                     </div>                            
                 </div>
 
@@ -319,6 +502,15 @@ return array(
                         <li>Unzip package and put it inside folder <code>"koolreport/packages"</code></li>
                         <li>All done! The packages is ready to use.</li>
                     </ol>
+                    <h2 id="koolreport-pro">KoolReport Pro</h2>
+                    <p>
+                        <b>KoolReport Pro</b> is a special version including the latest KoolReport and all
+                        commercial packages. It is back with life-time license and professional support from us.
+                        The KoolReport pro comes with <b>Developer License</b> and <b>Enterprise License</b>.
+                    </p>
+                    <p>
+                        <a href="https://www.koolreport.com/get-koolreport-pro">Click here for more details</a>.
+                    </p>
                 </div>
             </div>
             <div class="col-md-3" role="complementary">
@@ -330,10 +522,12 @@ return array(
                         <li><a href="#cube">Cube package</a></li>
                         <li><a href="#pivot">Pivot package</a></li>
                         <li><a href="#inputs">Input package</a></li>
+                        <li><a href="#barcode">Barcode package</a></li>
                         <li><a href="#instruction">Instruction</a>
                             <ul class="nav">
                                 <li><a href="#setup-databases">Setup databases</a></li>
                                 <li><a href="#extended-packages">Extended packages</a></li>
+                                <li><a href="#koolreport-pro">KoolReport Pro</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -349,9 +543,11 @@ return array(
     <div class="bs-docs-footer">
         <div class="container">
             <ul class="bs-docs-footer-links">
-                <li><a href="https://www.koolreport.com" target="_blank">Home</a></li>
-                <li><a href="https://www.facebook.com/groups/1643955672575545/" target="_blank">Discussion</a></li>                             
+			    <li><a href="https://github.com/koolphp/koolreport" target="_blank">Github</a></li>
+			    <li><a href="https://twitter.com/GetKoolReport" target="_blank">Twitter</a></li>
+			    <li><a href="https://www.facebook.com/koolreport/" target="_blank">Facebook</a></li>
                 <li><a href="https://www.koolreport.com/about">About</a></li>
+                <li><a href="https://www.koolreport.com/get-koolreport-pro">KoolReport Pro</a></li>
             </ul>
             <p>Designed and built with <i class="fa fa-heart-o text-danger"></i> by <a href="https://www.koolphp.net">KoolPHP Inc</a>.</p>
             <p>Code licensed <a href="https://www.koolreport/license">MIT</a>.</p>

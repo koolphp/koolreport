@@ -65,7 +65,7 @@ class Transpose extends Process
         //Send each rows
         foreach($keys as $cKey)
         {
-            $row = array("c0"=>$cKey);
+            $row = array("c0"=>isset($this->metaData["columns"][$cKey]["label"])?$this->metaData["columns"][$cKey]["label"]:$cKey);   
             for($i=0;$i<$countRow;$i++)
             {
                 $row["c".($i+1)] = $this->data[$i][$cKey];

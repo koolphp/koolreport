@@ -15,9 +15,9 @@
  * {
  * 		public function setup()
  * 		{
- * 			$this	->incomming()
+ * 			$this	->incoming()
  * 					->pipe(new Process())
- * 					->pipe($this->outcomming());
+ * 					->pipe($this->outcoming());
  * 
  * 		}
  * 
@@ -33,7 +33,7 @@ class ProcessGroupEnd extends Process
 	{
 		$this->params->inputFromEndProcess($data);
 	}
-	protected function receiveMeta($metaData)
+	public function receiveMeta($metaData,$source)
 	{
 		$this->params->metaFromEndProcess($metaData);
 	}
@@ -44,21 +44,20 @@ class ProcessGroup extends Process
 	protected $params;
 	protected $startProcess;
 	protected $endProcess;
-	public function __construct($params)
+	public function __construct($params=null)
 	{
-		parent::__construct();
-		$this->internalPoints = array();
-		$this->params = $params;
+		parent::__construct($params);
 		$this->startProcess = new Node();
 		$this->endProcess = new ProcessGroupEnd($this);
-		$this->setup($this->params);		
+		$this->setup();		
 	}
 	
-	public function setup($params)
+	public function setup()
 	{
+		//overwrite this function
 	}
 		
-	protected function incomming()
+	protected function incoming()
 	{
 		return $this->startProcess;
 	}	
@@ -67,20 +66,31 @@ class ProcessGroup extends Process
 		return $this->endProcess;
 	}
 	
-	protected function receiveMeta($metaData)
+	public function receiveMeta($metaData,$source)
 	{
-		$this->startProcess->receiveMeta($metaData);
+		$this->streamingSource = $source;
+		$this->metaData = $metaData;
+		$this->startProcess->receiveMeta($metaData,$this);
+	}
+
+	protected function onInputStart()
+	{
+		$this->startProcess->startInput($this);
+	}
+
+	protected function onInputEnd()
+	{
+		$this->startProcess->endInput($this);
 	}
 	
 	public function metaFromEndProcess($metaData)
 	{
-		$this->metaData = $metaData;
 		$this->sendMeta($metaData);
 	} 
 		
 	public function onInput($data)
 	{
-		$this->startProcess->input($data);
+		$this->startProcess->input($data,$this);
 	}
 	public function inputFromEndProcess($data)
 	{

@@ -1,3 +1,24 @@
+# Version 1.61.2
+    1. Add html() method to Widget to allow return html of widget
+    2. Add $return to create() method of Widget to return html instead of echo html.
+    2. Add innerView() to KoolReport to allow rendering sub view
+    3. Add function get() to DataStore to get any value in table
+    4. Make Tranpose process take the label as data if the label of column is available.
+    4. Fix the isEnd() function of Node
+    5. Fix Group to allow multiple sources to pipe to group process.
+    6. Return content on event `"OnRenderEnd"`
+    7. Allow cancel rendering using `"OnBeforeRender"` event
+    8. Add previous() function to Node for navigation
+    9. Fix the ProcessGroup to enable transferring data smoothly.
+    10. ResourceManager now will fire the OnResourceInit event
+    11. Table has `data` property to input data on fly.
+    12. Google chart has `data` property to input data on fly.
+    13. Add `filter()` function to DataStore to filter data base on condition.
+    14. Add `top()` and `topByPercent()` function to DataStore to get the top rows
+    15. Add `bottom()` and `bottomByPercent()` function to DataStore to get the bottom rows
+    16. Add `sort()` function to DataStore to get data sorted.
+    17. Add `"footer"=>"count"` to `Table` column settings.
+
 # Version 1.47.3
     1. New `AggregatedColumn` process
     2. Table is now able to show footer

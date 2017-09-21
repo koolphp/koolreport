@@ -14,10 +14,18 @@ use \koolreport\core\Utility;
 class ResourceManager extends Base
 {
     protected $tags;
+    protected $report;
+
+    public function __construct($report)
+    {
+        parent::__construct();
+        $this->report = $report;
+    }
 
     public function init()
     {
         $this->tags = array();
+        $this->report->fireEvent("OnResourceInit");
         return $this;
     }
 

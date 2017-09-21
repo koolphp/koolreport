@@ -112,7 +112,6 @@ class AggregatedColumn extends Process
                     break;
                 }
             }
-            
         }
         while($item = array_shift($this->data))
         {

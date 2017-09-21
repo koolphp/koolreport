@@ -11,6 +11,7 @@
 namespace koolreport\widgets\google;
 use \koolreport\core\Widget;
 use \koolreport\core\Utility;
+use \koolreport\core\DataStore;
 
 
 class Chart extends Widget
@@ -24,15 +25,38 @@ class Chart extends Widget
     protected $height;
     protected $title;
     protected $colorScheme;
-  
+    protected $data;
+
     protected function onInit()
     {
         $this->chartId = "chart_".Utility::getUniqueId();
-        $this->dataStore = Utility::get($this->params,"dataStore",null);
-        if(!$this->dataStore)
+        
+        $data = Utility::get($this->params,"data");
+        if(is_array($data) && count($data)>0)
         {
-            throw \Exception("The dataStore property is required");
+            $this->dataStore = new DataStore;
+            $this->dataStore->data($data);
+            $row = $data[0];
+            $meta = array("columns"=>array());
+            foreach($row as $cKey=>$cValue)
+            {
+                $meta["columns"][$cKey] = array(
+                    "type"=>Utility::guessType($cValue),
+                );
+            }
+            $this->dataStore->meta($meta);
         }
+        else
+        {
+            $this->dataStore = Utility::get($this->params,"dataStore",null);
+            if(!$this->dataStore)
+            {
+                throw new \Exception("The dataStore property is required");
+            }    
+        }
+
+
+        
         $this->columns = Utility::get($this->params,"columns",null);
         $this->options = Utility::get($this->params,"options",array());
         $this->width = Utility::get($this->params,"width","600px");

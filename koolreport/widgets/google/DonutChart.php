@@ -23,9 +23,5 @@ class DonutChart extends Chart
 		}
 	}
 	
-	static function create($params)
-	{
-		$component = new DonutChart($params);
-		$component->render();
-	}
+
 }

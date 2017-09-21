@@ -15,17 +15,8 @@ class Map extends Chart
 {
 	protected function loadLibrary()
 	{
-		// $this->template("LoadLibrary",array(
-			// "chartId"=>$this->chartId,
-			// "zone"=>"current",
-			// "packages"=>array("map")
-		// ));
-    $this->getReport()->getResourceManager()
-      ->addScriptOnBegin("google.charts.load('current', {'packages':['map']})");
+		$this->getReport()->getResourceManager()
+		->addScriptOnBegin("google.charts.load('current', {'packages':['map']})");
 	}	
-	static function create($params)
-	{
-		$component = new Map($params);
-		$component->render();
-	}
+
 }

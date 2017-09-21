@@ -18,13 +18,13 @@
 }
 
 body {
-  background-color:#cfd8dc;
+  background-color:#cfd8dc !important;
 }
 
 .box-container
 {
     /* max-width:1200px; */
-    width:21cm;
+    width:21cm !important;
     margin: 0 auto;
     padding:30px !important;
     background:#ffffff;

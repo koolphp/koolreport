@@ -14,7 +14,7 @@ class Node extends Base
 {
 	protected $sources;	
 	protected $destinations;
-	protected $is_ended=true;
+	protected $is_ended=false;
 	protected $metaData;
 	protected $streamingSource;
 	
@@ -43,6 +43,15 @@ class Node extends Base
 			$node->source($this);
 			return $node;			
 		}
+	}
+
+	public function previous($index=0)
+	{
+		if(count($this->sources)>0)
+		{
+			return $this->sources[$index];
+		}
+		return null;
 	}
 	
 	public function saveTo(&$self)

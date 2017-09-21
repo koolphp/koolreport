@@ -20,6 +20,7 @@
 namespace koolreport\widgets\koolphp;
 use \koolreport\core\Widget;
 use \koolreport\core\Utility;
+use \koolreport\core\DataStore;
 
 class Table extends Widget
 {
@@ -34,13 +35,37 @@ class Table extends Widget
 	protected $showHeader;
 	protected $footer;
 
+	protected $data;
+
 	protected function onInit()
 	{
-		$this->dataStore = Utility::get($this->params,"dataStore",null);
-        if($this->dataStore==null)
+
+        $data = Utility::get($this->params,"data");
+        if(is_array($data) && count($data)>0)
         {
-            throw \Exception("dataStore is required in Table widget");
-        }
+            $this->dataStore = new DataStore;
+            $this->dataStore->data($data);
+            $row = $data[0];
+            $meta = array("columns"=>array());
+            foreach($row as $cKey=>$cValue)
+            {
+                $meta["columns"][$cKey] = array(
+                    "type"=>Utility::guessType($cValue),
+                );
+            }
+            $this->dataStore->meta($meta);
+		}
+		else
+		{
+			$this->dataStore = Utility::get($this->params,"dataStore",null);
+			if($this->dataStore==null)
+			{
+				throw new \Exception("dataStore is required in Table widget");
+			}
+		}		
+
+
+		
 		$this->columns = Utility::get($this->params,"columns",array());
 		$this->removeDuplicate = Utility::get($this->params,"removeDuplicate",array());
 		$this->cssClass = Utility::get($this->params,"cssClass",array());
@@ -249,6 +274,9 @@ class Table extends Widget
 					break;
 					case "avg":
 						$this->footer[$cKey] = $storage[$cKey]/$this->dataStore->countData();
+					break;
+					case "count":
+						$this->footer[$cKey] = $this->dataStore->countData();
 					break;
 				}
 			}

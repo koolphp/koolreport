@@ -15,17 +15,8 @@ class GeoChart extends Chart
 {
 	protected function loadLibrary()
 	{
-		// $this->template("LoadLibrary",array(
-			// "chartId"=>$this->chartId,
-			// "zone"=>"current",
-			// "packages"=>array("geochart")
-		// ));
-    $this->getReport()->getResourceManager()
-      ->addScriptOnBegin("google.charts.load('current', {'packages':['geochart']})");
+		$this->getReport()->getResourceManager()
+		->addScriptOnBegin("google.charts.load('current', {'packages':['geochart']})");
 	}	
-	static function create($params)
-	{
-		$component = new GeoChart($params);
-		$component->render();
-	}
+
 }

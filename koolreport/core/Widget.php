@@ -76,10 +76,39 @@ class Widget extends Base
 		
 	}
 	
-	static function create($params)
+	static function create($params,$return=false)
 	{
         $class = get_called_class();
 		$component = new $class($params);
-		$component->render();
+		if($return)
+		{
+			ob_start();
+			$component->render();
+			return ob_get_clean();
+		}
+		else
+		{
+			$component->render();
+		}
 	}    
+	static function html($params)
+	{
+        $class = get_called_class();
+		$component = new $class($params);
+		ob_start();
+		$component->render();
+		return ob_get_clean();		
+	}
+
+	static function begin($params)
+	{
+
+	}
+
+	static function end()
+	{
+
+	}
+
+
 }

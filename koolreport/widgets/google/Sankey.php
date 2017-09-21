@@ -15,17 +15,8 @@ class Sankey extends Chart
 {
 	protected function loadLibrary()
 	{
-		// $this->template("LoadLibrary",array(
-			// "chartId"=>$this->chartId,
-			// "zone"=>"current",
-			// "packages"=>array("sankey")
-		// ));
-    $this->getReport()->getResourceManager()
-      ->addScriptOnBegin("google.charts.load('current', {'packages':['sankey']})");
+		$this->getReport()->getResourceManager()
+		->addScriptOnBegin("google.charts.load('current', {'packages':['sankey']})");
 	}	
-	static function create($params)
-	{
-		$component = new Sankey($params);
-		$component->render();
-	}
+
 }

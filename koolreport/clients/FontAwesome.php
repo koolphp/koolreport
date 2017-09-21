@@ -15,7 +15,7 @@ trait FontAwesome
 {
     public function __constructFontAwesome()
     {
-        $this->registerEvent('OnBeforeRender',function(){
+        $this->registerEvent('OnResourceInit',function(){
             $assetUrl = $this->publishAssetFolder(dirname(__FILE__)."/font-awesome");
             $this->getResourceManager()->addCssFile($assetUrl."/css/font-awesome.min.css");
         });
