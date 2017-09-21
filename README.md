@@ -11,6 +11,7 @@ KoolReport is an intuitive and flexible open-source PHP reporting framework for 
 
 # Changelog 
 
+* [Version 1.61.2 (Sep 21st, 2017)](https://www.koolreport.com/updates#version-1612)
 * [Version 1.47.3 (Aug 23rd, 2017)](https://www.koolreport.com/updates#version-1473)
 * [Version 1.34.9 (Jul 25th, 2017)](https://www.koolreport.com/updates#version-1349)
 * [Version 1.32.8 (Jul 5th, 2017)](https://www.koolreport.com/updates#version-1328)
