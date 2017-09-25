@@ -214,6 +214,8 @@ Result of this report can be [previewed in here](https://www.koolreport.com/exam
 2. [Sales By Months and Years](https://www.koolreport.com/examples/reports/cube/sales_by_months_years/index.php)
 3. [Sales By Customers And Products](https://www.koolreport.com/examples/reports/cube/sales_by_customers_products/index.php)
 
+.. and [all examples](https://www.koolreport.com/examples).
+
 # Licenses
 The KoolReport is licensed under MIT License.
 
