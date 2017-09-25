@@ -228,7 +228,7 @@ The KoolReport is licensed under MIT License.
 * [Cache](https://www.koolreport.com/packages/cache): Drive the speed and responsiveness of your report to the max [__$9__]
 * [BarCode](https://www.koolreport.com/packages/barcode): Helps to generate BarCode and QRCode [__$9__]
 * [Statistics](https://www.koolreport.com/packages/statistics): Provide various statistical measures for your data [__$9__]
-* [Sparklines](https://www.koolreport.com/packages/sparklines):Helps to create tiny charts [__$9__]
+* [Sparklines](https://www.koolreport.com/packages/sparklines): Helps to create tiny charts [__$9__]
 
 
 # KoolReport Pro
