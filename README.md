@@ -217,15 +217,19 @@ The KoolReport is licensed under MIT License.
 
 # Extended packages:
 
+* [Excel](https://www.koolreport.com/packages/excel): Import and export data to Excel [__Free__]
+* [MongoDB](https://www.koolreport.com/packages/mongodb): Build report from MongoDB [__Free__]
+* [CleanData](https://www.koolreport.com/packages/cleandata): Solution for your missing data [__Free__]
 * [Cube](https://www.koolreport.com/packages/cube): Help to turn your data into two dimensions cross-tab table [__$9.00__]
 * [Pivot](https://www.koolreport.com/packages/pivot): Build multi-dimenstional pivot table [__$19.00__]
 * [Export](https://www.koolreport.com/packages/export): Export your report to PDF, JPG, PNG and other formats [__$19.00__]
-* [Excel](https://www.koolreport.com/packages/excel): Import and export data to Excel [__Free__]
-* [MongoDB](https://www.koolreport.com/packages/mongodb): Build report from MongoDB [__Free__]
 * [Morris Chart](https://www.koolreport.com/packages/morris_chart): Use morris charts in your report [__$9__]
 * [Inputs](https://www.koolreport.com/packages/inputs): Help to build dynamic reports/dashboard [__$9__]
 * [Cache](https://www.koolreport.com/packages/cache): Drive the speed and responsiveness of your report to the max [__$9__]
 * [BarCode](https://www.koolreport.com/packages/barcode): Helps to generate BarCode and QRCode [__$9__]
+* [Statistics](https://www.koolreport.com/packages/statistics): Provide various statistical measures for your data [__$9__]
+* [Sparklines](https://www.koolreport.com/packages/sparklines):Helps to create tiny charts [__$9__]
+
 
 # KoolReport Pro
 
@@ -243,7 +247,7 @@ If you have further inquiry on this special version, please go to our [forum](ht
 
 # Some thoughts
 
-Please consider the purchase of extended packages or subscription as a donation to the project. In exchange, we would like to send you some gifts which are package codes or services. __We are helping each others.__ We love this KoolReport very much and want it to be alive. __Being alive means that the code continues to evolve, more solutions are added, and everything is back with professional support.__ So please support us!
+Please consider the purchase of extended packages or subscription as a donation to the existence of this project. In exchange, we would like to send you some gifts which are package codes or services. __We are helping each others.__ We love this KoolReport very much and want it to be alive. __Being alive means that the code continues to evolve, more solutions are added, and everything is back with professional support.__ So please support us!
 
 
 # Our vision
