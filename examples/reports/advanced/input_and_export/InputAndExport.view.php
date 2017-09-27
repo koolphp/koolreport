@@ -19,7 +19,7 @@
         <title>Order details of customer</title>
     </head>
     <body>
-
+    <link rel="stylesheet" href="../../../assets/css/example.css" />
         <div class="container box-container">
             <form method="post">
                 <div class="text-center">

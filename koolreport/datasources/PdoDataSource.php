@@ -18,7 +18,7 @@ class PdoDataSource extends DataSource
 	static $connections;
 	protected $connection;
 	protected $query;
-	protected $params;
+	protected $sqlParams;
 	protected function onInit()
 	{		
 		$connectionString = Utility::get($this->params,"connectionString","");
@@ -46,27 +46,27 @@ class PdoDataSource extends DataSource
 		}
 	}
 	
-	public function query($query,$params=null)
+	public function query($query,$sqlParams=null)
 	{
 		$this->query = $query;
-		if($params!=null)
+		if($sqlParams!=null)
 		{
-			$this->params = $params;
+			$this->sqlParams = $sqlParams;
 		}
 		return $this;
 	}
 
-	public function params($params)
+	public function params($sqlParams)
 	{
-		$this->params = $params;
+		$this->sqlParams = $sqlParams;
 		return $this;
 	}
 	
-	protected function bindParams($query,$params)
+	protected function bindParams($query,$sqlParams)
 	{
-		if($params!=null)
+		if($sqlParams!=null)
 		{
-			foreach($params as $key=>$value)
+			foreach($sqlParams as $key=>$value)
 			{
 				if(gettype($value)==="array")
 				{
@@ -124,7 +124,7 @@ class PdoDataSource extends DataSource
 	public function start()
 	{
 		
-		$query = $this->bindParams($this->query,$this->params);
+		$query = $this->bindParams($this->query,$this->sqlParams);
 		$stm = $this->connection->prepare($query);
 		$stm->execute();
 

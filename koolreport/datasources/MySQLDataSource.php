@@ -25,7 +25,8 @@ use \koolreport\core\Utility;
 class MySQLDataSource extends DataSource
 {
 	protected $connection;
-	protected $query;
+  protected $query;
+  protected $sqlParams;
 	protected function onInit()
 	{		
 		$host = Utility::get($this->params,"host","");
@@ -49,25 +50,25 @@ class MySQLDataSource extends DataSource
       }
 	}
 	
-	public function query($query, $params=null)
+	public function query($query, $sqlParams=null)
 	{
 		$this->query = $query;
-    if($params != null)
-			$this->params = $params;
+    if($sqlParams != null)
+			$this->sqlParams = $sqlParams;
 		return $this;
 	}
   
-  public function params($params)
+  public function params($sqlParams)
 	{
-		$this->params = $params;
+		$this->sqlParams = $sqlParams;
 		return $this;
 	}
   
-  protected function bindParams($query, $params)
+  protected function bindParams($query, $sqlParams)
 	{
-		if($params!=null)
+		if($sqlParams!=null)
 		{
-			foreach($params as $key=>$value)
+			foreach($sqlParams as $key=>$value)
 			{
 				if(gettype($value)==="array")
 				{
@@ -126,7 +127,7 @@ class MySQLDataSource extends DataSource
 	
 	public function start()
 	{
-    $query = $this->bindParams($this->query, $this->params);
+    $query = $this->bindParams($this->query, $this->sqlParams);
 		$result = $this->connection->query($query);
     
     $finfo = $result->fetch_fields();

@@ -24,9 +24,9 @@ body {
 .box-container
 {
     /* max-width:1200px; */
-    width:21cm !important;
+    max-width:21cm;
     margin: 0 auto;
-    padding:30px !important;
+    padding:30px;
     background:#ffffff;
     margin-top:50px;
     margin-bottom:50px;
@@ -46,7 +46,7 @@ body {
 }
 
 .box-all {
-  width:25cm !important;
+  max-width:25cm;
 }
 
 .kreport-title {

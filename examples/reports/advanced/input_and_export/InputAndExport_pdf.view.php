@@ -18,8 +18,6 @@
         <title>Order details of customer</title>
     </head>
     <body>
-        <link rel="stylesheet" href="../../../assets/css/example.css" />
-
         <div class="container box-container">
                 <div class="text-center">
                     <h1><?php echo $customerName; ?></h1>

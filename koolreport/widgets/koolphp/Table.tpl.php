@@ -32,7 +32,7 @@
 			{
 				$class = (gettype($thClass)=="string")?$thClass:$thClass($cKey);
 			}
-			echo "<th ".(($thStyle)?"style='$thStyle'":"")." class='$class'>$label</th>";
+			echo "<th".(($thStyle)?" style='$thStyle'":"").(($class!="")?" class='$class'":"").">$label</th>";
 		}
 		?>
 		</tr>

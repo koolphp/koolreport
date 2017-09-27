@@ -12,7 +12,7 @@
    ->pipe(new Filter(
       'or',
       array('age','>',4),
-      array('name','contains','Tuan'),
+      array('name','contain','Tuan'),
       'and',
       array('time','<=','2010-12-31')),
     )
@@ -72,21 +72,27 @@ class Filter extends Process
           $isFiltered = $value <= $condition[2];
         break;
       case 'contain':
+      case 'contains':
         $isFiltered = strpos(strtolower($value), strtolower($condition[2])) !== false;
         break;
       case 'notContain':
+      case 'notContains':
         $isFiltered = strpos(strtolower($value), strtolower($condition[2])) === false;
         break;
       case 'startWith':
+      case 'startsWith':
         $isFiltered = strpos(strtolower($value), strtolower($condition[2])) === 0;
         break;
       case 'notStartWith':
+      case 'notStartsWith':
         $isFiltered = strpos(strtolower($value), strtolower($condition[2])) !== 0;
         break;
       case 'endWith':
+      case 'endsWith':
         $isFiltered = strpos(strrev(strtolower($value)), strrev(strtolower($condition[2]))) === 0;
         break;
       case 'notEndWith':
+      case 'notEndsWith':
         $isFiltered = strpos(strrev(strtolower($value)), strrev(strtolower($condition[2]))) !== 0;
         break;
       case 'between':

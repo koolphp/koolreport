@@ -5,7 +5,7 @@ use \koolreport\processes\Filter;
 
 class Products extends koolreport\KoolReport
 {
-  use koolreport\clients\BootstrapCSS;
+  use \koolreport\clients\BootstrapCSS;
   
   function settings()
   {

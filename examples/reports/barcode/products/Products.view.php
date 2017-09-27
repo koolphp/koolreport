@@ -1,7 +1,7 @@
 <?php
 use \koolreport\widgets\koolphp\Table;
-use koolreport\barcode\BarCode;
-use koolreport\barcode\QRCode;
+use \koolreport\barcode\BarCode;
+use \koolreport\barcode\QRCode;
 ?>
 <!DOCTYPE html>
 <html>
@@ -65,20 +65,22 @@ use koolreport\barcode\QRCode;
   </style>
   <body>
     <div class="container box-container">
-    
-      <div class='row kreport-title'>
-        <div class='col-md-6'>
-          <h1>Product Catalogs</h1>
-        </div>
-        <div class='col-md-6 text-right'>
-          <?php
-            QRCode::create(array(
-            "format" => "svg",
-            "value"=>"https://www.koolreport.com",
-            'size' => 100
-          ));
-          ?>
-        </div>
+
+      <div class='kreport-title'>
+        <table style="width:100%;">
+          <tr>
+            <td style="vertical-align:bottom"><h1>Product Catalogs</h1></td>
+            <td class="text-right">
+              <?php
+                QRCode::create(array(
+                "format" => "svg",
+                "value"=>"https://www.koolreport.com",
+                'size' => 100
+              ));
+              ?>        
+            </td>
+          </tr>
+        </table>
       </div>
       <div class='row kreport-horizontal-line-0'>&nbsp;</div>
       
@@ -110,7 +112,7 @@ use koolreport\barcode\QRCode;
                   </div>
                   <div class='barcode'>
                     <?php
-                      Barcode::create(array(
+                      BarCode::create(array(
                         "format" => "svg",
                         "value"=>$code,
                         "type"=>"TYPE_EAN_8"
@@ -123,24 +125,19 @@ use koolreport\barcode\QRCode;
                         <h3><strong><?php echo $row['productName']; ?></strong></h3>
                         <p><?php echo $row['productDescription']; ?></p>
                     </div>
-                    
-                  </div>  
-                  <div class="pk-extra row">
-                    <div class="col-md-3">
-                      VENDOR:
-                    </div>
-                    <div class="vendor col-md-9">
-                      <?php echo $row['productVendor']; ?>
+                    <table style="width:100%;">
+                      <tbody>
+                        <tr>
+                          <td><b><?php echo $row['productVendor']; ?></b></td>
+                          <td class="text-right text-success" style="vertical-align:bottom;"><b><?php echo '$' . $row['buyPrice']; ?></b></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="row">
+                      <div class="col-xs-8"></div>
+                      <div  ></div>
                     </div>
                   </div>
-                  <div class="pk-extra row">
-                    <div class="col-md-6">
-                      LIST PRICE:
-                    </div>
-                    <div class="vendor text-success col-md-6">
-                      <?php echo '$' . $row['buyPrice']; ?>
-                    </div>
-                  </div> 
                 </div>
               </a>
             </div>
