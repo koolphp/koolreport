@@ -38,7 +38,7 @@ $ composer require koolphp/koolreport
 
 ```
 koolreport/
-├── assets/
+├── clients/
 ├── core/
 │   ├── AssetManager.php
 │   ├── Base.php
@@ -52,8 +52,9 @@ koolreport/
 ├── datasources/
 │   ├── ArrayDataSource.php
 │   ├── CSVDataSource.php
-│   ├── ExcelDataSource.php
-│   ├── MongoDataSource.php
+│   ├── ReportDataSource.php
+│   ├── MySQLDataSource.php
+│   ├── SQLSRVDataSource.php
 │   └── PdoDataSource.php
 ├── packages/
 ├── processes/
@@ -68,11 +69,6 @@ koolreport/
 │   ├── NumberRange.php
 │   ├── TimeBucket.php
 │   └── ... many other processes
-├── vendor/
-│   ├── composer/
-│   ├── mongodb/
-│   ├── phpoffice/
-│   └── autoload.php
 ├── widgets/
 │   ├── google/
 │   │   ├── LineChart.php
