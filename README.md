@@ -2,7 +2,7 @@
 
 KoolReport is an intuitive and flexible open-source PHP reporting framework for faster and easier report delivery. It gives you full control of data process as well as data visualization. It is fast, simple and can be extended in many ways.
 
-[![View examples](https://www.koolreport.com/examples/assets/images/cube3.png)](https://www.koolreport.com/examples)
+[![View examples](https://www.koolreport.com/assets/images/kpro.png)](https://www.koolreport.com/examples)
 
 
 # Features
@@ -252,7 +252,7 @@ If you have further inquiry on this special version, please go to our [forum](ht
 
 KoolReport is the sum of our many years experience in making reports for our customers. We hope that it will help you to create powerful report with less effort. We love KoolReport very much and want it to be alive. We hope that you do too.
 
-Being alive means that the source code continues to evolve, more features are added, and everything is back with professional support. Everything is related to cost so we must sell the extended packages to cover.
+Being alive means that the source code continues to evolve, more features are added, and everything is back with professional support.
 
 Please consider your purchase of extended packages or subscription as your donation. In exchange, we would like to send you gifts which are extensions or support services. By this way, we together contribtuted to the existence of KoolReport.
 
