@@ -101,6 +101,14 @@ class Filter extends Process
       case 'notBetween':
         $isFiltered = ! ($value > $condition[2] && $value < $condition[3]);
         break;
+    	case "in":
+				if(!is_array($condition[2])) $condition[2] = array($condition[2]);
+				$isFiltered = in_array($value,$condition[2]);	
+			break;
+			case "notIn":
+				if(!is_array($condition[2])) $condition[2] = array($condition[2]);
+				$isFiltered = !in_array($value,$condition[2]);		
+			break;
       default:
         break;
     }
