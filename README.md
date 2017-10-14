@@ -254,7 +254,7 @@ KoolReport is the sum of our many years experience in making reports for our cus
 
 Being alive means that the source code continues to evolve, more features are added, and everything is back with professional support.
 
-Please consider your purchase of extended packages or subscription as your donation. In exchange, we would like to send you gifts which are extensions or support services. By this way, we together contribtuted to the existence of KoolReport.
+Please consider your purchase of extended packages or subscription as your donation. In exchange, we would like to send you gifts which are extensions or support services. By this way, we together contribute to the existence of KoolReport.
 
 
 # Our vision
