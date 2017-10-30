@@ -30,7 +30,7 @@
     }
     div.thumbnail div.img img
     {
-        width:200px;
+        width:100%;
     }
     div.thumbnail div.img
     {
@@ -543,11 +543,11 @@ return array(
     <div class="bs-docs-footer">
         <div class="container">
             <ul class="bs-docs-footer-links">
+                <li><a href="https://www.koolreport.com/get-koolreport-pro">KoolReport Pro</a></li>
 			    <li><a href="https://github.com/koolphp/koolreport" target="_blank">Github</a></li>
 			    <li><a href="https://twitter.com/GetKoolReport" target="_blank">Twitter</a></li>
 			    <li><a href="https://www.facebook.com/koolreport/" target="_blank">Facebook</a></li>
-                <li><a href="https://www.koolreport.com/about">About</a></li>
-                <li><a href="https://www.koolreport.com/get-koolreport-pro">KoolReport Pro</a></li>
+                <li><a href="https://www.koolreport.com/about">About us</a></li>
             </ul>
             <p>Designed and built with <i class="fa fa-heart-o text-danger"></i> by <a href="https://www.koolphp.net">KoolPHP Inc</a>.</p>
             <p>Code licensed <a href="https://www.koolreport/license">MIT</a>.</p>

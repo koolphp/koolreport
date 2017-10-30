@@ -8,13 +8,19 @@ use \koolreport\processes\ColumnMeta;
 class TableDemo extends \koolreport\KoolReport
 {
     use \koolreport\clients\FontAwesome;
+    use \koolreport\clients\jQuery;
     function settings()
     {
         return array(
             "dataSources"=>array(
                 "data_sample"=>array(
                     "class"=>'\koolreport\datasources\CSVDataSource',
-                    'filePath'=>dirname(__FILE__)."\data_sample.csv",
+                    'filePath'=>dirname(__FILE__)."/data_sample.csv",
+                ),
+                "long_data"=>array(
+                    "class"=>'\koolreport\datasources\CSVDataSource',
+                    "fieldSeparator"=>"|",
+                    'filePath'=>dirname(__FILE__)."/../../../databases/products.csv",
                 )
             )
         ); 
@@ -46,5 +52,7 @@ class TableDemo extends \koolreport\KoolReport
             ),            
         )))
         ->pipe($this->dataStore('data_sample'));
+        $this->src('long_data')
+        ->pipe($this->dataStore("long_data"));
     }
 }

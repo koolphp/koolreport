@@ -87,18 +87,18 @@ class DataStore extends Node
 
 	public function get($index=0,$colName=null)
 	{
-		if(isset($this->data[$index]))
+		if(isset($this->dataset[$index]))
 		{
 			if($colName!==null)
 			{
-				if(isset($this->data[$index][$colName]))
+				if(isset($this->dataset[$index][$colName]))
 				{
-					return $this->data[$index][$colName];
+					return $this->dataset[$index][$colName];
 				}
 			}
 			else
 			{
-				return $this->data[$index];
+				return $this->dataset[$index];
 			}
 		}
 		return null;
@@ -147,33 +147,39 @@ class DataStore extends Node
 			{
 				case "=":
 				case "==":
+				case "equal":
 					if($columnValue==$value) array_push($result,$row);
 				break;
 				case "===":
 					if($columnValue===$value) array_push($result,$row);
 				break;
 				case "!=":
+				case "notEqual":
 					if($columnValue!=$value) array_push($result,$row);
 				break;
 				case "!==":
 					if($columnValue!==$value) array_push($result,$row);
 				break;
 				case ">":
+				case "gt":
 					if($columnValue>$value) array_push($result,$row);
 				break;
 				case ">=":
 					if($columnValue>=$value) array_push($result,$row);
 				break;
 				case "<":
+				case "lt":
 					if($columnValue<$value) array_push($result,$row);
 				break;
 				case "<=":
 					if($columnValue<=$value) array_push($result,$row);
 				break;
 				case "contain":
+				case "contains":
 					if(strpos(strtolower($columnValue),strtolower($value))!==false) array_push($result,$row);
 				break;	
 				case "notContain":
+				case "notContains":
 					if(strpos(strtolower($columnValue),strtolower($value))===false) array_push($result,$row);
 				break;
 				case "between":
@@ -190,6 +196,22 @@ class DataStore extends Node
 					if(!is_array($value)) $value = array($value);
 					if(!in_array($columnValue,$value)) array_push($result,$row);	
 				break;
+				case "startWith":
+				case "startsWith":
+					if(strpos(strtolower($columnValue), strtolower($value)) === 0) array_push($result,$row);
+				break;
+				case "notStartWith":
+				case "notStartsWith":
+					if(strpos(strtolower($columnValue), strtolower($value)) !== 0) array_push($result,$row);
+				break;
+				case "endWith":
+				case "endsWith":
+					if(strpos(strrev(strtolower($columnValue)), strrev(strtolower($value))) === 0) array_push($result,$row);
+				break;
+				case "notEndWith":
+				case "notEndsWith":
+					if(strpos(strrev(strtolower($columnValue)), strrev(strtolower($value))) !== 0) array_push($result,$row);
+				break;
 				default:
 					throw new \Exception("Unknown operator [$operator]");
 					return $this;
@@ -202,11 +224,16 @@ class DataStore extends Node
 		return $ds;
 	}
 
-	public function top($num)
+	public function paging($pageSize,$pageIndex)
+	{
+		return $this->top($pageSize,$pageIndex*$pageSize);
+	}
+
+	public function top($num,$offset=0)
 	{
 		$count = $this->countData();
 		$result = array();
-		for($i=0;$i<$num && $i<$count;$i++)
+		for($i=$offset;$i<$num+$offset && $i<$count;$i++)
 		{
 			array_push($result,$this->dataset[$i]);
 		}
@@ -260,6 +287,47 @@ class DataStore extends Node
 	}
 
 	
+	public function sum($colName)
+	{
+		$sum = 0;
+		$this->popStart();
+		while($row=$this->pop())
+		{
+			$sum+=$row[$colName];
+		}
+		return $sum;
+	}
+	public function min($colName)
+	{
+		$this->popStart();
+		$min = INF;
+		while($row=$this->pop())
+		{
+			if($min>$row[$colName])
+			{
+				$min = $row[$colName];
+			}
+		}
+		return $min;
+	}
+	public function max($colName)
+	{
+		$this->popStart();
+		$max = -INF;
+		while($row=$this->pop())
+		{
+			if($max<$row[$colName])
+			{
+				$max = $row[$colName];
+			}
+		}
+		return $max;		
+	}
+	public function avg($colName)
+	{
+		return $this->sum($colName)/$this->countData();
+	}
+
 	public function getReport()
 	{
 		return $this->report;

@@ -204,7 +204,8 @@ class Chart extends Widget
             //Register loader
             $this->getReport()->getResourceManager()
                 ->addScriptFileOnBegin('https://www.gstatic.com/charts/loader.js');
-      
+            
+
             //Update options
             $options = $this->options;
             if($this->title)

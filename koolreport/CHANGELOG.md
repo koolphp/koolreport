@@ -1,14 +1,25 @@
+# Version 1.72.8
+    1. DataStore: Fix the `get()` function
+    2. TimeBucket: Change month bucket format from `Y-n` to `Y-m` to support sorting.
+    3. DataStore: Add $offset parameter to the top() function.
+    4. DataStore: Add function min(), max(), sum(), avg()
+    5. Make KoolReport run debug() if could not find the view file.
+    6. Filter: Add `"in"` and  `"notIn"` operator 
+    7. DataStore::filter() Add "startWith","notStartWith", "endWith" and "notEndWith"
+    8. CalculatedColumn: Add row number column with key `{#}`
+    9. Table: New feature of pagination
+
 # Version 1.61.5
     1. Fix parameters bug in PDODataSource
-    1. Fix parameters bug in MySQLDataSource
-    1. Fix parameters bug in SQLSRVDataSource
+    2. Fix parameters bug in MySQLDataSource
+    3. Fix parameters bug in SQLSRVDataSource
 
 # Version 1.61.2
     1. Add html() method to Widget to allow return html of widget
     2. Add $return to create() method of Widget to return html instead of echo html.
     2. Add innerView() to KoolReport to allow rendering sub view
     3. Add function get() to DataStore to get any value in table
-    4. Make Tranpose process take the label as data if the label of column is available.
+    4. Make Transpose process take the label as data if the label of column is available.
     4. Fix the isEnd() function of Node
     5. Fix Group to allow multiple sources to pipe to group process.
     6. Return content on event `"OnRenderEnd"`

@@ -234,9 +234,12 @@ class KoolReport extends Base
 	{
 		if($this->fireEvent("OnBeforeRun"))
 		{
-			foreach($this->dataSources as $dataSource)
+			if($this->dataSources!=null)
 			{
-				$dataSource->start();
+				foreach($this->dataSources as $dataSource)
+				{
+					$dataSource->start();
+				}	
 			}
 		}
 		$this->fireEvent("OnRunEnd");
@@ -247,8 +250,6 @@ class KoolReport extends Base
 	{
 		$GLOBALS["__ACTIVE_KOOLREPORT__"] = $this;
 		include(dirname(__FILE__)."/debug.view.php");
-		$content = ob_get_clean();
-		echo $content;
 	}
 	
 	public function innerView($view,$params=null,$return=false)
@@ -293,13 +294,21 @@ class KoolReport extends Base
 		$content = "";
 		if($this->fireEvent("OnBeforeRender"))
 		{
-			ob_start();
-			$this->getResourceManager()->init();
-			$GLOBALS["__ACTIVE_KOOLREPORT__"] = $this;
-			include($currentDir."/".$view.".view.php");
-			$content = ob_get_clean();	
-			//Adding resource to content
-			$this->getResourceManager()->process($content); 
+			if(is_file($currentDir."/".$view.".view.php"))
+			{
+				ob_start();
+				$this->getResourceManager()->init();
+				$GLOBALS["__ACTIVE_KOOLREPORT__"] = $this;
+				include($currentDir."/".$view.".view.php");
+				$content = ob_get_clean();	
+				//Adding resource to content
+				$this->getResourceManager()->process($content);	
+			}
+			else
+			{
+				$this->debug();
+				return;
+			}
 		}
 
 		if($return)

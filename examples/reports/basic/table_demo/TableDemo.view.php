@@ -217,3 +217,46 @@ Table::create(array(
             background-color:#fdffe8;
         }
     </style>
+    <h3>Table paging</h3>
+    <pre><code>
+    Table::create(array(
+        "dataStore"=>$this->dataStore("long_data"),
+        "columns"=>array(
+            "productName"=>array(
+                "label"=>"Product Name"
+            ),
+            "productLine"=>array(
+                "label"=>"Line"
+            ),
+            "quantityInStock"=>array(
+                "label"=>"Qty In Stock"
+            )
+        ),
+        "paging"=>array(
+            "pageSize"=>10,
+            "align"=>"center",
+            "pageIndex"=>0,
+        )
+    ));
+    </code></pre>    
+    <?php
+    Table::create(array(
+        "dataStore"=>$this->dataStore("long_data"),
+        "columns"=>array(
+            "productName"=>array(
+                "label"=>"Product Name"
+            ),
+            "productLine"=>array(
+                "label"=>"Line"
+            ),
+            "quantityInStock"=>array(
+                "label"=>"Qty In Stock"
+            )
+        ),
+        "paging"=>array(
+            "pageSize"=>10,
+            "align"=>"center",
+            "pageIndex"=>0,
+        )
+    ));
+    ?>

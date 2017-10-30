@@ -5,7 +5,7 @@ $salesbycustomer = new SalesByCustomer;
 $salesbycustomer->run();
 ?>
 
-<!DOCTYPE >
+<!DOCTYPE html>
 <html>
   <head>
     <title>Sales By Customer Report</title>

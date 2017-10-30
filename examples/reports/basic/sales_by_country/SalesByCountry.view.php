@@ -30,7 +30,7 @@ GeoChart::create(array(
 
 <?php
 Table::create(array(
-    "dataStore"=>$this->dataStore("sales"),
+    "dataStore"=>$this->dataStore("sales")->sort(array("amount"=>"desc")),
     "columns"=>array(
         "country"=>array(
             "label"=>"Country"
@@ -40,6 +40,9 @@ Table::create(array(
             "type"=>"number",
             "prefix"=>"$",
         )
+    ),
+    "paging"=>array(
+        "pageSize"=>10,
     )
 ));
 ?>

@@ -36,18 +36,22 @@ class Filter extends Process
     $isFiltered = true;
     switch ($condition[1]) {
       case '=':
+      case '==':
+      case 'equal':
         if ($type === 'string')
           $isFiltered = strcmp($value, $condition[2]) == 0;
         else
           $isFiltered = $value == $condition[2];
         break;
       case '!=':
+      case 'notEqual':
         if ($type === 'string')
           $isFiltered = strcmp($value, $condition[2]) != 0;
         else
           $isFiltered = $value != $condition[2];
         break;
       case '>':
+      case 'gt':
         if ($type === 'string')
           $isFiltered = strcmp($value, $condition[2]) > 0;
         else
@@ -60,6 +64,7 @@ class Filter extends Process
           $isFiltered = $value >= $condition[2];
         break;
       case '<':
+      case 'lt':
         if ($type === 'string')
           $isFiltered = strcmp($value, $condition[2]) < 0;
         else
@@ -101,6 +106,14 @@ class Filter extends Process
       case 'notBetween':
         $isFiltered = ! ($value > $condition[2] && $value < $condition[3]);
         break;
+      case "in":
+				if(!is_array($condition[2])) $condition[2] = array($condition[2]);
+				$isFiltered = in_array($value,$condition[2]);	
+			break;
+			case "notIn":
+				if(!is_array($condition[2])) $condition[2] = array($condition[2]);
+				$isFiltered = !in_array($value,$condition[2]);		
+			break;        
       default:
         break;
     }

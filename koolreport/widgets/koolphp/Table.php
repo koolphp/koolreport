@@ -24,6 +24,7 @@ use \koolreport\core\DataStore;
 
 class Table extends Widget
 {
+	protected $name;
 	protected $dataStore;
 	protected $columns;
 	protected $cssClass;
@@ -37,9 +38,19 @@ class Table extends Widget
 
 	protected $data;
 
-	protected function onInit()
-	{
+	protected $paging;
 
+	protected function onInit()
+	{	
+		//Table class
+        $this->getAssetManager()->publish("table");
+        $this->getReport()->getResourceManager()->addScriptFileOnBegin(
+            $this->getAssetManager()->getAssetUrl('table.js')
+        );
+        $this->getReport()->getResourceManager()->addCssFile(
+            $this->getAssetManager()->getAssetUrl('table.css')
+		);
+		$this->name = Utility::get($this->params,"name","ktable".Utility::getUniqueId());
         $data = Utility::get($this->params,"data");
         if(is_array($data) && count($data)>0)
         {
@@ -73,6 +84,18 @@ class Table extends Widget
 
 		$this->showFooter = Utility::get($this->params,"showFooter");
 		$this->showHeader = Utility::get($this->params,"showHeader",true);
+
+		$this->paging = Utility::get($this->params,"paging");
+		if($this->paging!==null)
+		{
+			$this->paging = array(
+				"pageSize"=>Utility::get($this->paging,"pageSize",10),
+				"pageIndex"=>Utility::get($this->paging,"pageIndex",0),
+				"align"=>Utility::get($this->paging,"align","left"),
+			);
+			$this->paging["itemCount"]=$this->dataStore->countData();
+			$this->paging["pageCount"]=ceil($this->paging["itemCount"]/$this->paging["pageSize"]);
+		}
 	}
 
 	public function render()

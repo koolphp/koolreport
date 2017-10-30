@@ -71,7 +71,7 @@
                             Select::create(array(
                                 "name"=>"select",
                                 "dataStore"=>$this->dataStore("customers"),
-                                "defaultOption"=>array(""=>"--"),
+                                "defaultOption"=>array("--"=>""),
                                 "dataBind"=>"customerName",
                                 "attributes"=>array(
                                     "class"=>"form-control",
@@ -321,7 +321,7 @@ BSelect::create(array(
 &lt;?php Select::create(array(
     "name"=>"select",
     "dataStore"=>$this->dataStore("customers"),
-    "defaultOption"=>array(""=>"--"),
+    "defaultOption"=>array("--"=>""),
     "dataBind"=>"customerName",
     "attributes"=>array(
         "class"=>"form-control",

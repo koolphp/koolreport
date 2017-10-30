@@ -67,7 +67,7 @@ class TimeBucket extends Process
 	{
 		$map = array(
 			"year"=>"Y",
-			"month"=>"Y-n",
+			"month"=>"Y-m",
 			"quarter"=>"Y-Q{q}",
 			"week"=>"Y-W",
 			"date"=>"Y-m-d",

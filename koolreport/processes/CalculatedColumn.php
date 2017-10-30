@@ -24,6 +24,11 @@
  *		),
  * 		"receivedAmount"=>"{amount}-{fee}"
  * )))
+ * ->pipe(new CalculatedColumn(array(
+ * 		"rowNum"=>"{#}",
+ * 		"receivedAmount"=>"{amount}-{fee}"
+ * )))
+ * 
  * If the column is existed then replace it with new calculated value 
  * If the column is not existed, create new and put the value there.
  * Also change the metaData to reflect the new column added.
@@ -34,6 +39,7 @@ use \koolreport\core\Process;
 
 class CalculatedColumn extends Process
 {
+    protected $rowNum = -1;
 	
 	protected function onInit()
 	{
@@ -78,6 +84,7 @@ class CalculatedColumn extends Process
 	
 	protected function onInput($data)
 	{
+        $this->rowNum++;
 		foreach($this->params as $cKey=>$cValue)
 		{
 			switch(gettype($cValue["exp"]))
@@ -87,7 +94,10 @@ class CalculatedColumn extends Process
 					foreach($data as $k=>$v)
 					{
 						$expression = str_replace("{".$k."}",$v,$expression);
-					}
+                    }
+                    //predefined row
+                    $expression = str_replace("{#}",$this->rowNum,$expression);
+
 					eval('$data[$cKey]='.$expression.';');							
 				break;
 				case "object":
