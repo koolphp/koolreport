@@ -2,7 +2,8 @@
 
 KoolReport is an intuitive and flexible open-source PHP reporting framework for faster and easier report delivery. It gives you full control of data process as well as data visualization. It is fast, simple and can be extended in many ways.
 
-[View some examples](https://www.koolreport.com/examples)
+[![View examples](https://www.koolreport.com/assets/images/kpro.png)](https://www.koolreport.com/examples)
+
 
 # Features
 
@@ -13,6 +14,7 @@ KoolReport is an intuitive and flexible open-source PHP reporting framework for 
 
 # Changelog 
 
+* [Version 1.61.5 (Sep 27th, 2017)](https://www.koolreport.com/updates#version-1615)
 * [Version 1.61.2 (Sep 21st, 2017)](https://www.koolreport.com/updates#version-1612)
 * [Version 1.47.3 (Aug 23rd, 2017)](https://www.koolreport.com/updates#version-1473)
 * [Version 1.34.9 (Jul 25th, 2017)](https://www.koolreport.com/updates#version-1349)
@@ -36,7 +38,7 @@ $ composer require koolphp/koolreport
 
 ```
 koolreport/
-├── assets/
+├── clients/
 ├── core/
 │   ├── AssetManager.php
 │   ├── Base.php
@@ -50,8 +52,9 @@ koolreport/
 ├── datasources/
 │   ├── ArrayDataSource.php
 │   ├── CSVDataSource.php
-│   ├── ExcelDataSource.php
-│   ├── MongoDataSource.php
+│   ├── ReportDataSource.php
+│   ├── MySQLDataSource.php
+│   ├── SQLSRVDataSource.php
 │   └── PdoDataSource.php
 ├── packages/
 ├── processes/
@@ -66,11 +69,6 @@ koolreport/
 │   ├── NumberRange.php
 │   ├── TimeBucket.php
 │   └── ... many other processes
-├── vendor/
-│   ├── composer/
-│   ├── mongodb/
-│   ├── phpoffice/
-│   └── autoload.php
 ├── widgets/
 │   ├── google/
 │   │   ├── LineChart.php
@@ -224,6 +222,7 @@ The KoolReport is licensed under MIT License.
 * [Excel](https://www.koolreport.com/packages/excel): Import and export data to Excel [__Free__]
 * [MongoDB](https://www.koolreport.com/packages/mongodb): Build report from MongoDB [__Free__]
 * [CleanData](https://www.koolreport.com/packages/cleandata): Solution for your missing data [__Free__]
+* [Instant](https://www.koolreport.com/packages/instant): Helps to create widget instantly without setting up a full report [__Free__]
 * [Cube](https://www.koolreport.com/packages/cube): Help to turn your data into two dimensions cross-tab table [__$9.00__]
 * [Pivot](https://www.koolreport.com/packages/pivot): Build multi-dimenstional pivot table [__$19.00__]
 * [Export](https://www.koolreport.com/packages/export): Export your report to PDF, JPG, PNG and other formats [__$19.00__]
@@ -237,9 +236,9 @@ The KoolReport is licensed under MIT License.
 
 # KoolReport Pro
 
-[KoolReport Pro](https://www.koolreport.com/get-koolreport-pro) is a special version of KoolReport. It includes latest KoolReport version plus all available advanced packages from KoolPHP Inc. It costs __$89__ for Developer License and __$169__ for Enterprise License. The licenses come with following benefits:
+[KoolReport Pro](https://www.koolreport.com/get-koolreport-pro) is the most advanced version of KoolReport. It includes latest KoolReport version plus all available advanced packages from KoolPHP Inc. It costs __$89__ for Developer License and __$229__ for Enterprise License. The licenses come with following benefits:
 
-1. __Life-time license__, means that you buy once and use forever.
+1. Include all __current package and future ones__.
 2. Deploying on __unlimited servers or projects__.
 3. __Royal free__ (no extra charged) when you delivered the KoolReport Pro with your commercial product.
 4. __1 year subscription__ to get free upgrades, bugs fixed and new released packages regardless price.
@@ -251,7 +250,11 @@ If you have further inquiry on this special version, please go to our [forum](ht
 
 # Some thoughts
 
-Please consider the purchase of extended packages or subscription as a donation to the existence of this project. In exchange, we would like to send you some gifts which are package codes or services. __We are helping each others.__ We love this KoolReport very much and want it to be alive. __Being alive means that the code continues to evolve, more solutions are added, and everything is back with professional support.__ So please support us!
+KoolReport is the sum of our many years experience in making reports for our customers. We hope that it will help you to create powerful report with less effort. We love KoolReport very much and want it to be alive. We hope that you do too.
+
+Being alive means that the source code continues to evolve, more features are added, and everything is back with professional support.
+
+Please consider your purchase of extended packages or subscription as your donation. In exchange, we would like to send you gifts which are extensions or support services. By this way, we together contribute to the existence of KoolReport.
 
 
 # Our vision
