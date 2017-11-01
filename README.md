@@ -237,7 +237,7 @@ The KoolReport is licensed under MIT License.
 
 # KoolReport Pro
 
-[KoolReport Pro](https://www.koolreport.com/get-koolreport-pro) is the most advanced version of KoolReport. It includes latest KoolReport version plus all available advanced packages from KoolPHP Inc. It costs __$89__ for Developer License and __$229__ for Enterprise License. The licenses come with following benefits:
+[KoolReport Pro](https://www.koolreport.com/get-koolreport-pro) is the most advanced version of KoolReport. It includes latest KoolReport version plus all available advanced packages from KoolPHP Inc. It costs __$129__ for Developer License and __$289__ for Enterprise License. The licenses come with following benefits:
 
 1. Include all __current package and future ones__.
 2. Deploying on __unlimited servers or projects__.
