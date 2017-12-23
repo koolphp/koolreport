@@ -102,7 +102,7 @@
 						if($span[$i][$cKey]>0)
 						{
 							?>
-								<td <?php echo ($tdStyle)?"style='$tdStyle'":""; ?> <?php if($tdClass){echo "class='".((gettype($tdClass)=="string")?$tdClass:$tdClass($row,$cKey))."'";} ?> rowspan="<?php echo $span[$i][$cKey]; ?>">
+								<td row-value="<?php echo ($cKey!=="#")?$row[$cKey]:($i+$meta["columns"][$cKey]["start"]);?>" <?php echo ($tdStyle)?"style='$tdStyle'":""; ?> <?php if($tdClass){echo "class='".((gettype($tdClass)=="string")?$tdClass:$tdClass($row,$cKey))."'";} ?> rowspan="<?php echo $span[$i][$cKey]; ?>">
 									<?php echo Utility::format(($cKey!=="#")?$row[$cKey]:($i+$meta["columns"][$cKey]["start"]),$meta["columns"][$cKey]);?>
 								</td>
 							<?php						
@@ -111,7 +111,7 @@
 					else
 					{
 						?>
-							<td <?php echo ($tdStyle)?"style='$tdStyle'":""; ?> <?php if($tdClass){echo " class='".((gettype($tdClass)=="string")?$tdClass:$tdClass($row,$cKey))."'";} ?>>
+							<td row-value="<?php echo ($cKey!=="#")?$row[$cKey]:($i+$meta["columns"][$cKey]["start"]);?>" <?php echo ($tdStyle)?"style='$tdStyle'":""; ?> <?php if($tdClass){echo " class='".((gettype($tdClass)=="string")?$tdClass:$tdClass($row,$cKey))."'";} ?>>
 								<?php echo Utility::format(($cKey!=="#")?$row[$cKey]:($i+$meta["columns"][$cKey]["start"]),$meta["columns"][$cKey]);?>
 							</td>
 						<?php					
@@ -119,6 +119,14 @@
 				}						
 				?>
 			</tr>
+			<?php	
+			}
+			?>
+			<?php
+			if($this->dataStore->countData()<=0)
+			{
+			?>
+				<tr><td colspan="<?php echo count($showColumnKeys); ?>" align="center"><?php echo $this->translate("No data available in table"); ?></td></tr>
 			<?php	
 			}
 			?>
@@ -136,10 +144,21 @@
 	?>
 </div>
 <script type="text/javascript">
-	if (typeof KoolPHPTable === 'function')
+	if (typeof KoolPHPTable != 'undefined')
 	{
 		var <?php echo $this->name; ?> = new KoolPHPTable('<?php echo $this->name; ?>',<?php echo json_encode(array(
 		"paging"=>$this->paging
 		)); ?>);
+		<?php
+		if($this->clientEvents)
+		{
+			foreach($this->clientEvents as $eventName=>$function)
+			{
+			?>
+			<?php echo $this->name; ?>.on("<?php echo $eventName; ?>",<?php echo $function; ?>);
+			<?php	
+			}
+		}
+		?>	
 	}
 </script>

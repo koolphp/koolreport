@@ -10,17 +10,16 @@
 
 use \koolreport\core\Utility;
 ?>
-<?php $this->loadLibrary(); ?>
 <div id="<?php echo $chartId; ?>" style="<?php if ($this->width) echo "width:".$this->width.";"; ?><?php if ($this->height) echo "height:".$this->height.";"; ?>"></div>
-
 <script type="text/javascript">
-  function draw_<?php echo $chartId; ?>()
-  {
-    var data = new google.visualization.arrayToDataTable(<?php echo json_encode($data);?>);
-    var options = <?php echo json_encode($options); ?>;
-    var chart = new google.visualization.<?php echo $chartType; ?>(document.getElementById('<?php echo $chartId; ?>'));    
-    chart.draw(data, options);
-  }
-  google.charts.setOnLoadCallback(draw_<?php echo $chartId; ?>);
-  window.addEventListener('resize',draw_<?php echo $chartId; ?>);
+    googleChartLoader.load("<?php echo $this->stability; ?>","<?php echo $this->package; ?>");
+    var <?php echo $chartId; ?> = new GoogleChart("<?php echo $chartType; ?>","<?php echo $chartId; ?>",<?php echo json_encode($data);?>,<?php echo json_encode($options);?>);
+    <?php
+    foreach($this->clientEvents as $event=>$function)
+    {
+    ?>
+        <?php echo $chartId; ?>.registerEvent("<?php echo $event; ?>",<?php echo $function; ?>);
+    <?php
+    }
+    ?>
 </script>

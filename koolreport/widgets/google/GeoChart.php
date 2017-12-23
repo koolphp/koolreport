@@ -13,10 +13,6 @@ namespace koolreport\widgets\google;
 
 class GeoChart extends Chart
 {
-	protected function loadLibrary()
-	{
-		$this->getReport()->getResourceManager()
-		->addScriptOnBegin("google.charts.load('current', {'packages':['geochart']})");
-	}	
-
+	protected $stability="current";
+	protected $package="geochart";
 }

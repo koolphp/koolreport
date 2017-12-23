@@ -13,10 +13,6 @@ namespace koolreport\widgets\google;
 
 class Table extends Chart
 {
-	protected function loadLibrary()
-	{
-		$this->getReport()->getResourceManager()
-		->addScriptOnBegin("google.charts.load('current', {'packages':['table']})");
-	}	
-
+	protected $stability="current";
+	protected $package="table";
 }

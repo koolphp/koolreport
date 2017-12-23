@@ -13,10 +13,6 @@ namespace koolreport\widgets\google;
 
 class Sankey extends Chart
 {
-	protected function loadLibrary()
-	{
-		$this->getReport()->getResourceManager()
-		->addScriptOnBegin("google.charts.load('current', {'packages':['sankey']})");
-	}	
-
+	protected $stability="current";
+	protected $package="sankey";
 }

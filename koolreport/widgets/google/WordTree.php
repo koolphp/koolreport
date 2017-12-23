@@ -13,10 +13,6 @@ namespace koolreport\widgets\google;
 
 class WordTree extends Chart
 {
-	protected function loadLibrary()
-	{
-		$this->getReport()->getResourceManager()
-		->addScriptOnBegin("google.charts.load('current', {'packages':['wordtree']})");
-	}	
-
+	protected $stability="current";
+	protected $package="wordtree";
 }

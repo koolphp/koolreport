@@ -34,6 +34,7 @@ class KoolReport extends Base
 		$this->fireEvent("OnInitDone");
 	}
 
+
 	public function getColorScheme($index=0)
 	{
 		if($index===null)

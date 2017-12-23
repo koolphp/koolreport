@@ -1,3 +1,16 @@
+# Version 2.0.0
+    1. DataStore: Add process() function to further process data
+    2. PdoDataSource: Update the bindParams() function.
+    3. Table: Handle the case when there is no data
+    4. Table: Show custom messages
+    5. Widget: Able to load language/localization
+    6. PdoDataSource, MySQLDataSource, SQLSRVDataSource: Update parameter binding.
+    7. Add ability to contain sub report, supporting partial report rendering.
+    8. Widget: Enhance the template() function
+    9. Google Charts: Rewrite library to support ajax loading and work well with SubReport
+    10. Table: Support ajax loading.
+    11. Table: Adding client event handler capability.
+
 # Version 1.72.8
     1. DataStore: Fix the `get()` function
     2. TimeBucket: Change month bucket format from `Y-n` to `Y-m` to support sorting.

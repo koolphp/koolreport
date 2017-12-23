@@ -33,21 +33,22 @@ class MySQLDataSource extends DataSource
 		$username = Utility::get($this->params,"username","");
 		$password = Utility::get($this->params,"password","");
 		$dbname = Utility::get($this->params,"dbname","");
-		$charset = Utility::get($this->params,"charset");
+		$charset = Utility::get($this->params,"charset", null);
 		
     $this->connection = new \mysqli($host, $username, $password, $dbname);
     /* check connection */
-    if ($this->connection->connect_errno) 
+    if ($this->connection->connect_errno) {
       echo "Failed to connect to MySQL: (" . 
         $this->connection->connect_errno . ") " . 
         $this->connection->connect_error;
+    }
 
     /* change character set */
-      if (!$this->connection->set_charset($charset)) {
-        printf("Error loading character set $charset: %s\n", 
-          $this->connection->error);
-        exit();
-      }
+    if (isset($charset) && ! $this->connection->set_charset($charset)) {
+      printf("Error loading character set $charset: %s\n", 
+        $this->connection->error);
+      exit();
+    }
 	}
 	
 	public function query($query, $sqlParams=null)
@@ -75,9 +76,13 @@ class MySQLDataSource extends DataSource
 					$value = "'".implode("','",$value)."'";
 					$query = str_replace($key,$value,$query);
 				}
-				else
+				else if(gettype($value)==="string")
 				{
 					$query = str_replace($key,"'$value'",$query);
+				}
+				else
+				{
+					$query = str_replace($key,$value,$query);
 				}
 			}
 		}

@@ -26,6 +26,10 @@ class Chart extends Widget
     protected $title;
     protected $colorScheme;
     protected $data;
+    protected $clientEvents;
+
+    protected $package="corechart";
+    protected $stability="current";
 
     protected function onInit()
     {
@@ -56,7 +60,7 @@ class Chart extends Widget
         }
 
 
-        
+        $this->clientEvents = Utility::get($this->params,"clientEvents",array());        
         $this->columns = Utility::get($this->params,"columns",null);
         $this->options = Utility::get($this->params,"options",array());
         $this->width = Utility::get($this->params,"width","600px");
@@ -190,21 +194,23 @@ class Chart extends Widget
         }
         return $data;
     }
-    
-    protected function loadLibrary()
-    {
-        $this->getReport()->getResourceManager()
-        ->addScriptOnBegin("google.charts.load('current', {'packages':['corechart']});");
-    }
-    
+        
     public function render()
     {
         if($this->dataStore->countData()>0)
         {
-            //Register loader
-            $this->getReport()->getResourceManager()
-                ->addScriptFileOnBegin('https://www.gstatic.com/charts/loader.js');
+            //jQuery
+            $publicAssetUrl = $this->getReport()->publishAssetFolder(realpath(dirname(__FILE__)."/../../clients/jquery"));
+            $this->getReport()->getResourceManager()->addScriptFileOnBegin(
+                $publicAssetUrl."/jquery.min.js"
+            );
             
+
+            $this->getAssetManager()->publish("clients");            
+            $this->getReport()->getResourceManager()->addScriptFileOnBegin(
+                $this->getAssetManager()->getAssetUrl('googlechart.js')
+            );
+
 
             //Update options
             $options = $this->options;

@@ -73,8 +73,8 @@ class CSVDataSource extends DataSource
           $columnNames = array();
           for ($i=0; $i<count($row); $i++)
             array_push($columnNames, 'Column ' . $i);
-        }
-        
+				}
+				
         $metaData = array("columns"=>array());
         for($i=0;$i<count($columnNames);$i++) {						
           $metaData["columns"][$columnNames[$i]] = array(

@@ -10,34 +10,25 @@
 
 use \koolreport\core\Utility;
 ?>
-<?php $this->loadLibrary(); ?>
 <div id="<?php echo $chartId; ?>" style="<?php if ($this->width) echo "width:".$this->width.";"; ?><?php if ($this->height) echo "height:".$this->height.";"; ?>"></div>
 
 <script type="text/javascript">
-    function draw_<?php echo $chartId; ?>()
-    {
-        var container = document.getElementById('<?php echo $chartId; ?>');
-        var chart = new google.visualization.Timeline(container);
-        var dataTable = new google.visualization.DataTable();
-        var options = <?php echo json_encode($options); ?>;
-
-        <?php
-        foreach($columns as $cKey=>$column)
-            if($column!=null)
-            {
-                $column["id"] = $cKey;
-            ?>
-            dataTable.addColumn(<?php echo json_encode($column); ?>);
-            <?php    
-            }
+    googleChartLoader.load("<?php echo $this->stability; ?>","<?php echo $this->package; ?>");
+    var tldata = [[]];
+    <?php
+    foreach($columns as $cKey=>$column)
+        if($column!=null)
+        {
+            $column["id"] = $cKey;
         ?>
-
-        dataTable.addRows([
-        <?php
+        tldata[0].push(<?php echo json_encode($column); ?>);
+        <?php    
+        }
         $this->dataStore->popStart();
         while($row=$this->dataStore->pop())
         {
-            echo "[";
+        ?>
+        tldata.push([<?php
             foreach($columns as $cKey=>$column)
             {
                 if($column!=null)
@@ -61,14 +52,11 @@ use \koolreport\core\Utility;
                         break;
                     }    
                 }
-            }
-            echo "],";
+            }        
+        ?>]);
+        <?php    
         }
-        ?>
-        ]);
-
-        chart.draw(dataTable, options);
-    }
-    google.charts.setOnLoadCallback(draw_<?php echo $chartId; ?>);
-    window.addEventListener('resize',draw_<?php echo $chartId; ?>);
+    ?>
+    
+    var <?php echo $chartId; ?> = new GoogleChart("Timeline","<?php echo $chartId; ?>",tldata,<?php echo json_encode($options); ?>);    
 </script>

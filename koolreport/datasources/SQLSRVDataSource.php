@@ -31,8 +31,8 @@ class SQLSRVDataSource extends DataSource
 	{		
     $host = Utility::get($this->params,"host","");//host\instanceName
     $username = Utility::get($this->params,"username","");
-		$password = Utility::get($this->params,"password","");
-		$dbname = Utility::get($this->params,"dbname","");
+    $password = Utility::get($this->params,"password","");
+    $dbname = Utility::get($this->params,"dbname","");
     $connectionInfo = array( "Database"=>$dbname, "UID"=>$username, "PWD"=>$password);
     $conn = sqlsrv_connect( $host, $connectionInfo);
 
@@ -71,9 +71,13 @@ class SQLSRVDataSource extends DataSource
 					$value = "'".implode("','",$value)."'";
 					$query = str_replace($key,$value,$query);
 				}
-				else
+				else if(gettype($value)==="string")
 				{
 					$query = str_replace($key,"'$value'",$query);
+				}
+				else
+				{
+					$query = str_replace($key,$value,$query);
 				}
 			}
 		}

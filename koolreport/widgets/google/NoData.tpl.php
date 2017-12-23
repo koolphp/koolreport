@@ -1,1 +1,1 @@
-[No data]
+[No data available in chart]

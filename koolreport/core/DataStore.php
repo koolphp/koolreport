@@ -328,6 +328,20 @@ class DataStore extends Node
 		return $this->sum($colName)/$this->countData();
 	}
 
+	public function process($process)
+	{
+		$ds = new DataStore($this->report);
+		$process->pipe($ds);
+		$process->receiveMeta($this->metaData,$this);
+		$process->startInput($this);
+		foreach($this->dataset as $row)
+		{
+			$process->input($row,$this);
+		}
+		$process->endInput($this);
+		return $ds;
+	}
+
 	public function getReport()
 	{
 		return $this->report;

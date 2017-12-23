@@ -40,44 +40,60 @@ class Table extends Widget
 
 	protected $paging;
 
+	protected $clientEvents;
+
+
 	protected function onInit()
 	{	
+		$this->clientEvents = Utility::get($this->params,"clientEvents");
+		$this->columns = Utility::get($this->params,"columns",array());
 		//Table class
-        $this->getAssetManager()->publish("table");
-        $this->getReport()->getResourceManager()->addScriptFileOnBegin(
-            $this->getAssetManager()->getAssetUrl('table.js')
-        );
-        $this->getReport()->getResourceManager()->addCssFile(
-            $this->getAssetManager()->getAssetUrl('table.css')
-		);
 		$this->name = Utility::get($this->params,"name","ktable".Utility::getUniqueId());
         $data = Utility::get($this->params,"data");
-        if(is_array($data) && count($data)>0)
+        if(is_array($data))
         {
-            $this->dataStore = new DataStore;
-            $this->dataStore->data($data);
-            $row = $data[0];
-            $meta = array("columns"=>array());
-            foreach($row as $cKey=>$cValue)
-            {
-                $meta["columns"][$cKey] = array(
-                    "type"=>Utility::guessType($cValue),
-                );
-            }
-            $this->dataStore->meta($meta);
+			if(count($data)>0)
+			{
+				$this->dataStore = new DataStore;
+				$this->dataStore->data($data);
+				$row = $data[0];
+				$meta = array("columns"=>array());
+				foreach($row as $cKey=>$cValue)
+				{
+					$meta["columns"][$cKey] = array(
+						"type"=>Utility::guessType($cValue),
+					);
+				}
+				$this->dataStore->meta($meta);	
+			}
+			else
+			{
+                $this->dataStore = new DataStore;
+                $this->dataStore->data(array());
+                $metaColumns = array();
+                foreach($this->columns as $cKey=>$cValue)
+                {
+                    if(gettype($cValue)=="array")
+                    {
+                        $metaColumns[$cKey] = $cValue;
+                    }
+                    else
+                    {
+                        $metaColumns[$cValue] = array();
+                    }
+                }
+                $this->dataStore->meta(array("columns"=>$metaColumns));
+			}
 		}
 		else
 		{
 			$this->dataStore = Utility::get($this->params,"dataStore",null);
 			if($this->dataStore==null)
 			{
-				throw new \Exception("dataStore is required in Table widget");
+				throw new \Exception("dataStore or data property is required in Table widget");
 			}
 		}		
 
-
-		
-		$this->columns = Utility::get($this->params,"columns",array());
 		$this->removeDuplicate = Utility::get($this->params,"removeDuplicate",array());
 		$this->cssClass = Utility::get($this->params,"cssClass",array());
 		$this->excludedColumns = Utility::get($this->params,"excludedColumns",array());
@@ -96,14 +112,24 @@ class Table extends Widget
 			$this->paging["itemCount"]=$this->dataStore->countData();
 			$this->paging["pageCount"]=ceil($this->paging["itemCount"]/$this->paging["pageSize"]);
 		}
+
+		$this->getReport()->getResourceManager()->addScriptFileOnBegin(
+			$this->getReport()->publishAssetFolder(realpath(dirname(__FILE__)."/../../clients/jquery"))."/jquery.min.js"
+		);
+
+		$this->getAssetManager()->publish("table");
+        $this->getReport()->getResourceManager()->addScriptFileOnBegin(
+            $this->getAssetManager()->getAssetUrl('table.js')
+        );
+        $this->getReport()->getResourceManager()->addCssFile(
+            $this->getAssetManager()->getAssetUrl('table.css')
+		);
+
+
 	}
 
 	public function render()
 	{
-		if($this->dataStore->countData()<1)
-		{
-			return;
-		}
 
         $meta = $this->dataStore->meta();
         $showColumnKeys = array();

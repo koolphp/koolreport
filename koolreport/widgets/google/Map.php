@@ -13,10 +13,6 @@ namespace koolreport\widgets\google;
 
 class Map extends Chart
 {
-	protected function loadLibrary()
-	{
-		$this->getReport()->getResourceManager()
-		->addScriptOnBegin("google.charts.load('current', {'packages':['map']})");
-	}	
-
+	protected $stability="current";
+	protected $package="map";
 }

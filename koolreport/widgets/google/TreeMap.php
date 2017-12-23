@@ -13,10 +13,6 @@ namespace koolreport\widgets\google;
 
 class TreeMap extends Chart
 {
-	protected function loadLibrary()
-	{
-		$this->getReport()->getResourceManager()
-		->addScriptOnBegin("google.charts.load('current', {'packages':['treemap']})");
-	}	
-
+	protected $stability="current";
+	protected $package="treemap";
 }

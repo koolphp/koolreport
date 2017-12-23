@@ -9,13 +9,13 @@
  */
 
 /* Usage
-   ->pipe(new Filter(
+   ->pipe(new Filter(array(
       'or',
       array('age','>',4),
       array('name','contain','Tuan'),
       'and',
       array('time','<=','2010-12-31')),
-    )
+    ))
  */
 namespace koolreport\processes;
 use \koolreport\core\Utility;

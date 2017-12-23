@@ -14,17 +14,13 @@ use \koolreport\core\Utility;
 
 class Timeline extends Chart
 {
+	protected $stability="current";
+	protected $package="timeline";
 
 	protected function onInit()
 	{
 		parent::onInit();
 
-	}
-
-	protected function loadLibrary()
-	{
-		$this->getReport()->getResourceManager()
-		->addScriptOnBegin("google.charts.load('current', {'packages':['timeline']})");
 	}
 
 	protected function newClientDate($value,$meta)
@@ -56,10 +52,11 @@ class Timeline extends Chart
 	public function render()
 	{
 
-        $this->getReport()->getResourceManager()
-            ->addScriptFileOnBegin('https://www.gstatic.com/charts/loader.js');
-
-
+		$this->getAssetManager()->publish("clients");            
+		$this->getReport()->getResourceManager()->addScriptFileOnBegin(
+			$this->getAssetManager()->getAssetUrl('googlechart.js')
+		);
+		
 		$columns = $this->getColumnSettings();
 
 		//Update options

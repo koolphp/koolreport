@@ -454,6 +454,20 @@
                 </div>
 
                 <div class="bs-docs-section">
+                    <h1 id="more-examples">More examples</h1>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <ul>
+                                <li><a href="reports/others/subreport_demo/index.php">Example of SubReport, Inputs and Ajax Report Loading</a></li>
+                            </ul>
+                        </div>
+                    </div>                            
+                </div>
+
+
+
+                <div class="bs-docs-section">
                     <h1 id="instruction">Instruction</h1>
                     <h2 id="setup-databases">Setup databases</h2>
                     <p>Most of our examples use <code>.csv</code> data file so that they can be run immediately
@@ -521,8 +535,9 @@ return array(
                         <li><a href="#export">Export package</a></li>
                         <li><a href="#cube">Cube package</a></li>
                         <li><a href="#pivot">Pivot package</a></li>
-                        <li><a href="#inputs">Input package</a></li>
+                        <li><a href="#inputs">Inputs package</a></li>
                         <li><a href="#barcode">Barcode package</a></li>
+                        <li><a href="#more-examples">More examples</a></li>
                         <li><a href="#instruction">Instruction</a>
                             <ul class="nav">
                                 <li><a href="#setup-databases">Setup databases</a></li>

@@ -73,9 +73,13 @@ class PdoDataSource extends DataSource
 					$value = "'".implode("','",$value)."'";
 					$query = str_replace($key,$value,$query);
 				}
-				else
+				else if(gettype($value)==="string")
 				{
 					$query = str_replace($key,"'$value'",$query);
+				}
+				else
+				{
+					$query = str_replace($key,$value,$query);
 				}
 			}
 		}
