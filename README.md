@@ -229,7 +229,7 @@ The KoolReport is licensed under MIT License.
 * [Pivot](https://www.koolreport.com/packages/pivot): Build multi-dimenstional pivot table [__$19.00__]
 * [Export](https://www.koolreport.com/packages/export): Export your report to PDF, JPG, PNG and other formats [__$19.00__]
 * [Morris Chart](https://www.koolreport.com/packages/morris_chart): Use morris charts in your report [__$9__]
-* [Inputs](https://www.koolreport.com/packages/inputs): A simplest way to build dynamic reports [__$9__]
+* [Inputs](https://www.koolreport.com/packages/inputs): A simplest way to build dynamic reports [__$19__]
 * [Cache](https://www.koolreport.com/packages/cache): Drive the speed and responsiveness of your report to the max [__$9__]
 * [BarCode](https://www.koolreport.com/packages/barcode): Generate BarCode and QRCode [__$9__]
 * [Statistics](https://www.koolreport.com/packages/statistics): Provide various statistical measures for your data [__$9__]
