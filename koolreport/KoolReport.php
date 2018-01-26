@@ -205,30 +205,23 @@ class KoolReport extends Base
 	} 
 	
 	public function dataStore($name)
-	{				
-		$settings = $this->settings();
-		$dataStoreParams = Utility::get($settings,"dataStore");
-		if(gettype($name)=="array")
+	{	
+		if(gettype($name)=="string")
 		{
-			$rStores = array();
-			foreach($name as $dataStoreName)
-			{
-				if(!isset($this->dataStores[$dataStoreName]))
-				{
-					$this->dataStores[$dataStoreName] = $this->newDataStore($dataStoreParams);
-				}
-				array_push($rStores,$this->dataStores[$name]);
-			}	
-			return $rStores;
-		}
-		else
-		{
+			$settings = $this->settings();
+			$dataStoreParams = Utility::get($settings,"dataStore");
 			if(!isset($this->dataStores[$name]))
 			{
 				$this->dataStores[$name] = $this->newDataStore($dataStoreParams);
 			}
-			return $this->dataStores[$name];						
+			return $this->dataStores[$name];							
 		}
+		else
+		{
+			//$name's type is different from string
+			//return everything for further process
+			return $name;
+		}			
 	}
 	
 	public function run()
@@ -292,10 +285,10 @@ class KoolReport extends Base
         }
 		$currentDir = dirname(Utility::getClassPath($this));
 
-		$content = "";
-		if($this->fireEvent("OnBeforeRender"))
+		if(is_file($currentDir."/".$view.".view.php"))
 		{
-			if(is_file($currentDir."/".$view.".view.php"))
+			$content = "";
+			if($this->fireEvent("OnBeforeRender"))
 			{
 				ob_start();
 				$this->getResourceManager()->init();
@@ -303,24 +296,27 @@ class KoolReport extends Base
 				include($currentDir."/".$view.".view.php");
 				$content = ob_get_clean();	
 				//Adding resource to content
-				$this->getResourceManager()->process($content);	
-			}
-			else
-			{
-				$this->debug();
-				return;
-			}
-		}
+				if($this->fireEvent("OnBeforeResourceAttached"))
+				{
+					$this->getResourceManager()->process($content);
+					$this->fireEvent("OnResourceAttached");
+				}
 
-		if($return)
-		{
-			$this->fireEvent("OnRenderEnd",array('content'=>$content));
-			return $content;
+				$this->fireEvent("OnRenderEnd",array('content'=>&$content));
+				if($return)
+				{
+					return $content;
+				}
+				else
+				{
+					echo $content;
+					
+				}
+			}
 		}
 		else
 		{
-			echo $content;
-			$this->fireEvent("OnRenderEnd",array('content'=>$content));
+			$this->debug();
 		}
 	}
 }

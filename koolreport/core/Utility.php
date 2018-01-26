@@ -4,7 +4,7 @@
  *
  * @author KoolPHP Inc (support@koolphp.net)
  * @link https://www.koolphp.net
- * @copyright 2008-2017 KoolPHP Inc
+ * @copyright KoolPHP Inc
  * @license https://www.koolreport.com/license#mit-license
  */
 
@@ -42,7 +42,6 @@ class Utility
 		}
 		return "unknown";
 	}
-    
 
 
     static function recurse_copy($src,$dst) { 
@@ -63,17 +62,6 @@ class Utility
     static function format($value,$format)
     {
         $type = Utility::get($format,"type","unknown");
-        $formatValue = Utility::get($format,"formatValue",null);
-
-        if(is_string($formatValue))
-        {
-            eval('$fv='.str_replace('@value','$value',$formatValue).';');
-            return $fv;
-        }
-        else if(is_callable($formatValue))
-        {
-            return $formatValue($value);
-        }
         switch($type)
         {
             case "number":
@@ -101,8 +89,6 @@ class Utility
                     return \DateTime::createFromFormat($dateFormat,$value)->format($displayFormat);
                 }
                 break;
-            
-
         }
         return $value;
     }

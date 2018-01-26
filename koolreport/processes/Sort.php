@@ -4,7 +4,7 @@
  *
  * @author KoolPHP Inc (support@koolphp.net)
  * @link https://www.koolphp.net
- * @copyright 2008-2017 KoolPHP Inc
+ * @copyright KoolPHP Inc
  * @license https://www.koolreport.com/license#mit-license
  */
 
@@ -26,7 +26,7 @@ class Sort extends Process
 		array_push($this->data, $row);
 	}
   
-  function process()
+  function sortProcess()
   {
     $sorts = $this->params;
     usort($this->data, function($a, $b) use ($sorts) {
@@ -47,7 +47,7 @@ class Sort extends Process
   
   public function onInputEnd()
   {
-    $this->process();
+    $this->sortProcess();
     // echo "<pre>";
     // echo json_encode($this->data, JSON_PRETTY_PRINT); 
     // echo "</pre>";

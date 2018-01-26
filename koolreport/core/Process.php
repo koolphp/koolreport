@@ -4,7 +4,7 @@
  *
  * @author KoolPHP Inc (support@koolphp.net)
  * @link https://www.koolphp.net
- * @copyright 2008-2017 KoolPHP Inc
+ * @copyright KoolPHP Inc
  * @license https://www.koolreport.com/license#mit-license
  */
 
@@ -23,5 +23,11 @@ class Process extends Node
 	protected function onInit()
 	{
 		//The descendant will override this function
+	}
+
+	static function process($params)
+	{
+		$class = get_called_class();
+		return new $class($params);
 	}
 }

@@ -34,7 +34,7 @@ class SalesByCustomer extends \koolreport\KoolReport
         )))
         ->pipe(new Limit(array(30)))
         ->pipe(new CopyColumn(array(
-          "dollar_sales"=>"indicator",
+          "indicator"=>"dollar_sales",
         )))
         ->pipe($this->dataStore('sales_by_customer'));
   }

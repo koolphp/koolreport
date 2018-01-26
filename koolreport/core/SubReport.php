@@ -1,4 +1,12 @@
 <?php
+/**
+ * This file contains trait class to handle sub-report
+ *
+ * @author KoolPHP Inc (support@koolphp.net)
+ * @link https://www.koolphp.net
+ * @copyright KoolPHP Inc
+ * @license https://www.koolreport.com/license#mit-license
+ */
 
 namespace koolreport\core;
 
@@ -20,7 +28,9 @@ trait SubReport
                 {
                     $params["@reportName"] = $name;
                     $r = new $class($params);
+                    echo "<!--subreport-start-->";
                     $r->run()->render();
+                    echo "<!--subreport-end-->";
                 }
                 else
                 {
@@ -31,9 +41,6 @@ trait SubReport
         });
         $this->registerEvent("OnResourceInit",function()
         {
-            $this->getResourceManager()->addScriptFileOnBegin(
-                $this->publishAssetFolder(realpath(dirname(__FILE__)."/../clients/jquery"))."/jquery.min.js"
-            );
             $this->getResourceManager()->addScriptFileOnBegin(
                 $this->publishAssetFolder(realpath(dirname(__FILE__)."/../clients/subreport"))."/subreport.js"
             );
@@ -53,6 +60,7 @@ trait SubReport
             echo "<sub-report id='$name' name='$name'>";
             $r->run()->render();
             echo "</sub-report>";
+            $GLOBALS["__ACTIVE_KOOLREPORT__"] = $this;
 		}
 		else
 		{

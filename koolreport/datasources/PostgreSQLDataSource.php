@@ -3,7 +3,7 @@
  *
  * @author KoolPHP Inc (support@koolphp.net)
  * @link https://www.koolphp.net
- * @copyright 2008-2017 KoolPHP Inc
+ * @copyright KoolPHP Inc
  * @license https://www.koolreport.com/license#mit-license
  
  
@@ -45,7 +45,7 @@ class PostgreSQLDataSource extends DataSource
 	
 	public function query($query, $sqlParams=null)
 	{
-		$this->query = $query;
+		$this->query =  (string)$query;
         if($sqlParams!=null)
 		{
 			$this->sqlParams = $sqlParams;

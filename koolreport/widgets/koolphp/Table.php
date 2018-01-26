@@ -4,7 +4,7 @@
  *
  * @author KoolPHP Inc (support@koolphp.net)
  * @link https://www.koolphp.net
- * @copyright 2008-2017 KoolPHP Inc
+ * @copyright KoolPHP Inc
  * @license https://www.koolreport.com/license#mit-license
  */
 
@@ -21,11 +21,12 @@ namespace koolreport\widgets\koolphp;
 use \koolreport\core\Widget;
 use \koolreport\core\Utility;
 use \koolreport\core\DataStore;
+use \koolreport\core\Process;
+use \koolreport\core\DataSource;
 
 class Table extends Widget
 {
 	protected $name;
-	protected $dataStore;
 	protected $columns;
 	protected $cssClass;
     protected $removeDuplicate;
@@ -36,63 +37,91 @@ class Table extends Widget
 	protected $showHeader;
 	protected $footer;
 
-	protected $data;
-
 	protected $paging;
 
 	protected $clientEvents;
 
+	protected $headers;
+
+	protected function resourceSettings()
+	{
+		return array(
+			"library"=>array("jQuery"),
+			"folder"=>"table",
+			"js"=>array("table.js"),
+			"css"=>array("table.css"),
+		);
+	}
 
 	protected function onInit()
 	{	
+		$this->useLanguage();
+		$this->useDataSource();
+		$this->useAutoName("ktable");
 		$this->clientEvents = Utility::get($this->params,"clientEvents");
 		$this->columns = Utility::get($this->params,"columns",array());
-		//Table class
-		$this->name = Utility::get($this->params,"name","ktable".Utility::getUniqueId());
-        $data = Utility::get($this->params,"data");
-        if(is_array($data))
-        {
-			if(count($data)>0)
-			{
-				$this->dataStore = new DataStore;
-				$this->dataStore->data($data);
-				$row = $data[0];
-				$meta = array("columns"=>array());
-				foreach($row as $cKey=>$cValue)
-				{
-					$meta["columns"][$cKey] = array(
-						"type"=>Utility::guessType($cValue),
-					);
-				}
-				$this->dataStore->meta($meta);	
-			}
-			else
-			{
-                $this->dataStore = new DataStore;
-                $this->dataStore->data(array());
-                $metaColumns = array();
-                foreach($this->columns as $cKey=>$cValue)
-                {
-                    if(gettype($cValue)=="array")
-                    {
-                        $metaColumns[$cKey] = $cValue;
-                    }
-                    else
-                    {
-                        $metaColumns[$cValue] = array();
-                    }
-                }
-                $this->dataStore->meta(array("columns"=>$metaColumns));
-			}
-		}
-		else
+		
+		if($this->dataStore==null)
 		{
-			$this->dataStore = Utility::get($this->params,"dataStore",null);
+			$data = Utility::get($this->params,"data");
+			if(is_array($data))
+			{
+				if(count($data)>0)
+				{
+					$this->dataStore = new DataStore;
+					$this->dataStore->data($data);
+					$row = $data[0];
+					$meta = array("columns"=>array());
+					foreach($row as $cKey=>$cValue)
+					{
+						$meta["columns"][$cKey] = array(
+							"type"=>Utility::guessType($cValue),
+						);
+					}
+					$this->dataStore->meta($meta);	
+				}
+				else
+				{
+					$this->dataStore = new DataStore;
+					$this->dataStore->data(array());
+					$metaColumns = array();
+					foreach($this->columns as $cKey=>$cValue)
+					{
+						if(gettype($cValue)=="array")
+						{
+							$metaColumns[$cKey] = $cValue;
+						}
+						else
+						{
+							$metaColumns[$cValue] = array();
+						}
+					}
+					$this->dataStore->meta(array("columns"=>$metaColumns));
+				}	
+			}
 			if($this->dataStore==null)
 			{
-				throw new \Exception("dataStore or data property is required in Table widget");
+				throw new \Exception("dataSource is required for Table");
+				return;	
 			}
-		}		
+		}
+
+		if($this->dataStore->countData()==0 && count($this->dataStore->meta()["columns"])==0)
+		{
+			$meta = array("columns"=>array());
+			foreach($this->columns as $cKey=>$cValue)
+			{
+				if(gettype($cValue)=="array")
+				{
+					$meta["columns"][$cKey] = $cValue;
+				}
+				else
+				{
+					$meta["columns"][$cValue] = array();
+				}
+			}
+			$this->dataStore->meta($meta);
+		}
 
 		$this->removeDuplicate = Utility::get($this->params,"removeDuplicate",array());
 		$this->cssClass = Utility::get($this->params,"cssClass",array());
@@ -100,6 +129,7 @@ class Table extends Widget
 
 		$this->showFooter = Utility::get($this->params,"showFooter");
 		$this->showHeader = Utility::get($this->params,"showHeader",true);
+		
 
 		$this->paging = Utility::get($this->params,"paging");
 		if($this->paging!==null)
@@ -113,22 +143,30 @@ class Table extends Widget
 			$this->paging["pageCount"]=ceil($this->paging["itemCount"]/$this->paging["pageSize"]);
 		}
 
-		$this->getReport()->getResourceManager()->addScriptFileOnBegin(
-			$this->getReport()->publishAssetFolder(realpath(dirname(__FILE__)."/../../clients/jquery"))."/jquery.min.js"
-		);
-
-		$this->getAssetManager()->publish("table");
-        $this->getReport()->getResourceManager()->addScriptFileOnBegin(
-            $this->getAssetManager()->getAssetUrl('table.js')
-        );
-        $this->getReport()->getResourceManager()->addCssFile(
-            $this->getAssetManager()->getAssetUrl('table.css')
-		);
-
-
+		//Header Group
+		$this->headers = Utility::get($this->params,"headers",array());
 	}
 
-	public function render()
+	protected function formatValue($value,$format,$row=null)
+	{
+        $formatValue = Utility::get($format,"formatValue",null);
+
+        if(is_string($formatValue))
+        {
+            eval('$fv="'.str_replace('@value','$value',$formatValue).'";');
+            return $fv;
+        }
+        else if(is_callable($formatValue))
+        {
+            return $formatValue($value,$row);
+        }
+		else
+		{
+			return Utility::format($value,$format);
+		}
+	}
+
+	public function onRender()
 	{
 
         $meta = $this->dataStore->meta();
@@ -137,8 +175,15 @@ class Table extends Widget
         if($this->columns==array())
         {
             $this->dataStore->popStart();
-            $row = $this->dataStore->pop();
-            $showColumnKeys = array_keys($row);
+			$row = $this->dataStore->pop();
+			if($row)
+			{
+				$showColumnKeys = array_keys($row);
+			}
+			else if(count($meta["columns"])>0)
+			{
+				$showColumnKeys = array_keys($meta["columns"]);
+			}
         }
         else
         {

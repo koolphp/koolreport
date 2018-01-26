@@ -4,7 +4,7 @@
  *
  * @author KoolPHP Inc (support@koolphp.net)
  * @link https://www.koolphp.net
- * @copyright 2008-2017 KoolPHP Inc
+ * @copyright KoolPHP Inc
  * @license https://www.koolreport.com/license#mit-license
  */
 
@@ -17,7 +17,6 @@ use \koolreport\core\DataStore;
 class Chart extends Widget
 {
     protected $chartId;
-    protected $dataStore;
     protected $columns;
     protected $options;
     protected $type;
@@ -27,38 +26,24 @@ class Chart extends Widget
     protected $colorScheme;
     protected $data;
     protected $clientEvents;
+    protected $pointerOnHover;
 
     protected $package="corechart";
     protected $stability="current";
 
+    protected function resourceSettings()
+    {
+        return array(
+            "library"=>array("jQuery"),
+            "folder"=>"clients",
+            "js"=>array("googlechart.js"),
+        );
+    }
+
     protected function onInit()
     {
-        $this->chartId = "chart_".Utility::getUniqueId();
-        
-        $data = Utility::get($this->params,"data");
-        if(is_array($data) && count($data)>0)
-        {
-            $this->dataStore = new DataStore;
-            $this->dataStore->data($data);
-            $row = $data[0];
-            $meta = array("columns"=>array());
-            foreach($row as $cKey=>$cValue)
-            {
-                $meta["columns"][$cKey] = array(
-                    "type"=>Utility::guessType($cValue),
-                );
-            }
-            $this->dataStore->meta($meta);
-        }
-        else
-        {
-            $this->dataStore = Utility::get($this->params,"dataStore",null);
-            if(!$this->dataStore)
-            {
-                throw new \Exception("The dataStore property is required");
-            }    
-        }
-
+        $this->useDataSource();
+        $this->useAutoName("gchart");
 
         $this->clientEvents = Utility::get($this->params,"clientEvents",array());        
         $this->columns = Utility::get($this->params,"columns",null);
@@ -66,6 +51,52 @@ class Chart extends Widget
         $this->width = Utility::get($this->params,"width","600px");
         $this->height = Utility::get($this->params,"height","400px");
         $this->title = Utility::get($this->params,"title");
+        $this->pointerOnHover = Utility::get($this->params,"pointerOnHover");
+        if($this->pointerOnHover===null)
+        {
+            if(isset($this->clientEvents["itemSelect"])
+                ||isset($this->clientEvents["rowSelect"])
+                ||isset($this->clientEvents["columnSelect"])
+                ||isset($this->clientEvents["select"]))
+            {
+                $this->pointerOnHover = true;
+            }
+        }
+
+        if(!$this->dataStore)
+        {
+            //Backward compatible with setting through "data"
+			$data = Utility::get($this->params,"data");
+			if(is_array($data))
+			{
+				if(count($data)>0)
+				{
+					$this->dataStore = new DataStore;
+					$this->dataStore->data($data);
+					$row = $data[0];
+					$meta = array("columns"=>array());
+					foreach($row as $cKey=>$cValue)
+					{
+						$meta["columns"][$cKey] = array(
+							"type"=>Utility::guessType($cValue),
+						);
+					}
+					$this->dataStore->meta($meta);	
+				}
+				else
+				{
+					$this->dataStore = new DataStore;
+					$this->dataStore->data(array());
+					$this->dataStore->meta(array("columns"=>array()));
+				}	
+			}
+			if($this->dataStore==null)
+			{
+				throw new \Exception("dataSource is required");
+				return;
+			}
+        }
+
         $this->type = Utility::getClassName($this);
         if($this->type=="Chart")
         {
@@ -93,6 +124,7 @@ class Chart extends Widget
             $this->colorScheme = $this->getReport()->getColorScheme();
         }
     }
+
     
     protected function typeConvert($type)
     {
@@ -195,23 +227,10 @@ class Chart extends Widget
         return $data;
     }
         
-    public function render()
+    protected function onRender()
     {
         if($this->dataStore->countData()>0)
         {
-            //jQuery
-            $publicAssetUrl = $this->getReport()->publishAssetFolder(realpath(dirname(__FILE__)."/../../clients/jquery"));
-            $this->getReport()->getResourceManager()->addScriptFileOnBegin(
-                $publicAssetUrl."/jquery.min.js"
-            );
-            
-
-            $this->getAssetManager()->publish("clients");            
-            $this->getReport()->getResourceManager()->addScriptFileOnBegin(
-                $this->getAssetManager()->getAssetUrl('googlechart.js')
-            );
-
-
             //Update options
             $options = $this->options;
             if($this->title)
@@ -224,7 +243,6 @@ class Chart extends Widget
             }
             //Render
             $this->template("Chart",array(
-                "chartId"=>$this->chartId,
                 "chartType"=>$this->type,
                 "options"=>$options,
                 "data"=>$this->prepareData(),

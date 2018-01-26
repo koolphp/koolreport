@@ -1,3 +1,25 @@
+# Version 2.31.7
+    1. Fix the bug of incorrect active report when subReport is used.
+    2. Widget: Adding default `dataSource` and backward `dataStore` property.
+    3. Widget: Able to set dataStore object, array data and even the adhoc process.
+    4. Table: Remove the `data` property and start using the `dataSource`
+    5. GoogleCharts: Remove `data` property and start using `dataSource` instead
+    6. DataStore: Adding `requestDataSending()` to manually request data piping from source.
+    7. Adding events `OnBeforeResourceAttached` and `OnResourceAttached`
+    8. Table: Add ability to set multilevel group headers.
+    9. PdoDataSource: Adding SQL Query error handling
+    10. CopyColumn: Change input format from `"orginal"=>"copy"` to `"copy"=>"orginal"`
+    11. DataStore: Function process() can accept a series of piping processes.
+    12. GoogleCharts: Add property `pointerOnHover` to set whether pointer will be used when user holds mouse over the item of chart.
+    13: GoogleCharts: Automatic set `pointerOnHover=>true` if there is `"itemSelect"` event is registered.
+    14. Table: Change "goPage" event to "pageChanged" event
+    15. Added `ColumnRename` process to rename column
+    16. Process: Adding static function `process()`
+
+Note for packages:
+- Remove the $dataStore property
+
+
 # Version 2.0.0
     1. DataStore: Add process() function to further process data
     2. PdoDataSource: Update the bindParams() function.

@@ -4,7 +4,7 @@
  *
  * @author KoolPHP Inc (support@koolphp.net)
  * @link https://www.koolphp.net
- * @copyright 2008-2017 KoolPHP Inc
+ * @copyright KoolPHP Inc
  * @license https://www.koolreport.com/license#mit-license
  */
 
@@ -49,14 +49,9 @@ class Timeline extends Chart
 		return "new Date(".\DateTime::createFromFormat($format,$value)->format($toFormat).")";
 	}
 
-	public function render()
+	protected function onRender()
 	{
 
-		$this->getAssetManager()->publish("clients");            
-		$this->getReport()->getResourceManager()->addScriptFileOnBegin(
-			$this->getAssetManager()->getAssetUrl('googlechart.js')
-		);
-		
 		$columns = $this->getColumnSettings();
 
 		//Update options
@@ -71,7 +66,6 @@ class Timeline extends Chart
 		}
 
 		$this->template('Timeline',array(
-                "chartId"=>$this->chartId,
                 "options"=>$options,
 				"columns"=>$columns,
         ));

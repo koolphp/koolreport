@@ -6,6 +6,7 @@ if(typeof googleChartLoader === "undefined")
         this.chartId = chartId;
         this.data = data;
         this.options = options;
+        this.events = {};
         googleChartLoader.callback(function(){
             google.charts.setOnLoadCallback(this.init.bind(this));
             window.addEventListener('resize',this.draw.bind(this));    
@@ -17,12 +18,14 @@ if(typeof googleChartLoader === "undefined")
         dataTable:null,
         chartId:null,
         chartType:null,
-        events:{},
+        events:null,
         chart:null,
         data:null,
+        pointerOnHover:false,
         init:function()
         {
             this.chart = new google.visualization[this.chartType](document.getElementById(this.chartId));
+            
             google.visualization.events.addListener(this.chart, 'select', function(){
                 var selection = this.chart.getSelection();
                 for (var i = 0; i < selection.length; i++)
@@ -37,9 +40,10 @@ if(typeof googleChartLoader === "undefined")
                             selectedRow.push(this.dataTable.getValue(item.row,i));
                         }
                     }
+
                     if (item.row != null && item.column != null)
-                    {                    
-                        this.fireEvent("onItemSelect",{
+                    {
+                        this.fireEvent("itemSelect",{
                             "selectedRowIndex":item.row,
                             "selectedColumnIndex":item.column,
                             "selectedValue":this.dataTable.getValue(item.row,item.column),
@@ -48,9 +52,33 @@ if(typeof googleChartLoader === "undefined")
                             "table":this.dataTable,
                         });
                     }
+                    else if(item.row !=null)
+                    {
+                        this.fireEvent("rowSelect",{
+                            selectedRow:selectedRow,
+                            table:this.dataTable,
+                            selectedRowIndex:item.row,
+                        });
+                    }
+                    else if(item.column!=null)
+                    {
+                        this.fireEvent("columnSelect",{
+                            selectedColumnIndex:item.column,
+                            table:this.dataTable,
+                            columnName:this.dataTable.getColumnLabel(item.column),
+                        });
+                    }
+                    this.fireEvent("select",{
+                        selectedRowIndex:item.row,
+                        selectedColumnIndex:item.column,
+                        table:this.dataTable,
+                    });
                 }
             }.bind(this));
-            this.addPointerCss();
+            if(this.pointerOnHover)
+            {
+                this.addPointerCss();
+            }
             this.draw();
         },
         addPointerCss:function()
@@ -66,6 +94,10 @@ if(typeof googleChartLoader === "undefined")
         {
             this.dataTable = new google.visualization.arrayToDataTable(this.data);
             this.chart.draw(this.dataTable,this.options);
+        },
+        redraw:function()
+        {
+            this.draw();
         },
         registerEvent:function(name,handler)
         {
@@ -88,22 +120,27 @@ if(typeof googleChartLoader === "undefined")
     };
     var googleChartLoader = {
         funcs: new Array(),
+        loading:false,
         load:function(stability,package)
         {
-            if(typeof google =="undefined")
+            if(typeof google !="undefined")
             {
-                $.getScript('https://www.gstatic.com/charts/loader.js',function(){
-                    google.charts.load(stability, {'packages':[package]});
-                    for(var i in this.funcs)
-                    {
-                        this.funcs[i]();
-                    }
-                    this.funcs = new Array();
-                }.bind(this));
+                google.charts.load(stability, {'packages':[package]});
             }
             else
             {
-                google.charts.load(stability, {'packages':[package]});
+                if(this.loading == false)
+                {
+                    $.getScript('https://www.gstatic.com/charts/loader.js',function(){
+                        google.charts.load(stability, {'packages':[package]});
+                        for(var i in this.funcs)
+                        {
+                            this.funcs[i]();
+                        }
+                        this.funcs = new Array();
+                    }.bind(this));
+                    this.loading = true;
+                }    
             }
         },
         callback:function(func)

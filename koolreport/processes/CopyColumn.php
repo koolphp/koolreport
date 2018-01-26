@@ -4,7 +4,7 @@
  *
  * @author KoolPHP Inc (support@koolphp.net)
  * @link https://www.koolphp.net
- * @copyright 2008-2017 KoolPHP Inc
+ * @copyright KoolPHP Inc
  * @license https://www.koolreport.com/license#mit-license
  */
 
@@ -24,7 +24,7 @@ class CopyColumn extends Process
 {
 	protected function onMetaReceived($metaData)
 	{
-		foreach($this->params as $original=>$copy)
+		foreach($this->params as $copy=>$original)
 		{
 			$metaData["columns"][$copy] = $metaData["columns"][$original];
 		}
@@ -34,7 +34,7 @@ class CopyColumn extends Process
 	public function onInput($data)
 	{
 		//Process data here
-		foreach($this->params as $original=>$copy)
+		foreach($this->params as $copy=>$original)
 		{
 			$data[$copy] = $data[$original];
 		}

@@ -30,7 +30,7 @@ if($this->params["country"])
 {
 ?>
     <div class="form-group">
-        <label>Select customer:</label>
+    <label>Select customer in <?php echo $this->params["country"]; ?>:</label>
         <?php
         Select::create(array(
             "name"=>"customer",

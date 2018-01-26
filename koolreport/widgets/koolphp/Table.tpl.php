@@ -4,7 +4,7 @@
  *
  * @author KoolPHP Inc (support@koolphp.net)
  * @link https://www.koolphp.net
- * @copyright 2008-2017 KoolPHP Inc
+ * @copyright KoolPHP Inc
  * @license https://www.koolreport.com/license#mit-license
  */
 	use \koolreport\core\Utility;
@@ -21,6 +21,31 @@
 		{
 		?>
 		<thead>
+			<?php
+			foreach($this->headers as $header)
+			{
+			?>
+			<tr>
+				<?php
+				foreach($header as $hName=>$hValue)
+				{
+					?>
+					<th<?php
+					foreach($hValue as $k=>$v)
+					{
+						if($k!="label")
+						{
+							echo " $k='$v'";
+						}
+					}
+					?>><?php echo Utility::get($hValue,"label",$hName); ?></th>
+					<?php
+				}
+				?>
+			</tr>
+			<?php	
+			}
+			?>
 			<tr>
 			<?php 
 			foreach($showColumnKeys as $cKey)
@@ -55,7 +80,7 @@
 			?>
 				<td <?php if($tfClass){echo " class='".((gettype($tfClass)=="string")?$tfClass:$tfClass($cKey))."'";} ?> <?php echo ($tfStyle)?"style='$tfStyle'":""; ?> >
 					<?php 
-						$footerValue = isset($this->footer[$cKey])?Utility::format($this->footer[$cKey],$meta["columns"][$cKey]):"";
+						$footerValue = isset($this->footer[$cKey])?$this->formatValue($this->footer[$cKey],$meta["columns"][$cKey]):"";
 						$footerText = Utility::get($meta["columns"][$cKey],"footerText");
 						if($footerText!==null)
 						{
@@ -103,7 +128,7 @@
 						{
 							?>
 								<td row-value="<?php echo ($cKey!=="#")?$row[$cKey]:($i+$meta["columns"][$cKey]["start"]);?>" <?php echo ($tdStyle)?"style='$tdStyle'":""; ?> <?php if($tdClass){echo "class='".((gettype($tdClass)=="string")?$tdClass:$tdClass($row,$cKey))."'";} ?> rowspan="<?php echo $span[$i][$cKey]; ?>">
-									<?php echo Utility::format(($cKey!=="#")?$row[$cKey]:($i+$meta["columns"][$cKey]["start"]),$meta["columns"][$cKey]);?>
+									<?php echo $this->formatValue(($cKey!=="#")?$row[$cKey]:($i+$meta["columns"][$cKey]["start"]),$meta["columns"][$cKey],$row);?>
 								</td>
 							<?php						
 						}
@@ -112,7 +137,7 @@
 					{
 						?>
 							<td row-value="<?php echo ($cKey!=="#")?$row[$cKey]:($i+$meta["columns"][$cKey]["start"]);?>" <?php echo ($tdStyle)?"style='$tdStyle'":""; ?> <?php if($tdClass){echo " class='".((gettype($tdClass)=="string")?$tdClass:$tdClass($row,$cKey))."'";} ?>>
-								<?php echo Utility::format(($cKey!=="#")?$row[$cKey]:($i+$meta["columns"][$cKey]["start"]),$meta["columns"][$cKey]);?>
+								<?php echo $this->formatValue(($cKey!=="#")?$row[$cKey]:($i+$meta["columns"][$cKey]["start"]),$meta["columns"][$cKey],$row);?>
 							</td>
 						<?php					
 					}								
@@ -144,21 +169,18 @@
 	?>
 </div>
 <script type="text/javascript">
-	if (typeof KoolPHPTable != 'undefined')
+	var <?php echo $this->name; ?> = new KoolPHPTable('<?php echo $this->name; ?>',<?php echo json_encode(array(
+	"paging"=>$this->paging
+	)); ?>);
+	<?php
+	if($this->clientEvents)
 	{
-		var <?php echo $this->name; ?> = new KoolPHPTable('<?php echo $this->name; ?>',<?php echo json_encode(array(
-		"paging"=>$this->paging
-		)); ?>);
-		<?php
-		if($this->clientEvents)
+		foreach($this->clientEvents as $eventName=>$function)
 		{
-			foreach($this->clientEvents as $eventName=>$function)
-			{
-			?>
-			<?php echo $this->name; ?>.on("<?php echo $eventName; ?>",<?php echo $function; ?>);
-			<?php	
-			}
+		?>
+		<?php echo $this->name; ?>.on("<?php echo $eventName; ?>",<?php echo $function; ?>);
+		<?php	
 		}
-		?>	
 	}
+	?>	
 </script>

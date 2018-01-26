@@ -4,7 +4,7 @@
  *
  * @author KoolPHP Inc (support@koolphp.net)
  * @link https://www.koolphp.net
- * @copyright 2008-2017 KoolPHP Inc
+ * @copyright KoolPHP Inc
  * @license https://www.koolreport.com/license#mit-license
  */
 
@@ -48,7 +48,7 @@ class PdoDataSource extends DataSource
 	
 	public function query($query,$sqlParams=null)
 	{
-		$this->query = $query;
+		$this->query =  (string)$query;
 		if($sqlParams!=null)
 		{
 			$this->sqlParams = $sqlParams;
@@ -127,10 +127,15 @@ class PdoDataSource extends DataSource
 	
 	public function start()
 	{
-		
-		$query = $this->bindParams($this->query,$this->sqlParams);
-		$stm = $this->connection->prepare($query);
-		$stm->execute();
+		$stm = $this->connection->prepare($this->query);
+		$stm->execute($this->sqlParams);
+
+		$error = $stm->errorInfo();
+		if($error[2]!=null)
+		{
+			throw new \Exception("Query Error >> [".$error[2]."]");
+			return;
+		}
 
 		$metaData = array("columns"=>array());
 		$numcols = $stm->columnCount();

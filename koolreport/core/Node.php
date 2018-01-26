@@ -4,7 +4,7 @@
  *
  * @author KoolPHP Inc (support@koolphp.net)
  * @link https://www.koolphp.net
- * @copyright 2008-2017 KoolPHP Inc
+ * @copyright KoolPHP Inc
  * @license https://www.koolreport.com/license#mit-license
  */
 
@@ -28,28 +28,16 @@ class Node extends Base
 		
 	public function pipe($node)
 	{
-		if(gettype($node)=="array")
-		{
-			foreach($node as $nd)
-			{
-				array_push($this->destinations,$nd);
-				$nd->source($this);
-			}
-			return $node;//Return array of node
-		}
-		else
-		{
-			array_push($this->destinations,$node);
-			$node->source($this);
-			return $node;			
-		}
+		array_push($this->destinations,$node);
+		$node->source($this);
+		return $node;			
 	}
 
 	public function previous($index=0)
 	{
 		if(count($this->sources)>0)
 		{
-			return $this->sources[$index];
+			return Utility::get($this->sources,$index);
 		}
 		return null;
 	}
@@ -153,6 +141,17 @@ class Node extends Base
 	protected function onMetaReceived($metaData)
 	{
 		return $metaData;		
+	}
+
+	protected function requestDataSending()
+	{
+		if(!$this->isEnded())
+		{
+			foreach($this->sources as $source)
+			{
+				$source->requestDataSending();
+			}
+		}
 	}
 	
 	public function getReport()

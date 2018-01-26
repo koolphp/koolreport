@@ -4,7 +4,7 @@
  *
  * @author KoolPHP Inc (support@koolphp.net)
  * @link https://www.koolphp.net
- * @copyright 2008-2017 KoolPHP Inc
+ * @copyright KoolPHP Inc
  * @license https://www.koolreport.com/license#mit-license
  */
 
@@ -14,7 +14,7 @@ class DataSource extends Node
 {
 	protected $params;
 	protected $report;
-	public function __construct($params,$report)
+	public function __construct($params=null,$report=null)
 	{
 		parent::__construct();
 		$this->params = $params;
@@ -34,4 +34,9 @@ class DataSource extends Node
 	{
 		return $this->report;
 	}
+
+	protected function requestDataSending()
+	{
+		$this->start();
+	} 
 }

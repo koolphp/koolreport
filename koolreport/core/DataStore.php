@@ -4,7 +4,7 @@
  *
  * @author KoolPHP Inc (support@koolphp.net)
  * @link https://www.koolphp.net
- * @copyright 2008-2017 KoolPHP Inc
+ * @copyright KoolPHP Inc
  * @license https://www.koolreport.com/license#mit-license
  */
 
@@ -16,7 +16,6 @@ class DataStore extends Node
 	protected $params;
 	protected $report;
     protected $index=-1;
-    
   
 	public function __construct($report=null,$params=null)
 	{
@@ -332,14 +331,25 @@ class DataStore extends Node
 	{
 		$ds = new DataStore($this->report);
 		$process->pipe($ds);
-		$process->receiveMeta($this->metaData,$this);
-		$process->startInput($this);
+		$top_process = $process;
+		while($top_process->previous()!=null)
+		{
+			$top_process = $top_process->previous();
+		}
+		$top_process->receiveMeta($this->metaData,$this);
+		$top_process->startInput($this);
+
 		foreach($this->dataset as $row)
 		{
-			$process->input($row,$this);
+			$top_process->input($row,$this);
 		}
-		$process->endInput($this);
+		$top_process->endInput($this);
 		return $ds;
+	}
+
+	public function requestDataSending()
+	{
+		parent::requestDataSending();
 	}
 
 	public function getReport()

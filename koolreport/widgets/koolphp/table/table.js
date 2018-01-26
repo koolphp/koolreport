@@ -115,7 +115,7 @@ if(typeof KoolPHPTable =="undefined")
                 _root.find("tr[row-index="+(oldStart+i)+"]").hide();
                 _root.find("tr[row-index="+(newStart+i)+"]").show();
             }
-            this.fireEvent("gopage",{pageIndex:pageIndex});
+            this.fireEvent("pageChanged",{pageIndex:pageIndex,oldPageIndex:oldIndex});
         },
         on:function(name,func){
             if(typeof this.events[name] == "undefined")
