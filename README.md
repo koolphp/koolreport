@@ -14,6 +14,7 @@ KoolReport is an intuitive and flexible open-source PHP reporting framework for 
 
 # Changelog 
 
+* [Version 2.0.0 (Jan 26th, 2018)](https://www.koolreport.com/updates#version-2317)
 * [Version 2.0.0 (Dec 23rd, 2017)](https://www.koolreport.com/updates#version-200)
 * [Version 1.72.8 (Oct 30th, 2017)](https://www.koolreport.com/updates#version-1728)
 * [Version 1.61.5 (Sep 27th, 2017)](https://www.koolreport.com/updates#version-1615)
@@ -224,6 +225,7 @@ The KoolReport is licensed under MIT License.
 * [Excel](https://www.koolreport.com/packages/excel): Import and export data to Excel [__Free__]
 * [MongoDB](https://www.koolreport.com/packages/mongodb): Build report from MongoDB [__Free__]
 * [CleanData](https://www.koolreport.com/packages/cleandata): Solution for your missing data [__Free__]
+* [QueryBuilder](https://www.koolreport.com/packages/querybuilder): Build fast and error-free SQL Query for your report [__Free__]
 * [Instant](https://www.koolreport.com/packages/instant): Create widget instantly without setting up a full report [__Free__]
 * [Cube](https://www.koolreport.com/packages/cube): Turn your data into two dimensions cross-tab table [__$9.00__]
 * [Pivot](https://www.koolreport.com/packages/pivot): Build multi-dimenstional pivot table [__$19.00__]
@@ -235,6 +237,7 @@ The KoolReport is licensed under MIT License.
 * [Statistics](https://www.koolreport.com/packages/statistics): Provide various statistical measures for your data [__$9__]
 * [Sparklines](https://www.koolreport.com/packages/sparklines): Create tiny charts [__$9__]
 * [DataGrid](https://www.koolreport.com/packages/datagrid): Display data in table format, search, sort, group data and more.. [__$19__]
+* [DrillDown](https://www.koolreport.com/packages/drilldown): Build awesome drill-down, drill-through report easily [__$29__]
 
 
 # KoolReport Pro
