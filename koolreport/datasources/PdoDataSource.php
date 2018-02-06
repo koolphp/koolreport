@@ -127,8 +127,9 @@ class PdoDataSource extends DataSource
 	
 	public function start()
 	{
-		$stm = $this->connection->prepare($this->query);
-		$stm->execute($this->sqlParams);
+		$query = $this->bindParams($this->query,$this->sqlParams);
+		$stm = $this->connection->prepare($query);
+		$stm->execute();
 
 		$error = $stm->errorInfo();
 		if($error[2]!=null)

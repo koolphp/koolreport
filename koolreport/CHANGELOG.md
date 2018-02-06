@@ -1,3 +1,6 @@
+# Version 2.32.8
+    1. Revert back to previous parambinding of PDODataSource
+
 # Version 2.31.7
     1. Fix the bug of incorrect active report when subReport is used.
     2. Widget: Adding default `dataSource` and backward `dataStore` property.
