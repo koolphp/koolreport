@@ -229,7 +229,7 @@ The KoolReport is licensed under MIT License.
 * [QueryBuilder](https://www.koolreport.com/packages/querybuilder): Build fast and error-free SQL Query for your report [__Free__]
 * [Instant](https://www.koolreport.com/packages/instant): Create widget instantly without setting up a full report [__Free__]
 * [Cube](https://www.koolreport.com/packages/cube): Turn your data into two dimensions cross-tab table [__$9.00__]
-* [Pivot](https://www.koolreport.com/packages/pivot): Build multi-dimenstional pivot table [__$19.00__]
+* [Pivot](https://www.koolreport.com/packages/pivot): Build multi-dimenstional pivot table [__$29.00__]
 * [Export](https://www.koolreport.com/packages/export): Export your report to PDF, JPG, PNG and other formats [__$19.00__]
 * [Morris Chart](https://www.koolreport.com/packages/morris_chart): Use morris charts in your report [__$9__]
 * [Inputs](https://www.koolreport.com/packages/inputs): A simplest way to build dynamic reports [__$19__]
