@@ -16,7 +16,10 @@
     {
         "php":">=5.4"
     },
-    "autoload": {
-        "psr-0": { "koolreport\\": "koolreport/" }
-    }
+    "psr-4": {
+		"koolreport\\": [
+			"koolreport/", 
+			"koolreport/packages/"
+		]
+	}
 }
