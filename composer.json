@@ -1,6 +1,6 @@
 {
     "name": "koolphp/koolreport",
-    "version":"2.31.10",
+    "version":"2.31.11",
     "description": "An Open Source PHP Reporting Framework for easier and faster report delivery.",
     "keywords": ["php reporting framework","php reporting tools","data processing","data visualization","charts and graphs"],
     "homepage": "https://www.koolreport.com",
@@ -16,10 +16,11 @@
     {
         "php":">=5.4"
     },
-    "psr-4": {
+    "autoload": {
+        "psr-4": {
 		"koolreport\\": [
 			"koolreport/", 
 			"koolreport/packages/"
 		]
 	}
-}
+    }
