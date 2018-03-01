@@ -17,11 +17,8 @@
         "php":">=5.4"
     },
     "autoload": {
-        "psr-4": {
-		"koolreport\\": [
-			"koolreport/", 
-			"koolreport/packages/"
-		]
-	}
+        "files": [
+            "koolreport/autoload.php"
+        ]
     }
 }
