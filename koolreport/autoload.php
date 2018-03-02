@@ -10,21 +10,25 @@ foreach($packageFolders as $folder)
     }
 }
 
-spl_autoload_register(function ($class_name) {
-    $filePath = str_replace("\\","/",dirname(dirname(__FILE__))."/".$class_name . '.php');
-    //try to load in file
-    if(is_file($filePath))
+spl_autoload_register(function ($classname) {
+    
+    if(strpos($classname,"koolreport\\")!==false)
     {
-        require_once $filePath; 
-    }
-    else
-    {
-        //try to load in packages
-        $class_name = str_replace("\\","/",$class_name);
-        $filePath = str_replace("\\","/",dirname(dirname(__FILE__)))."/".str_replace("koolreport", "koolreport/packages", $class_name).'.php';
+        $filePath = str_replace("\\","/",dirname(dirname(__FILE__))."/".$classname . '.php');
+        //try to load in file
         if(is_file($filePath))
         {
-            require_once $filePath;
+            require_once $filePath; 
         }
+        else
+        {
+            //try to load in packages
+            $classname = str_replace("\\","/",$classname);
+            $filePath = str_replace("\\","/",dirname(dirname(__FILE__)))."/".str_replace("koolreport", "koolreport/packages", $classname).'.php';
+            if(is_file($filePath))
+            {
+                require_once $filePath;
+            }
+        }    
     }
 });

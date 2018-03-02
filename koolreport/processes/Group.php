@@ -80,6 +80,7 @@ class Group extends Process
 		foreach($this->countColumns as $column)
 		{
 			$metaData["columns"][$column]["method"] = "count";
+			$metaData["columns"][$column]["type"] = "number";
 		}
 		foreach($this->avgColumns as $column)
 		{
@@ -118,8 +119,6 @@ class Group extends Process
 			{
 				$res[$countColumn]=$this->cData[$index];
 			}
-			
-
 			foreach($this->minColumns as $minColumn)
 			{
 				if($res[$minColumn]>$row[$minColumn])
@@ -147,8 +146,12 @@ class Group extends Process
 		}
 		else
 		{
-			$this->gData[$index] = $row;
 			$this->cData[$index] = 1;
+			foreach($this->countColumns as $countColumn)
+			{
+				$row[$countColumn]=1;
+			}
+			$this->gData[$index] = $row;
 		}
 	}
 	

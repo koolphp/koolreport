@@ -134,7 +134,7 @@ class PdoDataSource extends DataSource
 		$error = $stm->errorInfo();
 		if($error[2]!=null)
 		{
-			throw new \Exception("Query Error >> [".$error[2]."]");
+			throw new \Exception("Query Error >> [".$error[2]."] >> $query");
 			return;
 		}
 

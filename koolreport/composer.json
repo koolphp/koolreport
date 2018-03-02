@@ -1,6 +1,6 @@
 {
     "name": "KoolReport",
-    "version":"2.31.8",
+    "version":"2.41.3",
     "description": "An Open Source PHP Reporting Framework for easier and faster report delivery",
     "keywords": ["php reporting framework","php reporting tools","data reporting","charts and graphs"],
     "homepage": "https://www.koolreport.com",

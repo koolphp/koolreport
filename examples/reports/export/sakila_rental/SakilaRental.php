@@ -18,7 +18,7 @@ class SakilaRental extends KoolReport
             "dataSources"=>array(
                 "sakila_rental"=>array(
                     "class"=>'\koolreport\datasources\CSVDataSource',
-                    'filePath'=>dirname(__FILE__)."\sakila_rental.csv",
+                    'filePath'=>dirname(__FILE__)."/sakila_rental.csv",
                 )
             )
         );

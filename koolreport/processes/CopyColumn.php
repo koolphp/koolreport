@@ -10,8 +10,8 @@
 
 /* Usage
  * ->pipe(new CopyColumn(array(
- * 		"amount"=>"amountCopy",
- * 		"time"=>"timeCopy",
+ * 		"amountCopy"=>"amount",
+ * 		"timeCopy"=>"time",
  * )))
  * Create a new column with new name with same value
  * 

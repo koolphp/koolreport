@@ -396,6 +396,22 @@
                               </div>
                             </a>
                         </div>
+
+                        <div class="col-md-4">
+                            <a href="reports/pivot/pivot_extract/index.php" class="pk">
+                              <div class="thumbnail">
+                                  <div class="img">
+                                      <img src="assets/images/pivot5.png" alt="...">
+                                  </div>
+                                  <div class="caption">
+                                      <div class="pk-info">
+                                          <h3><strong>PivotExtract</strong></h3>
+                                          <p>Extract data table from a pivot data.</p>
+                                      </div>
+                                  </div>                        
+                              </div>
+                            </a>
+                        </div>
                         
                     </div>           
                 </div>
@@ -526,6 +542,33 @@
                 </div>
 
 
+                <div class="bs-docs-section">
+                    <h1 id="chartjs">ChartJS package</h1>
+                    <p><code>ChartJS</code> provide beatiful charts for your data visualization
+                        Get the <code>ChartJS</code> package <a href="https://www.koolreport.com/packages/chartjs">in here</a>.
+                    </p>
+                    <div class="row">
+                    
+                        <div class="col-md-4">  
+                            <a href="reports/chartjs/intro/index.php" class="pk">
+                              <div class="thumbnail">
+                                  <div class="img">
+                                      <img src="assets/images/chartjs1.png" alt="...">
+                                  </div>
+                                  <div class="caption">
+                                      <div class="pk-info">
+                                          <h3><strong>Introduce charts</strong></h3>
+                                          <p>List supported charts from ChartJS</p>
+                                      </div>
+                                  </div>                        
+                              </div>
+                            </a>
+                        </div>    
+                        
+                    </div>                            
+                </div>
+
+
 
                 <div class="bs-docs-section">
                     <h1 id="more-examples">More examples</h1>
@@ -612,6 +655,7 @@ return array(
                         <li><a href="#inputs">Inputs package</a></li>
                         <li><a href="#barcode">Barcode package</a></li>
                         <li><a href="#drilldown">DrillDown package</a></li>
+                        <li><a href="#chartjs">ChartJS package</a></li>
                         <li><a href="#more-examples">More examples</a></li>
                         <li><a href="#instruction">Instruction</a>
                             <ul class="nav">

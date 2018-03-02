@@ -16,7 +16,7 @@ class InputAndExport extends \koolreport\KoolReport
     function defaultParamValues()
     {
         return array(
-            "customerNumber"=>null,
+            "customerNumber"=>0,
         );
     }
 
