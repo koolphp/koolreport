@@ -14,6 +14,7 @@ KoolReport is an intuitive and flexible open-source PHP reporting framework for 
 
 # Changelog 
 
+* [Version 2.31.8 (Feb 05th, 2018)](https://www.koolreport.com/updates#version-2318)
 * [Version 2.31.7 (Jan 26th, 2018)](https://www.koolreport.com/updates#version-2317)
 * [Version 2.0.0 (Dec 23rd, 2017)](https://www.koolreport.com/updates#version-200)
 * [Version 1.72.8 (Oct 30th, 2017)](https://www.koolreport.com/updates#version-1728)
@@ -227,9 +228,9 @@ The KoolReport is licensed under MIT License.
 * [CleanData](https://www.koolreport.com/packages/cleandata): Solution for your missing data [__Free__]
 * [QueryBuilder](https://www.koolreport.com/packages/querybuilder): Build fast and error-free SQL Query for your report [__Free__]
 * [Instant](https://www.koolreport.com/packages/instant): Create widget instantly without setting up a full report [__Free__]
-* [Cube](https://www.koolreport.com/packages/cube): Turn your data into two dimensions cross-tab table [__$9.00__]
-* [Pivot](https://www.koolreport.com/packages/pivot): Build multi-dimenstional pivot table [__$19.00__]
-* [Export](https://www.koolreport.com/packages/export): Export your report to PDF, JPG, PNG and other formats [__$19.00__]
+* [Cube](https://www.koolreport.com/packages/cube): Turn your data into two dimensions cross-tab table [__$9__]
+* [Pivot](https://www.koolreport.com/packages/pivot): Build multi-dimenstional pivot table [__$29__]
+* [Export](https://www.koolreport.com/packages/export): Export your report to PDF, JPG, PNG and other formats [__$19__]
 * [Morris Chart](https://www.koolreport.com/packages/morris_chart): Use morris charts in your report [__$9__]
 * [Inputs](https://www.koolreport.com/packages/inputs): A simplest way to build dynamic reports [__$19__]
 * [Cache](https://www.koolreport.com/packages/cache): Drive the speed and responsiveness of your report to the max [__$9__]
@@ -238,6 +239,7 @@ The KoolReport is licensed under MIT License.
 * [Sparklines](https://www.koolreport.com/packages/sparklines): Create tiny charts [__$9__]
 * [DataGrid](https://www.koolreport.com/packages/datagrid): Display data in table format, search, sort, group data and more.. [__$19__]
 * [DrillDown](https://www.koolreport.com/packages/drilldown): Build awesome drill-down, drill-through report easily [__$29__]
+* [ChartJS](https://www.koolreport.com/packages/chartjs): One of the most beautiful and powerful chart libraries for your report [__$29__]
 
 
 # KoolReport Pro
