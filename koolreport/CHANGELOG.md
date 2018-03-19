@@ -1,11 +1,15 @@
-# Version 2.33.1
+# Version 2.42.0
+    1. Change namespace `::class` to use classname in string so that `KoolReport` is compatible with PHP 5.4
+    2. `PdoDataSource`: Fix `charset` issue with `PostgreSQL`
+
+# Version 2.41.3
     1. Adding `AccumulativeColumn` to generate accumulative column.
     2. Fix Group process for not counting records correctly.
     3. Enhance the `autoload` of KoolReport
     4. A bundle of small fixes
 
 # Version 2.32.8
-    1. Revert back to previous parambinding of PDODataSource
+    1. Revert back to previous param binding of PDODataSource
 
 
 # Version 2.31.7

@@ -243,11 +243,11 @@ class Widget extends Base
 					));
 				}
 			}
-			else if(is_a($dataSource,DataStore::class))
+			else if(is_a($dataSource,'koolreport\core\DataStore'))
 			{
 				$this->dataStore = $dataSource;
 			}
-			else if(is_a($dataSource,DataSource::class)||is_a($dataSource,Process::class))
+			else if(is_a($dataSource,'koolreport\core\DataSource')||is_a($dataSource,'koolreport\core\Process'))
 			{
 				$this->dataStore = $this->onFurtherProcessRequest($dataSource)->pipe(new DataStore($this->getReport()));
 			}

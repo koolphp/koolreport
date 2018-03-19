@@ -42,7 +42,7 @@ class PdoDataSource extends DataSource
 		}
 		if($charset)
 		{
-			$this->connection->exec("set names $charset");
+			$this->connection->exec("set names '$charset'");
 		}
 	}
 	
