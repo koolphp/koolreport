@@ -1,3 +1,6 @@
+# Version 2.43.0
+    1. Fix issue with GoogleChart when working with numeric column but in string form.
+
 # Version 2.42.0
     1. Change namespace `::class` to use classname in string so that `KoolReport` is compatible with PHP 5.4
     2. `PdoDataSource`: Fix `charset` issue with `PostgreSQL`

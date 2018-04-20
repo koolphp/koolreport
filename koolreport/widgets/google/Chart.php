@@ -202,12 +202,18 @@ class Chart extends Widget
             $gRow = array();
             foreach($columns as $cKey=>$cSetting)
             {
-                $fValue = Utility::format($row[$cKey],$cSetting);
+                $value = $row[$cKey];
+                $cType = Utility::get($cSetting,"type","unknown");
+                if($cType==="number")
+                {
+                    $value = floatval($value);
+                }
+                $fValue = Utility::format($value,$cSetting);
                 
                 array_push($gRow,
-                    ($fValue===$row[$cKey])?
-                        $row[$cKey]:
-                        array("v"=>$row[$cKey],"f"=>$fValue)
+                    ($fValue===$value)?
+                        $value:
+                        array("v"=>$value,"f"=>$fValue)
                 );
                 
                 foreach($columnExtraRoles as $cRole)

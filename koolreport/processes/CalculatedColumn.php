@@ -84,6 +84,7 @@ class CalculatedColumn extends Process
 	
 	protected function onInput($data)
 	{
+		// print_r($data);
         $this->rowNum++;
 		foreach($this->params as $cKey=>$cValue)
 		{
@@ -91,13 +92,15 @@ class CalculatedColumn extends Process
 			{
 				case "string":
 					$expression = $cValue["exp"];
+					// echo $expression . ' || ';
 					foreach($data as $k=>$v)
+					if (is_string($v) || is_numeric($v))
 					{
 						$expression = str_replace("{".$k."}",$v,$expression);
                     }
                     //predefined row
                     $expression = str_replace("{#}",$this->rowNum,$expression);
-
+					// echo $expression . ' <br> ';
 					eval('$data[$cKey]='.$expression.';');							
 				break;
 				case "object":
