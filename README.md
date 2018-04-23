@@ -1,6 +1,6 @@
 # KoolReport
 
-KoolReport is an intuitive and flexible open-source PHP reporting framework for faster and easier report delivery. It gives you full control of data process as well as data visualization. It is fast, simple and can be extended in many ways.
+### KoolReport is an intuitive and flexible open-source PHP reporting framework for faster and easier report delivery. It gives you full control of data process as well as data visualization. It is fast, simple and can be extended in many ways.
 
 [![View examples](https://www.koolreport.com/assets/images/reporting_system.png)](https://www.koolreport.com/examples)
 
