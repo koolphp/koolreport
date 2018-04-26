@@ -174,25 +174,26 @@ use \koolreport\widgets\google\BarChart;
 <hr/>
 
 <?php
-    BarChart::create(array(
-        "dataStore"=>$this->dataStore('sales_by_customer'),
-        "width"=>"100%",
-        "height"=>"500px",
-        "columns"=>array(
-            "customerName"=>array(
-                "label"=>"Customer"
-            ),
-            "dollar_sales"=>array(
-                "type"=>"number",
-                "label"=>"Amount",
-                "prefix"=>"$",
-            )
+BarChart::create(array(
+    "dataStore"=>$this->dataStore('sales_by_customer'),
+    "width"=>"100%",
+    "height"=>"500px",
+    "columns"=>array(
+        "customerName"=>array(
+            "label"=>"Customer"
         ),
-        "options"=>array(
-            "title"=>"Sales By Customer"
+        "dollar_sales"=>array(
+            "type"=>"number",
+            "label"=>"Amount",
+            "prefix"=>"$",
         )
-    ));
+    ),
+    "options"=>array(
+        "title"=>"Sales By Customer"
+    )
+));
 ?>
+
 <?php
 Table::create(array(
     "dataStore"=>$this->dataStore('sales_by_customer'),
