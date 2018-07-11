@@ -20,8 +20,8 @@ if(typeof subReport =="undefined")
                     method:"POST",
                     data:data,
                 }).done(function(content){
-                    var start_mark = "<!--subreport-start-->";
-                    var end_mark = "<!--subreport-end-->";
+                    var start_mark = "<subreport-partial>";
+                    var end_mark = "</subreport-partial>";
                     content = content.substring(content.indexOf(start_mark)+start_mark.length,content.indexOf(end_mark));
                     $("sub-report#"+name).html(content);
                     this.fireEvent("updated",{"@supReport":name});

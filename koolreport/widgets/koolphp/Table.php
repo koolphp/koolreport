@@ -42,6 +42,7 @@ class Table extends Widget
 	protected $clientEvents;
 
 	protected $headers;
+	protected $responsive;
 
 	protected function resourceSettings()
 	{
@@ -145,6 +146,7 @@ class Table extends Widget
 
 		//Header Group
 		$this->headers = Utility::get($this->params,"headers",array());
+		$this->responsive = Utility::get($this->params,"responsive",false);
 	}
 
 	protected function formatValue($value,$format,$row=null)

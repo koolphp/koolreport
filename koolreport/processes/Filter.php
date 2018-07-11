@@ -38,14 +38,14 @@ class Filter extends Process
       case '=':
       case '==':
       case 'equal':
-        if ($type === 'string')
+        if ($type === 'string' && is_string($value) && is_string($condition[2]))
           $isFiltered = strcmp($value, $condition[2]) == 0;
         else
           $isFiltered = $value == $condition[2];
         break;
       case '!=':
       case 'notEqual':
-        if ($type === 'string')
+        if ($type === 'string' && is_string($value) && is_string($condition[2]))
           $isFiltered = strcmp($value, $condition[2]) != 0;
         else
           $isFiltered = $value != $condition[2];

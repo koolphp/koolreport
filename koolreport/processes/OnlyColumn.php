@@ -45,6 +45,7 @@ class OnlyColumn extends Process
 				$ndata[$colname] = $data[$colname];
 			}
 		}
+		
 		$this->next($ndata);
 	}
 }

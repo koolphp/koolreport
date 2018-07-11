@@ -636,7 +636,7 @@ return array(
                     <h2 id="koolreport-pro">KoolReport Pro</h2>
                     <p>
                         <b>KoolReport Pro</b> is a special version including the latest KoolReport and all
-                        commercial packages. It is back with life-time license and professional support from us.
+                        commercial packages. It is back with Priority Support from us.
                         The KoolReport pro comes with <b>Developer License</b> and <b>Enterprise License</b>.
                     </p>
                     <p>
@@ -677,10 +677,13 @@ return array(
     <div class="bs-docs-footer">
         <div class="container">
             <ul class="bs-docs-footer-links">
-                <li><a href="https://www.koolreport.com/get-koolreport-pro">KoolReport Pro</a></li>
 			    <li><a href="https://github.com/koolphp/koolreport" target="_blank">Github</a></li>
 			    <li><a href="https://twitter.com/GetKoolReport" target="_blank">Twitter</a></li>
 			    <li><a href="https://www.facebook.com/koolreport/" target="_blank">Facebook</a></li>
+                <li><a href="https://www.koolreport.com/get-koolreport-pro">KoolReport Pro</a></li>
+                <li><a href="https://www.koolreport.com/services">Services</a></li>
+                <li><a href="https://www.koolreport.com/testimonials">Testimonials</a></li>
+                <li><a href="https://www.koolreport.com/affiliate-program">Affiliate Program</a></li>
                 <li><a href="https://www.koolreport.com/about">About us</a></li>
             </ul>
             <p>Designed and built with <i class="fa fa-heart-o text-danger"></i> by <a href="https://www.koolphp.net">KoolPHP Inc</a>.</p>

@@ -12,18 +12,26 @@ class KoolReport extends Base
 	protected $resourceManager;
 	protected $events;
 	protected $colorSchemes;
+	protected $reportSettings;
 	
+	public function version()
+	{
+		return "2.75.0";
+	}
+
 	public function __construct($params=array())
 	{		
+		$this->params = $params;
 		$this->events = array();
+		$this->dataSources = array();
+		$this->dataStores = array();
+		$this->colorSchemes = array();
+		$this->reportSettings = $this->settings();
+
 		foreach($this->getTraitConstructs() as $traitConstruct)
 		{
 			$this->$traitConstruct();
 		}
-		$this->params = $params;
-		$this->dataSources = array();
-		$this->dataStores = array();
-		$this->colorSchemes = array();
 		
 		$this->fireEvent("OnInit");
 		if($this->fireEvent("OnBeforeSetup"))
@@ -102,10 +110,10 @@ class KoolReport extends Base
 		return $this->resourceManager;
 	}
 
-	public function publishAssetFolder($fullLocalPath)
+	public function publishAssetFolder($fullLocalPath,$version="")
 	{
 		$fullLocalPath = str_replace("\\", "/", $fullLocalPath);
-		$assets = Utility::get($this->settings(),"assets",array());
+		$assets = Utility::get($this->reportSettings,"assets");
 		$document_root = str_replace("\\", "/", $_SERVER["DOCUMENT_ROOT"]);			
 		$assetUrl = "";
 		if($assets)
@@ -117,7 +125,7 @@ class KoolReport extends Base
 				throw new \Exception("Could not find path to report's assets folder");
 			}			
 			$reportClassFolder = dirname(Utility::getClassPath($this));
-			if(is_dir($reportClassFolder."/".$targetAssetPath))
+			if(strpos($targetAssetPath,"/")!== 0 && is_dir($reportClassFolder."/".$targetAssetPath))
 			{
 				//Check if relative targetAssetPath existed
 				$targetAssetPath = str_replace("\\","/",realpath($reportClassFolder."/".$targetAssetPath));
@@ -135,7 +143,7 @@ class KoolReport extends Base
 
 			$objectFolderName = str_replace(dirname($fullLocalPath)."/","",$fullLocalPath);
 			
-			$objectHashFolderName = crc32("koolreport".$fullLocalPath.@filemtime($fullLocalPath));
+			$objectHashFolderName = crc32("koolreport".$fullLocalPath.@filemtime($fullLocalPath).$this->version().$version);
 			$objectHashFolderName = ($objectHashFolderName<0)?abs($objectHashFolderName)."0":"$objectHashFolderName";
 			//-------------------------
 
@@ -181,9 +189,22 @@ class KoolReport extends Base
 		return array();
 	}
 	
-	protected function src($name) {
-		$dataSources = Utility::get($this->settings(),"dataSources",array());
+	protected function src($name=null) {
+		$dataSources = Utility::get($this->reportSettings,"dataSources",array());
+		
+		if(count($dataSources)==0)
+		{
+			throw new \Exception("There is no source available, please add at least one in the settings()");
+			return false;
+		}
+
+		if(!$name)
+		{
+			$name = Utility::get(array_keys($dataSources),0);
+		}
+
 		$dataSourceSetting = Utility::get($dataSources,$name);
+		
 		if(!$dataSourceSetting)
 		{
 			throw new \Exception("Datasource not found '$name'");
@@ -208,8 +229,7 @@ class KoolReport extends Base
 	{	
 		if(gettype($name)=="string")
 		{
-			$settings = $this->settings();
-			$dataStoreParams = Utility::get($settings,"dataStore");
+			$dataStoreParams = Utility::get($this->reportSettings,"dataStore");
 			if(!isset($this->dataStores[$name]))
 			{
 				$this->dataStores[$name] = $this->newDataStore($dataStoreParams);

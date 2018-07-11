@@ -25,8 +25,8 @@ use \koolreport\core\Utility;
 class MySQLDataSource extends DataSource
 {
 	protected $connection;
-  protected $query;
-  protected $sqlParams;
+    protected $query;
+    protected $sqlParams;
 	protected function onInit()
 	{		
 		$host = Utility::get($this->params,"host","");
@@ -38,9 +38,9 @@ class MySQLDataSource extends DataSource
     $this->connection = new \mysqli($host, $username, $password, $dbname);
     /* check connection */
     if ($this->connection->connect_errno) {
-      echo "Failed to connect to MySQL: (" . 
-        $this->connection->connect_errno . ") " . 
-        $this->connection->connect_error;
+        echo "Failed to connect to MySQL: (" . 
+            $this->connection->connect_errno . ") " . 
+            $this->connection->connect_error;
     }
 
     /* change character set */
@@ -54,18 +54,18 @@ class MySQLDataSource extends DataSource
 	public function query($query, $sqlParams=null)
 	{
 		$this->query =  (string)$query;
-    if($sqlParams != null)
+        if($sqlParams != null)
 			$this->sqlParams = $sqlParams;
 		return $this;
 	}
   
-  public function params($sqlParams)
+     public function params($sqlParams)
 	{
 		$this->sqlParams = $sqlParams;
 		return $this;
 	}
   
-  protected function bindParams($query, $sqlParams)
+    protected function bindParams($query, $sqlParams)
 	{
 		if($sqlParams!=null)
 		{
@@ -89,76 +89,76 @@ class MySQLDataSource extends DataSource
 		return $query;
 	}
 	
-  function map_field_type_to_bind_type($field_type) {
-    switch ($field_type) {
-    case MYSQLI_TYPE_DECIMAL:
-    case MYSQLI_TYPE_NEWDECIMAL:
-    case MYSQLI_TYPE_FLOAT:
-    case MYSQLI_TYPE_DOUBLE:
-    case MYSQLI_TYPE_BIT:
-    case MYSQLI_TYPE_TINY:
-    case MYSQLI_TYPE_SHORT:
-    case MYSQLI_TYPE_LONG:
-    case MYSQLI_TYPE_LONGLONG:
-    case MYSQLI_TYPE_INT24:
-    case MYSQLI_TYPE_YEAR:
-    case MYSQLI_TYPE_ENUM:
-        return 'number';
+    function map_field_type_to_bind_type($field_type) {
+        switch ($field_type) {
+        case MYSQLI_TYPE_DECIMAL:
+        case MYSQLI_TYPE_NEWDECIMAL:
+        case MYSQLI_TYPE_FLOAT:
+        case MYSQLI_TYPE_DOUBLE:
+        case MYSQLI_TYPE_BIT:
+        case MYSQLI_TYPE_TINY:
+        case MYSQLI_TYPE_SHORT:
+        case MYSQLI_TYPE_LONG:
+        case MYSQLI_TYPE_LONGLONG:
+        case MYSQLI_TYPE_INT24:
+        case MYSQLI_TYPE_YEAR:
+        case MYSQLI_TYPE_ENUM:
+            return 'number';
 
-    case MYSQLI_TYPE_DATE:
-        return 'date';
+        case MYSQLI_TYPE_DATE:
+            return 'date';
 
-    case MYSQLI_TYPE_TIME:
-        return 'time';
-    case MYSQLI_TYPE_TIMESTAMP:
-    case MYSQLI_TYPE_DATETIME:
-    case MYSQLI_TYPE_NEWDATE:
-        return 'datetime';
-    
-    case MYSQLI_TYPE_VAR_STRING:
-    case MYSQLI_TYPE_STRING:
-    case MYSQLI_TYPE_CHAR:
-    case MYSQLI_TYPE_GEOMETRY:
-    case MYSQLI_TYPE_TINY_BLOB:
-    case MYSQLI_TYPE_MEDIUM_BLOB:
-    case MYSQLI_TYPE_LONG_BLOB:
-    case MYSQLI_TYPE_BLOB:
-        return 'string';
+        case MYSQLI_TYPE_TIME:
+            return 'time';
+        case MYSQLI_TYPE_TIMESTAMP:
+        case MYSQLI_TYPE_DATETIME:
+        case MYSQLI_TYPE_NEWDATE:
+            return 'datetime';
+        
+        case MYSQLI_TYPE_VAR_STRING:
+        case MYSQLI_TYPE_STRING:
+        case MYSQLI_TYPE_CHAR:
+        case MYSQLI_TYPE_GEOMETRY:
+        case MYSQLI_TYPE_TINY_BLOB:
+        case MYSQLI_TYPE_MEDIUM_BLOB:
+        case MYSQLI_TYPE_LONG_BLOB:
+        case MYSQLI_TYPE_BLOB:
+            return 'string';
 
-    default:
-        return 'unknown';
+        default:
+            return 'unknown';
+        }
     }
-  }
 	
 	public function start()
 	{
-    $query = $this->bindParams($this->query, $this->sqlParams);
-		$result = $this->connection->query($query);
-    
-    $finfo = $result->fetch_fields();
+        $query = $this->bindParams($this->query, $this->sqlParams);
+        $result = $this->connection->query($query);
+        
+        $finfo = $result->fetch_fields();
 
-		$metaData = array("columns"=>array());
-		$numcols = count($finfo);
-		for($i=0; $i<$numcols; $i++) 
-		{
-      $type = $this->map_field_type_to_bind_type($finfo[$i]->type);
-    	$metaData["columns"][$finfo[$i]->name] = array(
-				"type"=>$type,
-			);
-      switch($type)
-      {
-        case "datetime":
-            $metaData["columns"][$finfo[$i]->name]["format"] = "Y-m-d H:i:s";
-          break;
-        case "date":
-            $metaData["columns"][$finfo[$i]->name]["format"] = "Y-m-d";
-          break;
-        case "time":
-            $metaData["columns"][$finfo[$i]->name]["format"] = "H:i:s";
-          break;          
-      }
-    }
-				
+        $metaData = array("columns"=>array());
+        $numcols = count($finfo);
+        for($i=0; $i<$numcols; $i++) 
+        {
+            $type = $this->map_field_type_to_bind_type($finfo[$i]->type);
+                $metaData["columns"][$finfo[$i]->name] = array(
+                        "type"=>$type,
+                    );
+            switch($type)
+            {
+                case "datetime":
+                    $metaData["columns"][$finfo[$i]->name]["format"] = "Y-m-d H:i:s";
+                break;
+                case "date":
+                    $metaData["columns"][$finfo[$i]->name]["format"] = "Y-m-d";
+                break;
+                case "time":
+                    $metaData["columns"][$finfo[$i]->name]["format"] = "H:i:s";
+                break;          
+            }
+        }
+                    
 		$this->sendMeta($metaData,$this);
     
 		$this->startInput(null);

@@ -14,7 +14,7 @@
 	$thClass = Utility::get($this->cssClass,"th");
 	$tfClass = Utility::get($this->cssClass,"tf");
 ?>
-<div class="koolphp-table" id="<?php echo $this->name; ?>">
+<div class="koolphp-table <?php echo $this->responsive?"table-responsive":"";?>" id="<?php echo $this->name; ?>">
 	<table<?php echo ($tableCss)?" class='table $tableCss'":" class='table'"; ?>>
 		<?php
 		if($this->showHeader)

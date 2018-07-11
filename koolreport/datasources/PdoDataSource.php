@@ -6,6 +6,22 @@
  * @link https://www.koolphp.net
  * @copyright KoolPHP Inc
  * @license https://www.koolreport.com/license#mit-license
+ * 
+ * 
+    For Pdo with Oracle for Apache on Windows:
+    - Install Oracle database 32 bit only (php on Windows is only 32 bit).
+    - Download and extract Oracle Instant Client 32 bit, add the extracted folder 
+    to Windows' Path environment variable.
+    - Enable extension=php_pdo_oci.dll in php.ini.
+	- Restart Apache.
+
+	"pdoOracle"=>array(
+        'connectionString' => 'oci:dbname=//localhost:1521/XE',
+        'username' => 'sa',
+        'password' => 'root',
+        'class' => "\koolreport\datasources\PdoDataSource",
+    ),
+	
  */
 
 namespace koolreport\datasources;
@@ -21,6 +37,7 @@ class PdoDataSource extends DataSource
 	protected $sqlParams;
 	protected function onInit()
 	{		
+		// $this->connection = Utility::get($this->params,"connection",null);
 		$connectionString = Utility::get($this->params,"connectionString","");
 		$username = Utility::get($this->params,"username","");
 		$password = Utility::get($this->params,"password","");
@@ -61,29 +78,53 @@ class PdoDataSource extends DataSource
 		$this->sqlParams = $sqlParams;
 		return $this;
 	}
-	
-	protected function bindParams($query,$sqlParams)
-	{
-		if($sqlParams!=null)
-		{
-			foreach($sqlParams as $key=>$value)
+
+	protected function prepareParams($query, $sqlParams) {
+		$resultQuery = $query;
+		if (empty($sqlParams)) return $resultQuery;
+		foreach ($sqlParams as $paName => $paValue) {
+			if(gettype($paValue)==="array")
 			{
-				if(gettype($value)==="array")
-				{
-					$value = "'".implode("','",$value)."'";
-					$query = str_replace($key,$value,$query);
-				}
-				else if(gettype($value)==="string")
-				{
-					$query = str_replace($key,"'$value'",$query);
-				}
-				else
-				{
-					$query = str_replace($key,$value,$query);
-				}
+				$paramList = [];
+				foreach ($paValue as $i=>$value)
+					$paramList[] = $paName . "_param$i";
+				$resultQuery = str_replace($paName,implode(",", $paramList),$query);
 			}
 		}
-		return $query;
+		return $resultQuery;
+	}
+
+	protected function typeToPDOParamType($type) {
+		switch ($type) {
+			case "boolean":
+				return PDO::PARAM_BOOL;
+			case "integer":
+				return PDO::PARAM_STR;
+			case "NULL":
+				return PDO::PARAM_NULL;
+			case "resource":
+				return PDO::PARAM_LOB;
+			case "double":
+			case "string":
+			default:
+				return PDO::PARAM_STR;
+		}
+	}
+
+	protected function bindParams($stm, $sqlParams) {
+		if (empty($sqlParams)) return null;
+		foreach ($sqlParams as $paName => $paValue) {
+			$type = gettype($paValue);
+			if ($type === 'array') {
+				foreach ($paValue as $i=>$value) {
+					$paramType = $this->typeToPDOParamType(gettype($value));
+					$stm->bindValue($paName . "_param$i", $value, $paramType);
+				}
+			} else {
+				$paramType = $this->typeToPDOParamType($type);
+				$stm->bindValue($paName, $paValue, $paramType);
+			}
+		}
 	}
 
 	protected function guessType($native_type)
@@ -124,11 +165,35 @@ class PdoDataSource extends DataSource
 		}
 		return "unknown";
 	}
+
+	protected function guessTypeFromValue($value)
+	{
+		$map = array(
+			"float"=>"number",
+			"double"=>"number",
+			"int"=>"number",
+			"integer"=>"number",
+			"bool"=>"number",
+			"numeric"=>"number",
+			"string"=>"string",
+		);
+
+		$type = strtolower(gettype($value));
+		foreach($map as $key=>$value)
+		{
+			if(strpos($type,$key)!==false)
+			{
+				return $value;
+			}			
+		}
+		return "unknown";
+	}
 	
 	public function start()
 	{
-		$query = $this->bindParams($this->query,$this->sqlParams);
+		$query = $this->prepareParams($this->query,$this->sqlParams);
 		$stm = $this->connection->prepare($query);
+		$this->bindParams($stm,$this->sqlParams);
 		$stm->execute();
 
 		$error = $stm->errorInfo();
@@ -138,25 +203,47 @@ class PdoDataSource extends DataSource
 			return;
 		}
 
+		$driver = strtolower($this->connection->getAttribute(PDO::ATTR_DRIVER_NAME));
+		$metaSupportDrivers = array('dblib', 'mysql', 'pgsql', 'sqlite');
+		$metaSupport = false;
+		foreach ($metaSupportDrivers as $supportDriver)
+			if (strpos($driver, $supportDriver) !== false)
+				$metaSupport = true;
+		if (! $metaSupport) {
+			$row = $stm->fetch(PDO::FETCH_ASSOC);
+			$cNames = empty($row) ? array() : array_keys($row);
+			$numcols = count($cNames);
+		}
+		else {
+			$numcols = $stm->columnCount();
+		}
+
 		$metaData = array("columns"=>array());
-		$numcols = $stm->columnCount();
 		for($i=0;$i<$numcols;$i++)
 		{
-			$info = $stm->getColumnMeta($i);
-			$type = $this->guessType($info["native_type"]);
-			$metaData["columns"][$info["name"]] = array(
-				"type"=>$type,
+			if (! $metaSupport) {
+				$cName = $cNames[$i];
+				$cType = $this->guessTypeFromValue($row[$cName]);
+			}
+			else {
+				$info = $stm->getColumnMeta($i);
+				$cName = $info["name"];
+				$cType = $this->guessType($info["native_type"]);
+
+			}
+			$metaData["columns"][$cName] = array(
+				"type"=>$cType,
 			);
-			switch($type)
+			switch($cType)
 			{
 				case "datetime":
-					$metaData["columns"][$info["name"]]["format"] = "Y-m-d H:i:s";
+					$metaData["columns"][$cName]["format"] = "Y-m-d H:i:s";
 					break;
 				case "date":
-					$metaData["columns"][$info["name"]]["format"] = "Y-m-d";
+					$metaData["columns"][$cName]["format"] = "Y-m-d";
 					break;
 				case "time":
-					$metaData["columns"][$info["name"]]["format"] = "H:i:s";
+					$metaData["columns"][$cName]["format"] = "H:i:s";
 					break;
 			}
 		}
@@ -173,14 +260,16 @@ class PdoDataSource extends DataSource
 			}
 		}
 						
-		
-		while($row=$stm->fetch(PDO::FETCH_ASSOC))
+		if (! isset($row))
+			$row=$stm->fetch(PDO::FETCH_ASSOC);
+		while($row)
 		{
 			foreach($numberColumnList as $cName)
 			{
 					$row[$cName]+=0;
 			}
 			$this->next($row,$this);
+			$row=$stm->fetch(PDO::FETCH_ASSOC);
 		}			
 		$this->endInput(null);
 	}

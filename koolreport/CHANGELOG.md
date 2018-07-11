@@ -1,5 +1,20 @@
+# Version 2.75.0
+    1. Table: Add `responsive` property to Table widget
+    2. GoogleChart: Add `formatValue` to column so that user can do custom value format.
+    3. GoogleChart: Make width of GoogleChart default 100%
+    4. SubReport: Enhance the partial render
+    5. PdoDataSource: Fix issue with Oracle
+    6. KoolReport: Reduce reload settings() by saving to $reportSettings
+    7. KoolReport: src() will take the first datasource if name is not specify 
+    8. Utility: Add advanced jsonEncode() function to enable js function definition inside php array.
+    9. Adding version factor to KoolReport as well as its widget so that everytime we upgrade core libray as well as package, the widget is able to create new assets folder with updated resource
+    10. Fix several minor bug
+    11. Adding `DifferenceColumn` process to calculate the difference between row and the previous one.
+    12. Adding `AppendRow` process to add custom row to data flow.
+     
 # Version 2.43.0
-    1. Fix issue with GoogleChart when working with numeric column but in string form.
+    1. Google Chart:Fix issue with GoogleChart when working with numeric column but in string form.
+
 
 # Version 2.42.0
     1. Change namespace `::class` to use classname in string so that `KoolReport` is compatible with PHP 5.4

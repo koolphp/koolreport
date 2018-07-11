@@ -28,9 +28,11 @@ if(typeof googleChartLoader === "undefined")
             
             google.visualization.events.addListener(this.chart, 'select', function(){
                 var selection = this.chart.getSelection();
+                // console.log(selection);
                 for (var i = 0; i < selection.length; i++)
                 {
                     var item = selection[i];
+                    // console.log(item);
                     if(item.row!=null)
                     {
                         var selectedRow = [];
@@ -93,7 +95,13 @@ if(typeof googleChartLoader === "undefined")
         draw:function()
         {
             this.dataTable = new google.visualization.arrayToDataTable(this.data);
-            this.chart.draw(this.dataTable,this.options);
+            if (this.options.showColumns) {
+                var view = new google.visualization.DataView(this.dataTable);
+                view.setColumns([0].concat(this.options.showColumns));
+                this.chart.draw(view, this.options);
+            }
+            else
+                this.chart.draw(this.dataTable,this.options);
         },
         redraw:function()
         {
@@ -121,18 +129,25 @@ if(typeof googleChartLoader === "undefined")
     var googleChartLoader = {
         funcs: new Array(),
         loading:false,
-        load:function(stability,package)
+        load: function(stability,package,mapsApiKey)
         {
-            if(typeof google !="undefined")
+            // if(typeof google !="undefined")
+            if(typeof google !="undefined" && google.charts)
             {
-                google.charts.load(stability, {'packages':[package]});
+                google.charts.load(stability, {
+                    'packages':[package],
+                    mapsApiKey: mapsApiKey
+                });
             }
             else
             {
                 if(this.loading == false)
                 {
                     $.getScript('https://www.gstatic.com/charts/loader.js',function(){
-                        google.charts.load(stability, {'packages':[package]});
+                        google.charts.load(stability, {
+                            'packages':[package],
+                            mapsApiKey: mapsApiKey
+                        });
                         for(var i in this.funcs)
                         {
                             this.funcs[i]();
@@ -145,14 +160,16 @@ if(typeof googleChartLoader === "undefined")
         },
         callback:function(func)
         {
-            if(typeof google == "undefined")
-            {
-                this.funcs.push(func);
-            }
-            else
-            {
-                func();
-            }
+            // if(typeof google == "undefined")
+            // {
+            //     this.funcs.push(func);
+            // }
+            // else
+            // {
+            //     func();
+            // }
+            typeof google !="undefined" && google.charts ? 
+                func() : this.funcs.push(func);;
         }
     };
 }

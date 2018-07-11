@@ -8,6 +8,15 @@
  * @license https://www.koolreport.com/license#mit-license
  */
 
+ /* Usage:
+ 
+    ->pipe(new \koolreport\processes\AggregatedColumn(array(
+        'Q1 Sales Sum' => [
+            'sum', 'Q1 Sales'
+        ]
+    )))
+ */
+
 namespace koolreport\processes;
 use \koolreport\core\Utility;
 use \koolreport\core\Process;

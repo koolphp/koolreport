@@ -29,19 +29,22 @@ class SQLSRVDataSource extends DataSource
     protected $sqlParams;
 	protected function onInit()
 	{		
-    $host = Utility::get($this->params,"host","");//host\instanceName
-    $username = Utility::get($this->params,"username","");
-    $password = Utility::get($this->params,"password","");
-    $dbname = Utility::get($this->params,"dbname","");
-    $connectionInfo = array( "Database"=>$dbname, "UID"=>$username, "PWD"=>$password);
-    $conn = sqlsrv_connect( $host, $connectionInfo);
+        $host = Utility::get($this->params,"host","");//host\instanceName
+        $username = Utility::get($this->params,"username","");
+        $password = Utility::get($this->params,"password","");
+        $dbname = Utility::get($this->params,"dbname","");
+        $returnDatesAsStrings = Utility::get($this->params,"returnDatesAsStrings",true);
+        $charset = Utility::get($this->params,"charset",'utf-8');
+        $connectionInfo = array( "Database"=>$dbname, "UID"=>$username, "PWD"=>$password, 
+            'ReturnDatesAsStrings' => $returnDatesAsStrings, 'CharacterSet' => $charset);
+        $conn = sqlsrv_connect( $host, $connectionInfo);
 
-    if( $conn ) 
-      $this->connection = $conn;
-    else{
-       echo "Connection could not be established.<br />";
-       die( print_r( sqlsrv_errors(), true));
-    }
+        if( $conn ) 
+            $this->connection = $conn;
+        else{
+            echo "Connection could not be established.<br />";
+            die( print_r( sqlsrv_errors(), true));
+        }
 	}
 	
 	public function query($query, $sqlParams=null)
@@ -84,46 +87,46 @@ class SQLSRVDataSource extends DataSource
 		return $query;
 	}
 	
-  function map_field_type_to_bind_type($field_type) {
-    switch ($field_type) {
-    case SQL_BIGINT:
-    case SQL_BINARY:
-    case SQL_BIT:
-    case SQL_DECIMAL:
-    case SQL_FLOAT:
-    case SQL_LONGVARBINARY:
-    case SQL_INTEGER:
-    case SQL_NUMERIC:
-    case SQL_REAL:
-    case SQL_SMALLINT:
-    case SQL_TINYINT:
-    case MYSQLI_TYPE_ENUM:
-        return 'number';
-    case SQL_DATE:
-        return 'date';
-    case SQL_TIMESTAMP:
-    case SQL_TIMESTAMP:
-        return 'datetime';
-    
-    case SQL_CHAR:
-    case SQL_LONGVARCHAR:
-    case SQL_VARBINARY:
-    case SQL_VARCHAR:
-        return 'string';
+    function map_field_type_to_bind_type($field_type) {
+        switch ($field_type) {
+        case SQL_BIGINT:
+        case SQL_BINARY:
+        case SQL_BIT:
+        case SQL_DECIMAL:
+        case SQL_FLOAT:
+        case SQL_LONGVARBINARY:
+        case SQL_INTEGER:
+        case SQL_NUMERIC:
+        case SQL_REAL:
+        case SQL_SMALLINT:
+        case SQL_TINYINT:
+        case MYSQLI_TYPE_ENUM:
+            return 'number';
+        case SQL_DATE:
+            return 'date';
+        case SQL_TIMESTAMP:
+        case SQL_TIMESTAMP:
+            return 'datetime';
+        
+        case SQL_CHAR:
+        case SQL_LONGVARCHAR:
+        case SQL_VARBINARY:
+        case SQL_VARCHAR:
+            return 'string';
 
-    default:
-        return 'unknown';
+        default:
+            return 'unknown';
+        }
     }
-  }
 	
 	public function start()
 	{
-    $query = $this->bindParams($this->query,$this->sqlParams);
-    $stmt = sqlsrv_query( $this->connection, $query);
-    if( $stmt === false ) 
-         die( print_r( sqlsrv_errors(), true));
+        $query = $this->bindParams($this->query,$this->sqlParams);
+        $stmt = sqlsrv_query( $this->connection, $query);
+        if( $stmt === false ) 
+            die( print_r( sqlsrv_errors(), true));
 
-    $finfo = sqlsrv_field_metadata($stmt);
+        $finfo = sqlsrv_field_metadata($stmt);
 		$metaData = array("columns"=>array());
 		$numcols = count($finfo);
 		for($i=0; $i<$numcols; $i++) 

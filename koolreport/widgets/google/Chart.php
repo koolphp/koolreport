@@ -48,10 +48,11 @@ class Chart extends Widget
         $this->clientEvents = Utility::get($this->params,"clientEvents",array());        
         $this->columns = Utility::get($this->params,"columns",null);
         $this->options = Utility::get($this->params,"options",array());
-        $this->width = Utility::get($this->params,"width","600px");
+        $this->width = Utility::get($this->params,"width","100%");
         $this->height = Utility::get($this->params,"height","400px");
         $this->title = Utility::get($this->params,"title");
         $this->pointerOnHover = Utility::get($this->params,"pointerOnHover");
+        $this->mapsApiKey = Utility::get($this->params,"mapsApiKey",'');
         if($this->pointerOnHover===null)
         {
             if(isset($this->clientEvents["itemSelect"])
@@ -208,8 +209,8 @@ class Chart extends Widget
                 {
                     $value = floatval($value);
                 }
-                $fValue = Utility::format($value,$cSetting);
-                
+                $fValue = $this->formatValue($value,$cSetting,$row);
+
                 array_push($gRow,
                     ($fValue===$value)?
                         $value:
@@ -232,6 +233,26 @@ class Chart extends Widget
         }
         return $data;
     }
+
+	protected function formatValue($value,$format,$row=null)
+	{
+        $formatValue = Utility::get($format,"formatValue",null);
+
+        if(is_string($formatValue))
+        {
+            eval('$fv="'.str_replace('@value','$value',$formatValue).'";');
+            return $fv;
+        }
+        else if(is_callable($formatValue))
+        {
+            return $formatValue($value,$row);
+        }
+		else
+		{
+			return Utility::format($value,$format);
+		}
+	}
+    
         
     protected function onRender()
     {

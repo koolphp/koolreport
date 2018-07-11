@@ -43,6 +43,11 @@ class Widget extends Base
 		$this->report->fireEvent("OnWidgetInit",$this);
 	}
 
+	public function version()
+	{
+		return "";
+	}
+
 	protected function resourceSettings()
 	{
 		//This function will be overwritten
@@ -253,9 +258,7 @@ class Widget extends Base
 			}
 			if(!$this->dataStore->isEnded())
 			{
-				// print_r($this->dataStore->meta());
 				$this->dataStore->requestDataSending();
-				// print_r($this->dataStore->meta()['columns']);
 			}
 		}
 	}

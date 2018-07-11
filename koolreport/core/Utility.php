@@ -99,6 +99,34 @@ class Utility
         return $reflection->getShortName();
     }
     
+    static function mark_js_function(&$obj){
+        foreach($obj as $k=>&$v)
+        {
+            switch(gettype($v))
+            {
+                case "object":
+                case "array":
+                    Utility::mark_js_function($v);
+                    break;
+                case "string":
+                    $tsv = trim(strtolower($v));
+                    if(strpos($tsv,"function")===0 && strrpos($tsv,"}")===strlen($tsv)-1)
+                    {
+                        $obj[$k] = "--js|".trim($v)."|js--";
+                    }
+                    break;
+            }
+        }
+    }
+
+    static function jsonEncode($object,$option=0)
+    {
+        Utility::mark_js_function($object);
+        $text = json_encode($object,$option);
+        $text = str_replace('"--js|',"",$text);
+        $text = str_replace('|js--"',"",$text);
+        return $text;
+    }
     
     static function isAssoc($arr)
     {
@@ -117,6 +145,11 @@ class Utility
             return $default;
         }
         return isset($arr[$key])?$arr[$key]:$default;
+    }
+    static function init(& $arr, $key, $default = null) {
+        if (! isset($arr[$key]))
+            $arr[$key] = $default;
+        return $arr[$key];
     }
     static function getArray($arr,$key,$default=array())
     {

@@ -28,9 +28,9 @@ trait SubReport
                 {
                     $params["@reportName"] = $name;
                     $r = new $class($params);
-                    echo "<!--subreport-start-->";
+                    echo "<subreport-partial>";
                     $r->run()->render();
-                    echo "<!--subreport-end-->";
+                    echo "</subreport-partial>";
                 }
                 else
                 {

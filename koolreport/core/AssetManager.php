@@ -52,6 +52,6 @@ class AssetManager extends Base
 			throw new \Exception("Widget's assets folder is not existed");
 		}
 		$widgetSourceAssetPath = str_replace("\\", "/", realpath($widgetSourceAssetPath));
-		$this->assetUrl = $this->widget->getReport()->publishAssetFolder($widgetSourceAssetPath);
+		$this->assetUrl = $this->widget->getReport()->publishAssetFolder($widgetSourceAssetPath,$this->widget->version());
 	}
 }
