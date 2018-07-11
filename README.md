@@ -14,6 +14,7 @@
 
 # Changelog 
 
+* [Version 2.75.0 (Jul 11th, 2018)](https://www.koolreport.com/updates#version-2750)
 * [Version 2.43.0 (Apr 20th, 2018)](https://www.koolreport.com/updates#version-2430)
 * [Version 2.42.0 (Mar 19th, 2018)](https://www.koolreport.com/updates#version-2420)
 * [Version 2.41.3 (Mar 02nd, 2018)](https://www.koolreport.com/updates#version-2413)
@@ -229,11 +230,14 @@ The KoolReport is licensed under MIT License.
 
 # Extended packages:
 
-* [Excel](https://www.koolreport.com/packages/excel): Import and export data to Excel [__Free__]
+
+* [Laravel](https://www.koolreport.com/packages/laravel): Make KoolReport work seamlessly in Laravel PHP Framework [__Free__]
+* [CodeIgniter](https://www.koolreport.com/packages/codeigniter): Make KoolReport work seamlessly in CodeIgniter Framework [__Free__]
 * [MongoDB](https://www.koolreport.com/packages/mongodb): Build report from MongoDB [__Free__]
 * [CleanData](https://www.koolreport.com/packages/cleandata): Solution for your missing data [__Free__]
 * [QueryBuilder](https://www.koolreport.com/packages/querybuilder): Build fast and error-free SQL Query for your report [__Free__]
 * [Instant](https://www.koolreport.com/packages/instant): Create widget instantly without setting up a full report [__Free__]
+* [Excel](https://www.koolreport.com/packages/excel): Import and export data to Excel [__$9__]
 * [Cube](https://www.koolreport.com/packages/cube): Turn your data into two dimensions cross-tab table [__$9__]
 * [Pivot](https://www.koolreport.com/packages/pivot): Build multi-dimenstional pivot table [__$29__]
 * [Export](https://www.koolreport.com/packages/export): Export your report to PDF, JPG, PNG and other formats [__$19__]
