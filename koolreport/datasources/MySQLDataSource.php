@@ -24,6 +24,7 @@ use \koolreport\core\Utility;
 
 class MySQLDataSource extends DataSource
 {
+    static $connections;
 	protected $connection;
     protected $query;
     protected $sqlParams;
@@ -34,21 +35,28 @@ class MySQLDataSource extends DataSource
 		$password = Utility::get($this->params,"password","");
 		$dbname = Utility::get($this->params,"dbname","");
 		$charset = Utility::get($this->params,"charset", null);
-		
-    $this->connection = new \mysqli($host, $username, $password, $dbname);
-    /* check connection */
-    if ($this->connection->connect_errno) {
-        echo "Failed to connect to MySQL: (" . 
-            $this->connection->connect_errno . ") " . 
-            $this->connection->connect_error;
-    }
+        
+        $key = md5($host.$username.$password.$dbname);
+        if(isset(MySQLDataSource::$connections[$key]))
+        {
+            $this->connection = MySQLDataSource::$connections[$key];
+        }
+        else
+        {
+            $this->connection = new \mysqli($host, $username, $password, $dbname);
+            /* check connection */
+            if ($this->connection->connect_errno) {
+                throw new \Exception("Failed to connect to MySQL: (" . 
+                    $this->connection->connect_errno . ") " . 
+                    $this->connection->connect_error);
+            }
+            MySQLDataSource::$connections[$key] = $this->connection;    
+        }
 
-    /* change character set */
-    if (isset($charset) && ! $this->connection->set_charset($charset)) {
-      printf("Error loading character set $charset: %s\n", 
-        $this->connection->error);
-      exit();
-    }
+        /* change character set */
+        if (isset($charset) && ! $this->connection->set_charset($charset)) {
+            throw new \Exception("Error loading character set $charset: ".$this->connection->error);
+        }
 	}
 	
 	public function query($query, $sqlParams=null)
@@ -73,22 +81,46 @@ class MySQLDataSource extends DataSource
 			{
 				if(gettype($value)==="array")
 				{
-					$value = "'".implode("','",$value)."'";
+                    $value = array_map(function($v){
+                        return $this->escape($v);
+                    },$value);
+					$value = "(".implode(",",$value).")";
 					$query = str_replace($key,$value,$query);
-				}
-				else if(gettype($value)==="string")
-				{
-					$query = str_replace($key,"'$value'",$query);
 				}
 				else
 				{
-					$query = str_replace($key,$value,$query);
+					$query = str_replace($key,$this->escape($value),$query);
 				}
 			}
 		}
 		return $query;
 	}
-	
+    
+    protected function escape($str)
+    {
+		if (is_string($str) OR (is_object($str) && method_exists($str, '__toString')))
+		{
+			return "'".$this->escape_str($str)."'";
+		}
+		elseif (is_bool($str))
+		{
+			return ($str === FALSE) ? 0 : 1;
+		}
+		elseif ($str === NULL)
+		{
+			return 'NULL';
+		}
+
+		return $str;
+    }
+
+    protected function escape_str($str)
+    {
+        return $this->connection->real_escape_string($str);
+    }
+    
+
+
     function map_field_type_to_bind_type($field_type) {
         switch ($field_type) {
         case MYSQLI_TYPE_DECIMAL:
@@ -135,6 +167,11 @@ class MySQLDataSource extends DataSource
         $query = $this->bindParams($this->query, $this->sqlParams);
         $result = $this->connection->query($query);
         
+        if($result===FALSE)
+        {
+            throw new \Exception("Error on query >>> ".$this->connection->error);
+        }
+
         $finfo = $result->fetch_fields();
 
         $metaData = array("columns"=>array());

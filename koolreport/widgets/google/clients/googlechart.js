@@ -1,12 +1,13 @@
 if(typeof googleChartLoader === "undefined")
 {
-    function GoogleChart(chartType,chartId,data,options)
+    function GoogleChart(chartType,chartId,cKeys,data,options)
     {
         this.chartType = chartType;
         this.chartId = chartId;
         this.data = data;
         this.options = options;
         this.events = {};
+        this.cKeys = cKeys;
         googleChartLoader.callback(function(){
             google.charts.setOnLoadCallback(this.init.bind(this));
             window.addEventListener('resize',this.draw.bind(this));    
@@ -40,9 +41,12 @@ if(typeof googleChartLoader === "undefined")
                         for(var i=0;i<numColumns;i++)
                         {
                             selectedRow.push(this.dataTable.getValue(item.row,i));
+                            if(typeof(this.cKeys[i])!="undefined")
+                            {
+                                selectedRow[this.cKeys[i]] = selectedRow[i];
+                            }
                         }
                     }
-
                     if (item.row != null && item.column != null)
                     {
                         this.fireEvent("itemSelect",{

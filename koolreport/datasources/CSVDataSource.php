@@ -91,7 +91,7 @@ class CSVDataSource extends DataSource
       }
     }
     else {
-      echo 'fopen failed<br>';
+      throw new \Exception('Failed to open '.$this->filePath);
     }
     $this->endInput(null);
 	}

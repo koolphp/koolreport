@@ -1,3 +1,10 @@
+# Version 2.78.0
+    1. Utility: Fix jsonEncode() to work with array contains javascript function
+    2. DataSource: Improve the parameter escape string
+    3. DataSource: Make `MySQLDataSource`, `PostgreSQLDateaSource`, `SQLSRVDataSource`, `OracleDataSource` share database connection to reduce response time and memory.
+    4. GoogleChart: When you user select item on chart, the selectedRow now can contain associate value beside the array of values.
+    5. Table: Return both array and associate rowData on the rowClick event.
+
 # Version 2.75.0
     1. Table: Add `responsive` property to Table widget
     2. GoogleChart: Add `formatValue` to column so that user can do custom value format.

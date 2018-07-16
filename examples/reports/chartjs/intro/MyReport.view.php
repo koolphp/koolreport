@@ -284,6 +284,12 @@
                             "borderWidth"=>3,
                         )
                     ),
+                ),
+                "options"=>array(
+                    "tooltips"=>array(
+                        "mode"=>"index",
+                        "intersect"=>true,
+                    )
                 )
             ));
             ?>

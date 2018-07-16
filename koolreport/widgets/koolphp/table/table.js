@@ -18,7 +18,7 @@ if(typeof KoolPHPTable =="undefined")
         {
             $('#'+this.name+" tr").on('click',function(event){
                 var rowIndex = $(event.currentTarget).attr("row-index");
-                this.fireEvent('rowClick',{table:this,data:this.getRowData(rowIndex),rowIndex:rowIndex});
+                this.fireEvent('rowClick',{table:this,rowData:this.getRowData(rowIndex),rowIndex:rowIndex});
             }.bind(this));
         },
         getRowData:function(index)
@@ -26,7 +26,11 @@ if(typeof KoolPHPTable =="undefined")
             var data = [];
             $("#"+this.name+" tr[row-index="+index+"] td").each(function(i,td){
                 data.push($(td).attr("row-value"));
-            });
+                if(typeof this.options.cKeys[i] !="undefined")
+                {
+                    data[this.options.cKeys[i]] = data[i];
+                }
+            }.bind(this));
             return data;
         },
         initPaging:function()

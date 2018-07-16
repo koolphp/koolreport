@@ -170,7 +170,8 @@
 </div>
 <script type="text/javascript">
 	var <?php echo $this->name; ?> = new KoolPHPTable('<?php echo $this->name; ?>',<?php echo json_encode(array(
-	"paging"=>$this->paging
+		"cKeys"=>$showColumnKeys,
+		"paging"=>$this->paging
 	)); ?>);
 	<?php
 	if($this->clientEvents)

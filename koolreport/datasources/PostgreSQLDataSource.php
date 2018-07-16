@@ -8,12 +8,11 @@
  
  
  "mysql"=>array(
-    'datahost' => 'localhost',
+    'host' => 'localhost',
     'username' => 'root',
     'password' => '',
-    'database' => 'automaker',
-    'charset' => 'utf8',  
-    'class' => "\koolreport\datasources\MySQLDataSource"  
+    'dbbase' => 'automaker',
+    'class' => "\koolreport\datasources\PostgreSQLDataSource"  
   ),
  
  */
@@ -24,6 +23,7 @@ use \koolreport\core\Utility;
 
 class PostgreSQLDataSource extends DataSource
 {
+    static $connections;
 	protected $connection;
     protected $query;
     protected $sqlParams;
@@ -34,13 +34,27 @@ class PostgreSQLDataSource extends DataSource
         $password = Utility::get($this->params,"password","");
         $dbname = Utility::get($this->params,"dbname","");
         $connString = "host=$host dbname=$dbname user=$username password=$password";
-        $conn = pg_connect($connString);
+        
+        $key = md5($connString);
 
-        if( $conn ) 
-        $this->connection = $conn;
-        else{
-        die("Connection failed.");
+        if(isset(PostgreSQLDataSource::$connections[$key]))
+        {
+            $this->connection = PostgreSQLDataSource::$connections[$key];
         }
+        else
+        {
+            $conn = pg_connect($connString);
+            if( $conn ) 
+            {
+                $this->connection = $conn;
+            }
+            else
+            {
+                throw new \Exception("Could not connect to database");
+            }
+            PostgreSQLDataSource::$connections[$key] = $this->connection;
+        }
+        
 	}
 	
 	public function query($query, $sqlParams=null)
@@ -59,7 +73,7 @@ class PostgreSQLDataSource extends DataSource
 		return $this;
 	}
 	
-	protected function bindParams($query,$sqlParams)
+    protected function bindParams($query, $sqlParams)
 	{
 		if($sqlParams!=null)
 		{
@@ -67,17 +81,43 @@ class PostgreSQLDataSource extends DataSource
 			{
 				if(gettype($value)==="array")
 				{
-					$value = "'".implode("','",$value)."'";
+                    $value = array_map(function($v){
+                        return $this->escape($v);
+                    },$value);
+					$value = "(".implode(",",$value).")";
 					$query = str_replace($key,$value,$query);
 				}
 				else
 				{
-					$query = str_replace($key,"'$value'",$query);
+					$query = str_replace($key,$this->escape($value),$query);
 				}
 			}
 		}
 		return $query;
 	}
+    
+    protected function escape($str)
+    {
+		if (is_string($str) OR (is_object($str) && method_exists($str, '__toString')))
+		{
+			return "'".$this->escape_str($str)."'";
+		}
+		elseif (is_bool($str))
+		{
+			return ($str === FALSE) ? 0 : 1;
+		}
+		elseif ($str === NULL)
+		{
+			return 'NULL';
+		}
+
+		return $str;
+    }
+
+    protected function escape_str($str)
+    {
+        return pg_escape_string($str);
+    }
 	
     protected function map_field_type_to_bind_type($native_type)
 	{

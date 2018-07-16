@@ -13,7 +13,7 @@ use \koolreport\core\Utility;
 <div id="<?php echo $this->name; ?>" style="<?php if ($this->width) echo "width:".$this->width.";"; ?><?php if ($this->height) echo "height:".$this->height.";"; ?>"></div>
 <script type="text/javascript">
     googleChartLoader.load("<?php echo $this->stability; ?>","<?php echo $this->package; ?>","<?php echo $this->mapsApiKey; ?>");
-    var <?php echo $this->name; ?> = new GoogleChart("<?php echo $chartType; ?>","<?php echo $this->name; ?>",<?php echo json_encode($data);?>,<?php echo json_encode($options);?>);
+    var <?php echo $this->name; ?> = new GoogleChart("<?php echo $chartType; ?>","<?php echo $this->name; ?>",<?php echo json_encode($cKeys);?>,<?php echo json_encode($data);?>,<?php echo json_encode($options);?>);
     <?php
     if($this->pointerOnHover)
     {

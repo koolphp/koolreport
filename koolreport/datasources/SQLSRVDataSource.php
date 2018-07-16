@@ -13,7 +13,8 @@
     'password' => '',
     'database' => 'automaker',
     'charset' => 'utf8',  
-    'class' => "\koolreport\datasources\MySQLDataSource"  
+    'class' => "\koolreport\datasources\SQLSRVDataSource",
+    'returnDatesAsStrings'=>true  
   ),
  
  */
@@ -24,6 +25,7 @@ use \koolreport\core\Utility;
 
 class SQLSRVDataSource extends DataSource
 {
+    static $connections;
 	protected $connection;
     protected $query;
     protected $sqlParams;
@@ -37,13 +39,24 @@ class SQLSRVDataSource extends DataSource
         $charset = Utility::get($this->params,"charset",'utf-8');
         $connectionInfo = array( "Database"=>$dbname, "UID"=>$username, "PWD"=>$password, 
             'ReturnDatesAsStrings' => $returnDatesAsStrings, 'CharacterSet' => $charset);
-        $conn = sqlsrv_connect( $host, $connectionInfo);
 
-        if( $conn ) 
-            $this->connection = $conn;
-        else{
-            echo "Connection could not be established.<br />";
-            die( print_r( sqlsrv_errors(), true));
+        $key = md5($host.$username.$password.$dbname);
+        if(isset(SQLSRVDataSource::$connections[$key]))
+        {
+            $this->connection = SQLSRVDataSource::$connections[$key];
+        }
+        else
+        {
+            $conn = sqlsrv_connect( $host, $connectionInfo);
+            if($conn) 
+            {
+                $this->connection = $conn;
+            }
+            else
+            {
+                throw new \Exception("Connection could not be established: ".print_r( sqlsrv_errors(), true));
+            }    
+            SQLSRVDataSource::$connections[$key] = $this->connection;
         }
 	}
 	
@@ -63,7 +76,7 @@ class SQLSRVDataSource extends DataSource
 		return $this;
 	}
 	
-	protected function bindParams($query,$sqlParams)
+    protected function bindParams($query, $sqlParams)
 	{
 		if($sqlParams!=null)
 		{
@@ -71,21 +84,43 @@ class SQLSRVDataSource extends DataSource
 			{
 				if(gettype($value)==="array")
 				{
-					$value = "'".implode("','",$value)."'";
+                    $value = array_map(function($v){
+                        return $this->escape($v);
+                    },$value);
+					$value = "(".implode(",",$value).")";
 					$query = str_replace($key,$value,$query);
-				}
-				else if(gettype($value)==="string")
-				{
-					$query = str_replace($key,"'$value'",$query);
 				}
 				else
 				{
-					$query = str_replace($key,$value,$query);
+					$query = str_replace($key,$this->escape($value),$query);
 				}
 			}
 		}
 		return $query;
 	}
+    
+    protected function escape($str)
+    {
+		if (is_string($str) OR (is_object($str) && method_exists($str, '__toString')))
+		{
+			return "'".$this->escape_str($str)."'";
+		}
+		elseif (is_bool($str))
+		{
+			return ($str === FALSE) ? 0 : 1;
+		}
+		elseif ($str === NULL)
+		{
+			return 'NULL';
+		}
+
+		return $str;
+    }
+
+    protected function escape_str($str)
+    {
+        return str_replace("'","''",$str);
+    }
 	
     function map_field_type_to_bind_type($field_type) {
         switch ($field_type) {

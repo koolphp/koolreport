@@ -45,6 +45,7 @@ use \koolreport\core\Utility;
 
 class OracleDataSource extends DataSource
 {
+    static $connections;
 	protected $connection;
     protected $query;
     protected $sqlParams;
@@ -53,12 +54,22 @@ class OracleDataSource extends DataSource
         $username = Utility::get($this->params,"username","");
         $password = Utility::get($this->params,"password","");
         $connString = Utility::get($this->params,"connectionString","");
-        $conn = oci_connect($username, $password, $connString);
 
-        if( $conn ) 
-            $this->connection = $conn;
-        else{
-            die("Connection failed: " . oci_error());
+        $key = md5($username.$password.$connString);
+
+        if(isset(OracleDataSource::$connections[$key]))
+        {
+            $this->connection = OracleDataSource::$connections[$key];
+        }
+        else
+        {
+            $conn = oci_connect($username, $password, $connString);
+            if( $conn ) 
+                $this->connection = $conn;
+            else{
+                throw new \Exception("Connection failed: " . print_r(oci_error(),true));
+            }
+            OracleDataSource::$connections[$key] = $this->connection;
         }
 	}
 	
@@ -78,7 +89,7 @@ class OracleDataSource extends DataSource
 		return $this;
 	}
 	
-	protected function bindParams($query,$sqlParams)
+    protected function bindParams($query, $sqlParams)
 	{
 		if($sqlParams!=null)
 		{
@@ -86,17 +97,43 @@ class OracleDataSource extends DataSource
 			{
 				if(gettype($value)==="array")
 				{
-					$value = "'".implode("','",$value)."'";
+                    $value = array_map(function($v){
+                        return $this->escape($v);
+                    },$value);
+					$value = "(".implode(",",$value).")";
 					$query = str_replace($key,$value,$query);
 				}
 				else
 				{
-					$query = str_replace($key,"'$value'",$query);
+					$query = str_replace($key,$this->escape($value),$query);
 				}
 			}
 		}
 		return $query;
 	}
+    
+    protected function escape($str)
+    {
+		if (is_string($str) OR (is_object($str) && method_exists($str, '__toString')))
+		{
+			return "'".$this->escape_str($str)."'";
+		}
+		elseif (is_bool($str))
+		{
+			return ($str === FALSE) ? 0 : 1;
+		}
+		elseif ($str === NULL)
+		{
+			return 'NULL';
+		}
+
+		return $str;
+    }
+
+    protected function escape_str($str)
+    {
+        return str_replace("'","''",$str);
+    }
 	
     protected function map_field_type_to_bind_type($native_type)
 	{

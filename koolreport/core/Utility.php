@@ -99,32 +99,36 @@ class Utility
         return $reflection->getShortName();
     }
     
-    static function mark_js_function(&$obj){
+    static function mark_js_function(&$obj,&$marks=array()){
         foreach($obj as $k=>&$v)
         {
             switch(gettype($v))
             {
                 case "object":
                 case "array":
-                    Utility::mark_js_function($v);
+                    Utility::mark_js_function($v,$marks);
                     break;
                 case "string":
                     $tsv = trim(strtolower($v));
                     if(strpos($tsv,"function")===0 && strrpos($tsv,"}")===strlen($tsv)-1)
                     {
-                        $obj[$k] = "--js|".trim($v)."|js--";
+                        $marks[] = trim($v);
+                        $obj[$k] = "--js(".(count($marks)-1).")";
                     }
                     break;
             }
         }
+        return $marks;
     }
 
     static function jsonEncode($object,$option=0)
     {
-        Utility::mark_js_function($object);
+        $marks = Utility::mark_js_function($object);
         $text = json_encode($object,$option);
-        $text = str_replace('"--js|',"",$text);
-        $text = str_replace('|js--"',"",$text);
+        foreach($marks as $i=>$js)
+        {
+            $text = str_replace("\"--js($i)\"",$js,$text);
+        }
         return $text;
     }
     

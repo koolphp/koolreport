@@ -273,6 +273,7 @@ class Chart extends Widget
                 "chartType"=>$this->type,
                 "options"=>$options,
                 "data"=>$this->prepareData(),
+                "cKeys"=>array_keys($this->getColumnSettings()),
             ));			
         }
         else
