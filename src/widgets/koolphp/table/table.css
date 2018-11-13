@@ -1,0 +1,14 @@
+div.koolphp-table ul.pagination
+{
+    margin-top:0px;
+}
+
+div.koolphp-table td.dup
+{
+    display: none;
+}
+
+tr.row-group
+{
+    background:#eee;
+}

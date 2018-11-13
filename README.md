@@ -303,6 +303,3 @@ Below are the things we are going to do:
 
 # Author
 1. [KoolPHP Inc](https://www.koolphp.net) - A vendor of PHP components
-
-
-
