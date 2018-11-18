@@ -73,7 +73,7 @@ class ResourceManager extends Base
                     mkdir($asset_path,0755);
                 }
                 $assets = array(
-                    "path"=>asset_path,
+                    "path"=>$asset_path,
                     "url"=>$asset_url,
                 );
                 $assetUrl = "";
