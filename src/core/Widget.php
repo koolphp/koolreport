@@ -14,6 +14,7 @@ use \koolreport\core\DataStore;
 use \koolreport\core\Process;
 use \koolreport\core\DataSource;
 
+
 class Widget extends Base
 {
 	/**
@@ -99,20 +100,7 @@ class Widget extends Base
 
 		if($this->report===null)
 		{
-			$this->report = new class extends \koolreport\KoolReport
-			{
-				/**
-				 * Adding KoolReport script when widget is rendered.
-				 */
-				protected function OnBeforeWidgetRender()
-				{
-					//This will allow widget is able to load without report setup
-					//It will include the client-side KoolReport.widget.js to faciliate widget loading
-					$koolreport_js = $this->getResourceManager()->publishAssetFolder(realpath(dirname(__FILE__)."/../clients/core"))."/KoolReport.js";
-					echo "<script type='text/javascript' src='$koolreport_js'></script>";
-					return true;
-				}
-			};
+			$this->report = new WidgetContainer();
 		}
 		
 		$theme = $this->getReport()->getTheme();
@@ -763,5 +751,20 @@ class Widget extends Base
 		ob_start();
 		$component->render();
 		return ob_get_clean();		
+	}
+}
+
+class WidgetContainer extends \koolreport\KoolReport
+{
+	/**
+	 * Adding KoolReport script when widget is rendered.
+	 */
+	protected function OnBeforeWidgetRender()
+	{
+		//This will allow widget is able to load without report setup
+		//It will include the client-side KoolReport.widget.js to faciliate widget loading
+		$koolreport_js = $this->getResourceManager()->publishAssetFolder(realpath(dirname(__FILE__)."/../clients/core"))."/KoolReport.js";
+		echo "<script type='text/javascript' src='$koolreport_js'></script>";
+		return true;
 	}
 }
