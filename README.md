@@ -47,52 +47,17 @@ $ composer require koolphp/koolreport
 
 ```
 koolreport/
-├── clients/
-├── core/
-│   ├── AssetManager.php
-│   ├── Base.php
-│   ├── DataSource.php
-│   ├── DataStore.php
-│   ├── Node.php
-│   ├── Process.php
-│   ├── ProcessGroup.php
-│   ├── Utility.php
-│   └── Widget.php
-├── datasources/
-│   ├── ArrayDataSource.php
-│   ├── CSVDataSource.php
-│   ├── ReportDataSource.php
-│   ├── MySQLDataSource.php
-│   ├── SQLSRVDataSource.php
-│   └── PdoDataSource.php
 ├── packages/
-├── processes/
-│   ├── CalculatedColumn.php
-│   ├── Custom.php
-│   ├── DateTimeFormat.php
-│   ├── Filter.php
-│   ├── Group.php
-│   ├── Join.php
-│   ├── Limit.php
-│   ├── NumberBucket.php
-│   ├── NumberRange.php
-│   ├── TimeBucket.php
-│   └── ... many other processes
-├── widgets/
-│   ├── google/
-│   │   ├── LineChart.php
-│   │   ├── BubbleChart.php
-│   │   ├── BarChart.php
-│   │   ├── ColumnChart.php
-│   │   ├── DonutChart.php
-│   │   └── .. and many other charts from google :)
-│   └── koolphp
-│      ├── Table.php 
-│      └── Table.tpl.php
-├── autoload.php
-├── composer.json
-└── KoolReport.php
+├── src/
+│   ├── clients/
+│   ├── core/
+│   ├── datasources/
+│   ├── processes/
+│   └── widgets/
+├── tests/
+└── autoload.php
 ```
+
 ## System Requirement
 1. PHP 5.4 or higher
 
@@ -123,32 +88,36 @@ $salesByCustomer->run()->render();
 
 ```php
 <?php
-// SalesByCustomer.php - Report setup file
-require_once "koolreport/autoload.php";
+
+// Require autoload.php from koolreport library
+require_once "../koolreport/autoload.php";
+
+//Specify some data processes that will be used to process
 use \koolreport\processes\Group;
 use \koolreport\processes\Sort;
 use \koolreport\processes\Limit;
 
+//Define the class
 class SalesByCustomer extends \koolreport\KoolReport
-{
-    public function settings()
+{    
+    protected function settings()
     {
+        //Define the "sales" data source which is the orders.csv 
         return array(
             "dataSources"=>array(
                 "sales"=>array(
-                    "connectionString"=>"mysql:host=localhost;dbname=db_sales",
-                    "username"=>"root",
-                    "password"=>"",
-                    "charset"=>"utf8"
-                )
+                    "class"=>'\koolreport\datasources\CSVDataSource',
+                    "filePath"=>"orders.csv",
+                ),        
             )
         );
     }
-
-    public function setup()
+  
+    protected function setup()
     {
+        //Select the data source then pipe data through various process
+        //until it reach the end which is the dataStore named "sales_by_customer".
         $this->src('sales')
-        ->query("SELECT customerName,dollar_sales FROM customer_product_dollarsales")
         ->pipe(new Group(array(
             "by"=>"customerName",
             "sum"=>"dollar_sales"
@@ -164,41 +133,21 @@ class SalesByCustomer extends \koolreport\KoolReport
 
 ```php
 <?php 
-// SalesByCustomer.view.php - Handle the report view
-use \koolreport\widgets\koolphp\Table;
-use \koolreport\widgets\google\BarChart;
+    use \koolreport\widgets\koolphp\Table;
+    use \koolreport\widgets\google\BarChart;
 ?>
 
-<div class="text-center">
-    <h1>Sales Report</h1>
-    <h4>This report shows top 10 sales by customer</h4>
-</div>
-<hr/>
+<div class="report-content">
+    <div class="text-center">
+        <h1>Sales By Customer</h1>
+        <p class="lead">This report shows top 10 sales by customer</p>
+    </div>
 
-<?php
-BarChart::create(array(
-    "dataStore"=>$this->dataStore('sales_by_customer'),
-    "width"=>"100%",
-    "height"=>"500px",
-    "columns"=>array(
-        "customerName"=>array(
-            "label"=>"Customer"
-        ),
-        "dollar_sales"=>array(
-            "type"=>"number",
-            "label"=>"Amount",
-            "prefix"=>"$",
-        )
-    ),
-    "options"=>array(
-        "title"=>"Sales By Customer"
-    )
-));
-?>
-
-<?php
-Table::create(array(
-    "dataStore"=>$this->dataStore('sales_by_customer'),
+    <?php
+    BarChart::create(array(
+        "dataStore"=>$this->dataStore('sales_by_customer'),
+        "width"=>"100%",
+        "height"=>"500px",
         "columns"=>array(
             "customerName"=>array(
                 "label"=>"Customer"
@@ -207,24 +156,45 @@ Table::create(array(
                 "type"=>"number",
                 "label"=>"Amount",
                 "prefix"=>"$",
+                "emphasis"=>true
             )
         ),
-    "cssClass"=>array(
-        "table"=>"table table-hover table-bordered"
-    )
-));
-?>
+        "options"=>array(
+            "title"=>"Sales By Customer",
+        )
+    ));
+    ?>
+    <?php
+    Table::create(array(
+        "dataStore"=>$this->dataStore('sales_by_customer'),
+            "columns"=>array(
+                "customerName"=>array(
+                    "label"=>"Customer"
+                ),
+                "dollar_sales"=>array(
+                    "type"=>"number",
+                    "label"=>"Amount",
+                    "prefix"=>"$",
+                )
+            ),
+        "cssClass"=>array(
+            "table"=>"table table-hover table-bordered"
+        )
+    ));
+    ?>
+</div>
 ```
 
-Result of this report can be [previewed in here](https://www.koolreport.com/examples/reports/basic/sales_by_customer/index.php).
+You may download the source code [sale_report.zip](https://www.koolreport.com/docs/articles/quick_start/sale_report.zip). And the result of this report can be [previewed in here](https://www.koolreport.com/examples/reports/basic/sales_by_customer/index.php).
 
 # More examples
 
-1. [Sale By Quarter](https://www.koolreport.com/examples/reports/cube/sales_by_quarters/index.php)
-2. [Sales By Months and Years](https://www.koolreport.com/examples/reports/cube/sales_by_months_years/index.php)
-3. [Sales By Customers And Products](https://www.koolreport.com/examples/reports/cube/sales_by_customers_products/index.php)
+1. [Products vs Quarters](https://www.koolreport.com/examples/reports/cube/cube_products_vs_quarters/)
+2. [Export To PDF](https://www.koolreport.com/examples/reports/export/sakila_rental/)
+3. [DrillDown Report](https://www.koolreport.com/examples/reports/drilldown/drilldown/)
+4. [Pivot Table](https://www.koolreport.com/examples/reports/pivot/customers_categories_products/)
 
-.. and [all examples](https://www.koolreport.com/examples).
+.. and [all examples](https://www.koolreport.com/examples/).
 
 # Licenses
 The KoolReport is licensed under MIT License.
@@ -239,6 +209,8 @@ The KoolReport is licensed under MIT License.
 * [Instant](https://www.koolreport.com/packages/instant): Create widget instantly without setting up a full report [__Free__]
 * [Cache](https://www.koolreport.com/packages/cache): Drive the speed and responsiveness of your report to the max [__Free__]
 * [Statistics](https://www.koolreport.com/packages/statistics): Provide various statistical measures for your data [__Free__]
+* [Bootstrap3](https://www.koolreport.com/packages/bootstrap3): Create beautiful report with Bootstrap 3 [__Free__]
+* [Bootstrap4](https://www.koolreport.com/packages/bootstrap3): Create modern report with Bootstrap 4 [__Free__]
 * [Excel](https://www.koolreport.com/packages/excel): Import and export data to Excel [__$9__]
 * [Cube](https://www.koolreport.com/packages/cube): Turn your data into two dimensions cross-tab table [__$9__]
 * [Pivot](https://www.koolreport.com/packages/pivot): Build multi-dimenstional pivot table [__$29__]
