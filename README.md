@@ -77,6 +77,8 @@ Make two files `SalesByCustomer.php` and `SalesByCustomer.view.php`
 └── index.php
 ```
 
+`index.php`
+
 ```php
 <?php
 // index.php: Just a bootstrap file
@@ -86,10 +88,10 @@ $salesByCustomer = new SalesByCustomer;
 $salesByCustomer->run()->render();
 ```
 
+`SalesByCustomer.php`
+
 ```php
 <?php
-
-// Require autoload.php from koolreport library
 require_once "../koolreport/autoload.php";
 
 //Specify some data processes that will be used to process
@@ -130,6 +132,8 @@ class SalesByCustomer extends \koolreport\KoolReport
     }
 }
 ```
+
+`SalesByCustomer.view.php`
 
 ```php
 <?php 
