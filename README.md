@@ -77,7 +77,7 @@ Make two files `SalesByCustomer.php` and `SalesByCustomer.view.php`
 └── index.php
 ```
 
-`index.php`
+#### index.php
 
 ```php
 <?php
@@ -88,7 +88,7 @@ $salesByCustomer = new SalesByCustomer;
 $salesByCustomer->run()->render();
 ```
 
-`SalesByCustomer.php`
+#### SalesByCustomer.php
 
 ```php
 <?php
@@ -133,7 +133,7 @@ class SalesByCustomer extends \koolreport\KoolReport
 }
 ```
 
-`SalesByCustomer.view.php`
+#### SalesByCustomer.view.php
 
 ```php
 <?php 
@@ -237,7 +237,7 @@ The KoolReport is licensed under MIT License.
 3. __Royal free__ (no extra charged) when you delivered the KoolReport Pro with your commercial product.
 4. __1 year subscription__ to get free upgrades, bugs fixed and new released packages regardless price.
 5. __1 year priority support__ on forum. Your post will be marked with star and got fatest response by our expert.
-6. Enterprise License allows __unlimitted number of developers__ in organization.
+6. Enterprise License allows __unlimited number of developers__ in organization.
 7. __50% discount__ on the next subscription.
 
 If you have further inquiry on this special version, please go to our [forum](https://www.koolreport.com/forum/topics) or email us at [support@koolreport.com](mailto:support@koolreport.com). We will get back to you in no time.
