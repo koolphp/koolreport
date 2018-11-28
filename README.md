@@ -189,7 +189,7 @@ class SalesByCustomer extends \koolreport\KoolReport
 </div>
 ```
 
-You may download the source code [sale_report.zip](https://www.koolreport.com/docs/articles/quick_start/sale_report.zip). And the result of this report can be [previewed in here](https://www.koolreport.com/examples/reports/basic/sales_by_customer/index.php).
+You may download the source code [sale_report.zip](https://www.koolreport.com/docs/articles/quick_start/sale_report.zip). And the result of this report can be [previewed in here](https://www.koolreport.com/examples/reports/basic/sales_by_customer/).
 
 # More examples
 
