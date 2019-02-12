@@ -1,4 +1,4 @@
-<?php    
+<?php
 use \koolreport\widgets\koolphp\Table;
 ?>
 
@@ -13,8 +13,7 @@ use \koolreport\widgets\koolphp\Table;
 
 
 <?php
-foreach($this->dataStores as $name=>$dataStore)
-{
+foreach ($this->dataStores as $name=>$dataStore) {
 ?>
     <h1>$this->dataStore(<span class='text-success'>'<?php echo $name; ?>'</span>)</h1>
     <?php

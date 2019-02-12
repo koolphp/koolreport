@@ -1,11 +1,13 @@
 <?php
 /**
- * This file is template file of Google Chart 
+ * Timeline template
  *
- * @author KoolPHP Inc (support@koolphp.net)
- * @link https://www.koolphp.net
- * @copyright KoolPHP Inc
- * @license https://www.koolreport.com/license#mit-license
+ * @category  Core
+ * @package   KoolReport
+ * @author    KoolPHP Inc <support@koolphp.net>
+ * @copyright 2017-2028 KoolPHP Inc
+ * @license   MIT License https://www.koolreport.com/license#mit-license
+ * @link      https://www.koolphp.net
  */
 
 use \koolreport\core\Utility;
@@ -14,7 +16,6 @@ use \koolreport\core\Utility;
 
 <script type="text/javascript">
 KoolReport.widget.init(<?php echo json_encode($this->getResources()); ?>,function(){
-    KoolReport.google.chartLoader.load("<?php echo $this->stability; ?>","<?php echo $this->package; ?>");
     var tldata = [[]];
     <?php
     foreach($columns as $cKey=>$column)
@@ -59,7 +60,7 @@ KoolReport.widget.init(<?php echo json_encode($this->getResources()); ?>,functio
         }
     ?>
     
-    <?php echo $this->name; ?> = new KoolReport.google.chart("Timeline","<?php echo $this->name; ?>",<?php echo json_encode(array_keys($columns)); ?>,tldata,<?php echo json_encode($options); ?>);
+    <?php echo $this->name; ?> = new KoolReport.google.chart("Timeline","<?php echo $this->name; ?>",<?php echo json_encode(array_keys($columns)); ?>,tldata,<?php echo Utility::jsonEncode($options); ?>,<?php echo json_encode($loader); ?>);
     <?php
     if($this->pointerOnHover)
     {

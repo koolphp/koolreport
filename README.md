@@ -14,6 +14,8 @@
 
 # Changelog 
 
+* [Version 3.25.0 (Feb 11st, 2019)](https://www.koolreport.com/docs/koolreport/change_log/#version-3.25.0)
+* [Version 3.1.0 (Nov 17rd, 2018)](https://www.koolreport.com/docs/koolreport/change_log/#version-3.1.0)
 * [Version 3.0.0 (Nov 13rd, 2018)](https://www.koolreport.com/docs/koolreport/change_log/#version-3.0.0)
 * [Version 2.78.0 (Jul 16th, 2018)](https://www.koolreport.com/updates#version-2780)
 * [Version 2.43.0 (Apr 20th, 2018)](https://www.koolreport.com/updates#version-2430)

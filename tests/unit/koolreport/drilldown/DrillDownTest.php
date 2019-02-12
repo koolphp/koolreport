@@ -8,13 +8,6 @@ class DrillDownTest extends \Codeception\Test\Unit
      */
     protected $tester;
     
-    protected function _before()
-    {
-    }
-
-    protected function _after()
-    {
-    }
 
     protected function levels()
     {

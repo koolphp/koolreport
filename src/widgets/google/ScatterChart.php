@@ -2,15 +2,27 @@
 /**
  * This file is wrapper class for Google ScatterChart 
  *
- * @author KoolPHP Inc (support@koolphp.net)
- * @link https://www.koolphp.net
- * @copyright KoolPHP Inc
- * @license https://www.koolreport.com/license#mit-license
+ * @category  Core
+ * @package   KoolReport
+ * @author    KoolPHP Inc <support@koolphp.net>
+ * @copyright 2017-2028 KoolPHP Inc
+ * @license   MIT License https://www.koolreport.com/license#mit-license
+ * @link      https://www.koolphp.net
  */
 
 namespace koolreport\widgets\google;
 
 
+/**
+ * Google ScatterChart 
+ *
+ * @category  Core
+ * @package   KoolReport
+ * @author    KoolPHP Inc <support@koolphp.net>
+ * @copyright 2017-2028 KoolPHP Inc
+ * @license   MIT License https://www.koolreport.com/license#mit-license
+ * @link      https://www.koolphp.net
+ */
 class ScatterChart extends Chart
 {
 

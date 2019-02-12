@@ -1,12 +1,16 @@
 <?php
 /**
- *
- * @author KoolPHP Inc (support@koolphp.net)
- * @link https://www.koolphp.net
- * @copyright KoolPHP Inc
- * @license https://www.koolreport.com/license#mit-license
- 
- 
+ * This file contains class for MySQLDataSource
+ * 
+ * @category  Core
+ * @package   KoolReport
+ * @author    KoolPHP Inc <support@koolphp.net>
+ * @copyright 2017-2028 KoolPHP Inc
+ * @license   MIT License https://www.koolreport.com/license#mit-license
+ * @link      https://www.koolphp.net
+ */
+
+/* 
  "mysql"=>array(
     'host' => 'localhost',
     'username' => 'root',
@@ -15,97 +19,132 @@
     'charset' => 'utf8',  
     'class' => "\koolreport\datasources\MySQLDataSource"  
   ),
- 
  */
 
 namespace koolreport\datasources;
 use \koolreport\core\DataSource;
 use \koolreport\core\Utility as Util;
 
+/**
+ * MySQLDataSource helps to connect to MySQL Database
+ * 
+ * @category  Core
+ * @package   KoolReport
+ * @author    KoolPHP Inc <support@koolphp.net>
+ * @copyright 2017-2028 KoolPHP Inc
+ * @license   MIT License https://www.koolreport.com/license#mit-license
+ * @link      https://www.koolphp.net
+ */
 class MySQLDataSource extends DataSource
 {
     /**
+     * Contains list of reuable connection
+     * 
      * @var $connections Contains list of reuable connection
      */
     static $connections;
 
     /**
+     * Current data connection
+     * 
      * @var $connection Current data connection
      */
     protected $connection;
     
     /**
+     * The SQL query
+     * 
      * @var string $query The SQL query
      */
     protected $query;
 
     /**
-     * @var array $sqlParams The parameters for SQL query
+     * The parameters for SQL query
+     * 
+     * @var array $sqlParams 
      */
     protected $sqlParams;
 
     /**
-     * @var bool $countTotal Whether total should be count
+     * Whether total should be count
+     * 
+     * @var bool $countTotal 
      */
     protected $countTotal = false;
 
     /**
+     * Whether filter should be count
+     * 
      * @var bool $countFilter Whether filter should be count
      */
     protected $countFilter = false;
 
     /**
      * Init MySQLdataSource
+     * 
+     * @return null
      */
-	protected function onInit()
-	{		
-		$host = Util::get($this->params,"host","");
-		$username = Util::get($this->params,"username","");
-		$password = Util::get($this->params,"password","");
-		$dbname = Util::get($this->params,"dbname","");
-		$charset = Util::get($this->params,"charset", null);
+    protected function onInit()
+    {
+        $host = Util::get($this->params, "host", "");
+        $username = Util::get($this->params, "username", "");
+        $password = Util::get($this->params, "password", "");
+        $dbname = Util::get($this->params, "dbname", "");
+        $charset = Util::get($this->params, "charset", null);
         
         $key = md5($host.$username.$password.$dbname);
-        if(isset(MySQLDataSource::$connections[$key]))
-        {
+        if (isset(MySQLDataSource::$connections[$key])) {
             $this->connection = MySQLDataSource::$connections[$key];
-        }
-        else
-        {
+        } else {
             $this->connection = new \mysqli($host, $username, $password, $dbname);
             /* check connection */
             if ($this->connection->connect_errno) {
-                throw new \Exception("Failed to connect to MySQL: (" . 
-                    $this->connection->connect_errno . ") " . 
-                    $this->connection->connect_error);
+                throw new \Exception(
+                    "Failed to connect to MySQL: ("
+                    .$this->connection->connect_errno
+                    .") "
+                    .$this->connection->connect_error
+                );
             }
             MySQLDataSource::$connections[$key] = $this->connection;    
         }
 
         /* change character set */
         if (isset($charset) && ! $this->connection->set_charset($charset)) {
-            throw new \Exception("Error loading character set $charset: ".$this->connection->error);
+            throw new \Exception(
+                "Error loading character set $charset: "
+                .$this->connection->error
+            );
         }
-	}
+    }
     
     /**
      * Set the query and parameters
      * 
-     * @param string $query The query statement
-     * @param array $sqlParams The parameters for query
+     * @param string $query     The query statement
+     * @param array  $sqlParams The parameters for query
+     * 
+     * @return MySQLDataSource Return itself for cascade
      */
-	public function query($query, $sqlParams=null)
-	{
-		$this->query = (string)$query;
-        if($sqlParams != null)
-			$this->sqlParams = $sqlParams;
-		return $this;
+    public function query($query, $sqlParams=null)
+    {
+        $this->query = (string)$query;
+        if ($sqlParams != null) {
+            $this->sqlParams = $sqlParams;
+        }
+        return $this;
     }
 
     /**
      * Process query to additional condition
+     * 
+     * @param string $query       The query string
+     * @param array  $queryParams The array containing parameters
+     * 
+     * @return array Information for query processing
      */
-    static function processQuery($query, $queryParams) {
+    static function processQuery($query, $queryParams)
+    {
         $search = Util::get($queryParams, 'search', '');
         $searchSql = ! empty($search) ? "WHERE $search" : "";
 
@@ -127,11 +166,13 @@ class MySQLDataSource extends DataSource
      * Transform query
      * 
      * @param array $queryParams Parameters of query 
+     * 
+     * @return MySQLDataSource Return itself for cascade
      */
     public function queryProcessing($queryParams) 
     {
-        list($this->query, $this->totalQuery, $this->filterQuery) =
-            self::processQuery($this->query, $queryParams);
+        list($this->query, $this->totalQuery, $this->filterQuery)
+            = self::processQuery($this->query, $queryParams);
 
         $this->countTotal = Util::get($queryParams, 'countTotal', false);
         $this->countFilter = Util::get($queryParams, 'countFilter', false);
@@ -143,75 +184,79 @@ class MySQLDataSource extends DataSource
      * Insert params for query
      * 
      * @param array $sqlParams The parameters for query
+     * 
      * @return MySQLDataSource This datasource
      */
     public function params($sqlParams)
-	{
-		$this->sqlParams = $sqlParams;
-		return $this;
-	}
+    {
+        $this->sqlParams = $sqlParams;
+        return $this;
+    }
   
     /**
      * Perform data binding
      * 
-     * @param string $query Query need to bind params
-     * @param array $sqlParams The parameters will be bound to query
+     * @param string $query     Query need to bind params
+     * @param array  $sqlParams The parameters will be bound to query
+     * 
      * @return string Procesed query 
      */
     protected function bindParams($query, $sqlParams)
-	{
-        if (empty($sqlParams)) $sqlParams = [];
-		uksort($sqlParams, function($k1, $k2) {
-			return strlen($k1) < strlen($k2);
-		});
-        foreach($sqlParams as $key=>$value)
-        {
-            if(gettype($value)==="array")
-            {
-                $value = array_map(function($v){
-                    return $this->escape($v);
-                },$value);
-                $value = "(".implode(",",$value).")";
-                $query = str_replace($key,$value,$query);
+    {
+        if (empty($sqlParams)) {
+            $sqlParams = [];
+        }
+        uksort(
+            $sqlParams, 
+            function ($k1, $k2) {
+                return strlen($k1) < strlen($k2);
             }
-            else
-            {
-                $query = str_replace($key,$this->escape($value),$query);
+        );
+        foreach ($sqlParams as $key=>$value) {
+            if (gettype($value)==="array") {
+                $value = array_map(
+                    function ($v) {
+                        return $this->escape($v);
+                    },
+                    $value
+                );
+                $value = "(".implode(",", $value).")";
+                $query = str_replace($key, $value, $query);
+            } else {
+                $query = str_replace($key, $this->escape($value), $query);
             }
         }
-		return $query;
-	}
+        return $query;
+    }
     
     /**
      * Escape value for SQL safe
      * 
-     * @param string $string The string need to be escape
+     * @param string $str The string need to be escape
+     * 
+     * @return Escaped string
      */
     protected function escape($str)
     {
-		if (is_string($str) OR (is_object($str) && method_exists($str, '__toString')))
-		{
-			return "'".$this->escape_str($str)."'";
-		}
-		elseif (is_bool($str))
-		{
-			return ($str === FALSE) ? 0 : 1;
-		}
-		elseif ($str === NULL)
-		{
-			return 'NULL';
-		}
+        if (is_string($str) || (is_object($str) && method_exists($str, '__toString'))) {
+            return "'".$this->escapeStr($str)."'";
+        } elseif (is_bool($str)) {
+            return ($str === false) ? 0 : 1;
+        } elseif ($str === null) {
+            return 'NULL';
+        }
 
-		return $str;
+        return $str;
     }
 
     /**
      * Escape string
      * 
      * @param string $str The string needed to be escaped.
+     * 
      * @return string The escaped string
      */
-    protected function escape_str($str)
+    protected function escapeStr($str)
     {
         return $this->connection->real_escape_string($str);
     }
@@ -220,9 +265,11 @@ class MySQLDataSource extends DataSource
      * Map field type to bind type
      * 
      * @param strng $field_type The type of field
+     * 
      * @return string KoolReport type of field
      */
-    function map_field_type_to_bind_type($field_type) {
+    function mapFieldTypeToBindType($field_type)
+    {
         switch ($field_type) {
         case MYSQLI_TYPE_DECIMAL:
         case MYSQLI_TYPE_NEWDECIMAL:
@@ -265,16 +312,19 @@ class MySQLDataSource extends DataSource
     
     /**
      * Start piping data
+     * 
+     * @return null
      */
-	public function start()
-	{
+    public function start()
+    {
         $metaData = array("columns"=>array());
 
         if ($this->countTotal) {
             $totalQuery = $this->bindParams($this->totalQuery, $this->sqlParams);
             $totalResult = $this->connection->query($totalQuery);
-            if($totalResult===FALSE)
+            if ($totalResult===false) {
                 throw new \Exception("Error on query >>> ".$this->connection->error);
+            }
             $row = $totalResult->fetch_array();
             $result = $row[0];
             $metaData['totalRecords'] = $result;
@@ -283,8 +333,9 @@ class MySQLDataSource extends DataSource
         if ($this->countFilter) {
             $filterQuery = $this->bindParams($this->filterQuery, $this->sqlParams);
             $filterResult = $this->connection->query($filterQuery);
-            if($filterResult===FALSE)
+            if ($filterResult===false) {
                 throw new \Exception("Error on query >>> ".$this->connection->error);
+            }
             $row = $filterResult->fetch_array();
             $result = $row[0];
             $metaData['filterRecords'] = $result;
@@ -293,8 +344,7 @@ class MySQLDataSource extends DataSource
         $query = $this->bindParams($this->query, $this->sqlParams);
         $result = $this->connection->query($query);
         
-        if($result===FALSE)
-        {
+        if ($result===false) {
             throw new \Exception("Error on query >>> ".$this->connection->error);
         }
 
@@ -302,33 +352,33 @@ class MySQLDataSource extends DataSource
 
         
         $numcols = count($finfo);
-        for($i=0; $i<$numcols; $i++) 
-        {
-            $type = $this->map_field_type_to_bind_type($finfo[$i]->type);
+        for ($i=0; $i<$numcols; $i++) {
+            $type = $this->mapFieldTypeToBindType($finfo[$i]->type);
                 $metaData["columns"][$finfo[$i]->name] = array(
                         "type"=>$type,
                     );
             switch($type)
             {
-                case "datetime":
-                    $metaData["columns"][$finfo[$i]->name]["format"] = "Y-m-d H:i:s";
+            case "datetime":
+                $metaData["columns"][$finfo[$i]->name]["format"] = "Y-m-d H:i:s";
                 break;
-                case "date":
-                    $metaData["columns"][$finfo[$i]->name]["format"] = "Y-m-d";
+            case "date":
+                $metaData["columns"][$finfo[$i]->name]["format"] = "Y-m-d";
                 break;
-                case "time":
-                    $metaData["columns"][$finfo[$i]->name]["format"] = "H:i:s";
+            case "time":
+                $metaData["columns"][$finfo[$i]->name]["format"] = "H:i:s";
                 break;          
             }
         }
 
-		$this->sendMeta($metaData,$this);
+        $this->sendMeta($metaData, $this);
     
-		$this->startInput(null);
-		
-		while ($row = $result->fetch_assoc())
-			$this->next($row, $this);
-    
-		$this->endInput(null);
-	}
+        $this->startInput(null);
+        
+        while ($row = $result->fetch_assoc()) {
+            $this->next($row, $this);
+        }
+
+        $this->endInput(null);
+    }
 }

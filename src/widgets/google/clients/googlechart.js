@@ -1,7 +1,7 @@
 var KoolReport = KoolReport || {};
 KoolReport.google = KoolReport.google || {};
 KoolReport.google.chart = KoolReport.google.chart||
-function(chartType,chartId,cKeys,data,options)
+function(chartType,chartId,cKeys,data,options,loader)
 {
     this.chartType = chartType;
     this.chartId = chartId;
@@ -9,12 +9,18 @@ function(chartType,chartId,cKeys,data,options)
     this.options = options;
     this.events = {};
     this.cKeys = cKeys;
-    KoolReport.google.chartLoader.callback(function(){
-        google.charts.setOnLoadCallback(this.init.bind(this));
-        window.addEventListener('resize',function(){
-            this.redraw();
-        }.bind(this));    
-    }.bind(this));
+    this.loader = loader;
+
+    if(typeof google !="undefined" && typeof google.charts !="undefined" )
+    {   
+        this.loadPackage();
+    }
+    else
+    {        
+        // Load the loader.js
+        this.loadLoader();
+    }
+    $(window).on('resize',this.redraw.bind(this));
 };
 KoolReport.google.chart.prototype = {
     options:null,
@@ -24,18 +30,54 @@ KoolReport.google.chart.prototype = {
     events:null,
     chart:null,
     data:null,
+    loader:null,
     pointerOnHover:false,
+    loadLoader:function()
+    {
+        if($('#googlechart-loader').length == 0)
+        {
+            //First start, adding script and load event
+            var script = document.createElement("script");
+            script.id="googlechart-loader";
+            script.type="text/javascript";
+            script.src = "https://www.gstatic.com/charts/loader.js";
+            $(script).on("load",this.loadPackage.bind(this));
+            document.head.appendChild(script);
+            
+        }
+        else
+        {
+            //Already on page but have not run,
+            //Attach the load event
+            $('#googlechart-loader').on("load",this.loadPackage.bind(this));
+        }
+    },
+    loadPackage:function()
+    {
+        
+        if(typeof google.visualization !="undefined" && typeof google.visualization[this.chartType] !="undefined")
+        {
+            this.init();
+        }
+        else
+        {
+            //Load the package
+            google.charts.load(this.loader.stability,{
+                packages:[this.loader.package],
+                mapsApiKey:this.loader.mapsApiKey}
+            );
+            google.charts.setOnLoadCallback(this.init.bind(this));
+        }
+    },
     init:function()
     {
         this.chart = new google.visualization[this.chartType](document.getElementById(this.chartId));
         
         google.visualization.events.addListener(this.chart, 'select', function(){
             var selection = this.chart.getSelection();
-            // console.log(selection);
             for (var i = 0; i < selection.length; i++)
             {
                 var item = selection[i];
-                // console.log(item);
                 if(item.row!=null)
                 {
                     var selectedRow = [];
@@ -144,54 +186,5 @@ KoolReport.google.chart.prototype = {
                 this.events[name][i](params);
             }
         }
-    }
-};
-
-KoolReport.google.chartLoader = KoolReport.google.chartLoader ||{
-    funcs: new Array(),
-    loading:false,
-    load: function(stability,package,mapsApiKey)
-    {
-        
-        // if(typeof google !="undefined")
-        if(typeof google !="undefined" && google.charts)
-        {
-            google.charts.load(stability, {
-                'packages':[package],
-                mapsApiKey: mapsApiKey
-            });
-        }
-        else
-        {
-            if(this.loading == false)
-            {
-                $.getScript('https://www.gstatic.com/charts/loader.js',function(){
-                    
-                    google.charts.load(stability, {
-                        'packages':[package],
-                        mapsApiKey: mapsApiKey
-                    });
-                    for(var i in this.funcs)
-                    {
-                        this.funcs[i]();
-                    }
-                    this.funcs = new Array();
-                }.bind(this));
-                this.loading = true;
-            }    
-        }
-    },
-    callback:function(func)
-    {
-        // if(typeof google == "undefined")
-        // {
-        //     this.funcs.push(func);
-        // }
-        // else
-        // {
-        //     func();
-        // }
-        typeof google !="undefined" && google.charts ? 
-            func() : this.funcs.push(func);
     }
 };

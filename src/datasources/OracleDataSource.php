@@ -1,11 +1,16 @@
 <?php
 /**
- *
- * @author KoolPHP Inc (support@koolphp.net)
- * @link https://www.koolphp.net
- * @copyright KoolPHP Inc
- * @license https://www.koolreport.com/license#mit-license
- 
+ * This file contains OracleDataSource class
+ * 
+ * @category  Core
+ * @package   KoolReport
+ * @author    KoolPHP Inc <support@koolphp.net>
+ * @copyright 2017-2028 KoolPHP Inc
+ * @license   MIT License https://www.koolreport.com/license#mit-license
+ * @link      https://www.koolphp.net
+ */
+
+ /*
     How to install Oracle driver for Apache on Windows:
     - Install Oracle database 32 bit only (php on Windows is only 32 bit).
     - Download and extract Oracle Instant Client 32 bit, add the extracted folder 
@@ -43,83 +48,113 @@ namespace koolreport\datasources;
 use \koolreport\core\DataSource;
 use \koolreport\core\Utility as Util;
 
+/**
+ * OracleDataSource class helps to connect to Oracle database
+ * 
+ * @category  Core
+ * @package   KoolReport
+ * @author    KoolPHP Inc <support@koolphp.net>
+ * @copyright 2017-2028 KoolPHP Inc
+ * @license   MIT License https://www.koolreport.com/license#mit-license
+ * @link      https://www.koolphp.net
+ */
 class OracleDataSource extends DataSource
 {
     /**
+     * List of available connections for reusing
+     * 
      * @var array $connections List of available connections for reusing
      */
     static $connections;
 
     /**
-     * @var $connection The current connection
+     * The current connection
+     * 
+     * @var $connection 
      */
     protected $connection;
     
     /**
-     * @var string $query The query
+     * The query
+     * 
+     * @var string $query 
      */
     protected $query;
 
     /**
+     * The params of query
+     * 
      * @var array $sqlParams The params of query
      */
     protected $sqlParams;
 
     /**
+     * Whether the total should be counted.
+     * 
      * @var bool $countToal Whether the total should be counted.
      */
     protected $countTotal = false;
 
     /**
+     * Whether the filter should be counted
+     * 
      * @var bool $countFilter Whether the filter should be counted
      */
     protected $countFilter = false;
 
-	protected function onInit()
-	{		
-        $username = Util::get($this->params,"username","");
-        $password = Util::get($this->params,"password","");
-        $connString = Util::get($this->params,"connectionString","");
+    /**
+     * Called for initiation
+     * 
+     * @return null
+     */
+    protected function onInit()
+    {
+        $username = Util::get($this->params, "username", "");
+        $password = Util::get($this->params, "password", "");
+        $connString = Util::get($this->params, "connectionString", "");
 
         $key = md5($username.$password.$connString);
 
-        if(isset(OracleDataSource::$connections[$key]))
-        {
+        if (isset(OracleDataSource::$connections[$key])) {
             $this->connection = OracleDataSource::$connections[$key];
-        }
-        else
-        {
+        } else {
             $conn = oci_connect($username, $password, $connString);
-            if( $conn ) 
+            if ($conn) {
                 $this->connection = $conn;
-            else{
-                throw new \Exception("Connection failed: " . print_r(oci_error(),true));
+            } else {
+                throw new \Exception("Connection failed: " . print_r(oci_error(), true));
             }
             OracleDataSource::$connections[$key] = $this->connection;
         }
-	}
+    }
     
     /**
      * Set the query and params
      * 
-     * @param string $query The SQL query statement
-     * @param array $sqlParams The parameters of SQL query
+     * @param string $query     The SQL query statement
+     * @param array  $sqlParams The parameters of SQL query
+     * 
      * @return OracleDataSource This datasource object
      */
-	public function query($query, $sqlParams=null)
-	{
-		$this->query =  (string)$query;
-        if($sqlParams!=null)
-		{
-			$this->sqlParams = $sqlParams;
-		}
-		return $this;
+    public function query($query, $sqlParams=null)
+    {
+        $this->query =  (string)$query;
+        if ($sqlParams!=null) {
+            $this->sqlParams = $sqlParams;
+        }
+        return $this;
     }
 
     /**
      * Process query to additional condition
+     * 
+     * @param string $query       The SQL query statement
+     * @param array  $queryParams The parameters of SQL query
+     * 
+     * @return array Information of additional condition
      */
-    static function processQuery($query, $queryParams) {
+    static function processQuery($query, $queryParams) 
+    {
         $search = Util::get($queryParams, 'search', '1=1');
         $searchSql = "WHERE $search";
 
@@ -137,7 +172,8 @@ class OracleDataSource extends DataSource
         $filterQuery = "SELECT count(*) FROM ($query) tmp $searchSql";
         $totalQuery = "SELECT count(*) FROM ($query) tmp";
         $processedQuery = "select * from (select a.*, rownum as rnum 
-            from (select * from ($query) $orderSql) a $limitSearchSql ) tmp where rnum >= $start";
+            from (select * from ($query) $orderSql) a $limitSearchSql ) tmp 
+            where rnum >= $start";
         // echo "query=" . $processedQuery . '<br>';
         return [$processedQuery, $totalQuery, $filterQuery];
     }
@@ -146,11 +182,13 @@ class OracleDataSource extends DataSource
      * Transform query
      * 
      * @param array $queryParams Parameters of query 
+     * 
+     * @return OracleDataSource Return itself
      */    
     public function queryProcessing($queryParams) 
     {
-        list($this->query, $this->totalQuery, $this->filterQuery) =
-            self::processQuery($this->query, $queryParams);
+        list($this->query, $this->totalQuery, $this->filterQuery) 
+            = self::processQuery($this->query, $queryParams);
 
         $this->countTotal = Util::get($queryParams, 'countTotal', false);
         $this->countFilter = Util::get($queryParams, 'countFilter', false);
@@ -162,88 +200,93 @@ class OracleDataSource extends DataSource
      * Insert params for query
      * 
      * @param array $sqlParams The parameters for query
+     * 
      * @return OracleDataSource This datasource
      */  
     public function params($sqlParams)
-	{
-		$this->sqlParams = $sqlParams;
-		return $this;
+    {
+        $this->sqlParams = $sqlParams;
+        return $this;
     }
     
     /**
      * Perform data binding
      * 
-     * @param string $query Query need to bind params
-     * @param array $sqlParams The parameters will be bound to query
+     * @param string $query     Query need to bind params
+     * @param array  $sqlParams The parameters will be bound to query
+     * 
      * @return string Procesed query 
-     */	
+     */
     protected function bindParams($query, $sqlParams)
-	{
-		if (empty($sqlParams)) $sqlParams = [];
-		uksort($sqlParams, function($k1, $k2) {
-			return strlen($k1) < strlen($k2);
-		});
-        foreach($sqlParams as $key=>$value)
-        {
-            if(gettype($value)==="array")
-            {
-                $value = array_map(function($v){
-                    return $this->escape($v);
-                },$value);
-                $value = "(".implode(",",$value).")";
-                $query = str_replace($key,$value,$query);
+    {
+        if (empty($sqlParams)) {
+            $sqlParams = [];
+        }
+        uksort(
+            $sqlParams,
+            function ($k1, $k2) {
+                return strlen($k1) < strlen($k2);
             }
-            else
-            {
-                $query = str_replace($key,$this->escape($value),$query);
+        );
+        foreach ($sqlParams as $key=>$value) {
+            if (gettype($value)==="array") {
+                $value = array_map(
+                    function ($v) {
+                        return $this->escape($v);
+                    },
+                    $value
+                );
+                $value = "(".implode(",", $value).")";
+                $query = str_replace($key, $value, $query);
+            } else {
+                $query = str_replace($key, $this->escape($value), $query);
             }
         }
-		return $query;
+        return $query;
     }
     
     /**
      * Escape value for SQL safe
      * 
-     * @param string $string The string need to be escape
-     */    
+     * @param string $str The string need to be escape
+     * 
+     * @return string The escaped string
+     */
     protected function escape($str)
     {
-		if (is_string($str) OR (is_object($str) && method_exists($str, '__toString')))
-		{
-			return "'".$this->escape_str($str)."'";
-		}
-		elseif (is_bool($str))
-		{
-			return ($str === FALSE) ? 0 : 1;
-		}
-		elseif ($str === NULL)
-		{
-			return 'NULL';
-		}
+        if (is_string($str) || (is_object($str) && method_exists($str, '__toString'))) {
+            return "'".$this->escapeStr($str)."'";
+        } elseif (is_bool($str)) {
+            return ($str === false) ? 0 : 1;
+        } elseif ($str === null) {
+            return 'NULL';
+        }
 
-		return $str;
+        return $str;
     }
 
     /**
      * Escape string
      * 
      * @param string $str The string needed to be escaped.
+     * 
      * @return string The escaped string
      */
-    protected function escape_str($str)
+    protected function escapeStr($str)
     {
-        return str_replace("'","''",$str);
+        return str_replace("'", "''", $str);
     }
 
     /**
      * Map field type to bind type
      * 
-     * @param strng $field_type The type of field
-     * @return string KoolReport type of field
-     */	
-    protected function map_field_type_to_bind_type($native_type)
-	{
-		$oracleDatatypeMap = array(
+     * @param string $native_type The type of field
+     * 
+     * @return string KoolReport  type of field
+     */
+    protected function mapFieldTypeToBindType($native_type)
+    {
+        $oracleDatatypeMap = array(
             'varchar2' => 'string',
             'nvarchar2' => 'string',
             'number' => 'number',
@@ -265,25 +308,28 @@ class OracleDataSource extends DataSource
             'blob' => 'string',
             'bfile' => 'string',
         );
-		
-		$native_type = strtolower($native_type);
-        if (isset($oracleDatatypeMap[$native_type]))
+        
+        $native_type = strtolower($native_type);
+        if (isset($oracleDatatypeMap[$native_type])) {
             return $oracleDatatypeMap[$native_type];
-        else
+        } else {
             return "unknown";
+        }
     }
     
     /**
      * Start piping data
-     */	
-	public function start()
-	{
+     * 
+     * @return null
+     */
+    public function start()
+    {
         $metaData = array("columns"=>array());
 
         if ($this->countTotal) {
             $totalQuery = $this->bindParams($this->totalQuery, $this->sqlParams);
             $totalResult = oci_parse($this->connection, $totalQuery);
-            if(! $totalResult) {
+            if (! $totalResult) {
                 echo oci_error();
                 exit;
             }
@@ -296,7 +342,7 @@ class OracleDataSource extends DataSource
         if ($this->countFilter) {
             $filterQuery = $this->bindParams($this->filterQuery, $this->sqlParams);
             $filterResult = oci_parse($this->connection, $filterQuery);
-            if(! $filterResult){
+            if (! $filterResult) {
                 echo oci_error();
                 exit;
             }
@@ -306,7 +352,7 @@ class OracleDataSource extends DataSource
             $metaData['filterRecords'] = $total;
         }
 
-        $query = $this->bindParams($this->query,$this->sqlParams);
+        $query = $this->bindParams($this->query, $this->sqlParams);
         $stid = oci_parse($this->connection, $query);
         if (! $stid) {
             echo oci_error();
@@ -314,32 +360,33 @@ class OracleDataSource extends DataSource
         }
         oci_execute($stid);
         $num_fields = oci_num_fields($stid);
-		// $metaData = array("columns"=>array());
-		for($i=0; $i<$num_fields; $i++) {
+        // $metaData = array("columns"=>array());
+        for ($i=0; $i<$num_fields; $i++) {
             $name = oci_field_name($stid, $i+1);
             $type = oci_field_type($stid, $i+1);
-            $type = $this->map_field_type_to_bind_type($type);
-			$metaData["columns"][$name] = array(
-				"type"=>$type,
-			);
+            $type = $this->mapFieldTypeToBindType($type);
+            $metaData["columns"][$name] = array(
+                "type"=>$type,
+            );
             switch($type)
             {
-                case "datetime":
-                    $metaData["columns"][$name]["format"] = "Y-m-d H:i:s";
-                    break;
-                case "date":
-                    $metaData["columns"][$name]["format"] = "Y-m-d";
-                    break;
+            case "datetime":
+                $metaData["columns"][$name]["format"] = "Y-m-d H:i:s";
+                break;
+            case "date":
+                $metaData["columns"][$name]["format"] = "Y-m-d";
+                break;
             }
         }
-				
-		$this->sendMeta($metaData,$this);
+                
+        $this->sendMeta($metaData, $this);
     
-		$this->startInput(null);
-		
-		while($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS))
-			$this->next($row, $this);
+        $this->startInput(null);
+        
+        while ($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) {
+            $this->next($row, $this);
+        }
     
-		$this->endInput(null);
-	}
+        $this->endInput(null);
+    }
 }

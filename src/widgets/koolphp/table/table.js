@@ -128,12 +128,11 @@ KoolReport.koolphp.table.prototype = {
     },
     handleRowGroup:function()
     {
-        var _root = $('#'+this.name);
         if(this.options.paging==null)
         {
-            _root.find('tr.row-group').show();
             return;
         }
+        var _root = $('#'+this.name);
         var start = this.options.paging.pageIndex*this.options.paging.pageSize;
         var end = start+this.options.paging.pageSize-1;
         _root.find('tr.row-group:visible').hide();

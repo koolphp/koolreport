@@ -1,12 +1,29 @@
 # Change Log
 
+## Version 3.25.0
+
+1. `Table`: Adding `css` and `cssStyle` options for group row.
+2. `Table`: `"top"` and `"bottom"` template of row group now supports function
+3. `Widget`: Fix the `standardizeDataSource()` issue when receiving data source by function
+4. `KoolReport`: Convert code base to comply with PSR-2 standard
+5. `DataStore`: Change output of `toJson()` method to return both data and meta data
+6. `GoogleChart`: Fix the issue of inability to load multiple charts from different google chart package.
+7. `KoolReport`: Avoid duplicate data sending when requestDataSending() and run() are both called.
+8. `DataStore`: Adding method `clone()` to get a datastore cloned.
+9. `Table`: Adding new property `sorting` to facilitate sorting on Table.
+
+## Version 3.1.0
+
+1. `ResourceManager`: Fix issue with publishing resources 
+2. `Widget`: Fix the PHP5.4 incompatibility
+
 ## Version 3.0.0
 
 1. `DateTimeFormat`: Deal with null value or wrong format of datetime
 2. `Utility`: Deal with null value of datetime
 3. `TimeBucket`: Avoid null date value
 4. `DateTimeFormat`: Check null date value and do not convert if the datetime is in good shape
-5. `Widget`: New loading method for Widget which will allow widget is able to load resource and init itself on-demand
+5. `Widget`: New loading method for Widget which will allow widget is able to load resource and initiate itself on-demand
 6. `KoolReport`: Able to create event handler function in the report instead of using registerEvent() function.
 7. `Widget`: Remove `registerResources()` and `renderResources()`
 8. `Table`: Enhance the removeDuplicate feature, supporting paging and remove duplicate cell at the same time.
@@ -24,7 +41,7 @@
 22. `ComboChart`: Adding `chartType` property for columns in `ComboChart` for setting the chart to display
 23. `Widget`: Adding `themeBase` property to let theme define how widget to be rendered
 24. `Widget`: Adding `withoutLoader` property to set where widget should render with or without KoolReport loader.
-25. `Table`: Make pagnination compatible with Bootstrap4
+25. `Table`: Make pagination compatible with Bootstrap4
 26. `Widget`: Adding `themeCssClass` property to let theme controls appearance of widget
 27. `Widget`: Cover widgets in custom tag to increase client-side accessibility.
 28. `Table`: Add new feature `Row Grouping` which allows multi-levels row group in Table.
@@ -47,7 +64,7 @@
 6. KoolReport: Reduce reload settings() by saving to $reportSettings
 7. KoolReport: src() will take the first datasource if name is not specify 
 8. Utility: Add advanced jsonEncode() function to enable js function definition inside php array.
-9. Adding version factor to KoolReport as well as its widget so that everytime we upgrade core libray as well as package, the widget is able to create new assets folder with updated resource
+9. Adding version factor to KoolReport as well as its widget so that everytime we upgrade core library as well as package, the widget is able to create new assets folder with updated resource
 10. Fix several minor bug
 11. Adding `DifferenceColumn` process to calculate the difference between row and the previous one.
 12. Adding `AppendRow` process to add custom row to data flow.

@@ -5,15 +5,27 @@
  * with report view and widgets so that they can be applied
  * different styling. 
  *
- * @author KoolPHP Inc (support@koolphp.net)
- * @link https://www.koolphp.net
- * @copyright KoolPHP Inc
- * @license https://www.koolreport.com/license#mit-license
+ * @category  Core
+ * @package   KoolReport
+ * @author    KoolPHP Inc <support@koolphp.net>
+ * @copyright 2017-2028 KoolPHP Inc
+ * @license   MIT License https://www.koolreport.com/license#mit-license
+ * @link      https://www.koolphp.net
  */
 
 namespace koolreport\core;
 
-class Theme extends Base
+/**
+ * Theme class to handle theme settings for report
+ * 
+ * @category  Core
+ * @package   KoolReport
+ * @author    KoolPHP Inc <support@koolphp.net>
+ * @copyright 2017-2028 KoolPHP Inc
+ * @license   MIT License https://www.koolreport.com/license#mit-license
+ * @link      https://www.koolphp.net
+ */
+class Theme
 {
     /**
      * Store the report's object cotaining this theme.
@@ -22,9 +34,15 @@ class Theme extends Base
      */
     protected $report;
 
+    /**
+     * Constructor of theme
+     * 
+     * @param KoolReport $report The report object that theme is attached to
+     * 
+     * @return null
+     */
     public function __construct($report)
     {
-        parent::__construct();
         $this->report = $report;
         $this->onInit();
     }
@@ -33,6 +51,7 @@ class Theme extends Base
      * 
      * This method is derived by sub class
      * 
+     * @return null
      */
     protected function onInit()
     {
@@ -57,7 +76,8 @@ class Theme extends Base
     /**
      * Derived by them to provide list of supported widgets
      * 
-     * @return array Associated array containing list of supported widgets and resources information
+     * @return array Associated array containing list of supported widgets 
+     *               and resources information
      */
     protected function themeWidgets()
     {
@@ -82,16 +102,15 @@ class Theme extends Base
      * Get color scheme
      * 
      * @param string $key Name of color scheme we want to get, if null the first color scheme will be return.
+     * 
      * @return array Array of colors, null if there is no available
      */
     public function colorScheme($key=null)
     {
         $all = $this->allColorSchemes();
         $allKeys = array_keys($all);
-        if(count($allKeys)>0)
-        {
-            if($key && isset($all[strtolower($key)]))
-            {
+        if (count($allKeys)>0) {
+            if ($key && isset($all[strtolower($key)])) {
                 return $all[strtolower($key)];
             }    
             return $all[$allKeys[0]];
@@ -123,8 +142,7 @@ class Theme extends Base
      */
     public function applyColorScheme(&$colorScheme)
     {
-        if(gettype($colorScheme)!="array")
-        {
+        if (gettype($colorScheme)!="array") {
             $colorScheme = $this->colorScheme($colorScheme);    
         }
         return $colorScheme;
@@ -133,13 +151,13 @@ class Theme extends Base
     /**
      * Whether theme support a widget
      * 
-     * @param $widget: String of classname or object
-     * @return boolean
+     * @param Widget $widget String of classname or object
+     * 
+     * @return boolean Whether theme support a widget
      */
     public function doesSupport($widget)
     {
-        if(gettype($widget)!="string")
-        {
+        if (gettype($widget)!="string") {
             $widget = get_class($widget);            
         }
         return isset($this->themeWidgets()[$widget]);
@@ -148,10 +166,12 @@ class Theme extends Base
     /**
      * Return resources information of an widget
      * 
-     * The method will check if the theme support this widget and if yes, it will return
-     * supported resources provided by the theme.
+     * The method will check if the theme support this widget and if yes, 
+     * it will return supported resources provided by the theme.
      * 
-     * @param mixed $widget We can input either name of widget class or the widget object
+     * @param mixed $widget We can input either name of widget class 
+     *                      or the widget object
+     * 
      * @return array Associated array contaning resources for widget.
      */
     public function getWidgetResourcesFor($widget)
@@ -163,56 +183,60 @@ class Theme extends Base
             "replacingJs"=>array(),
         );
 
-        if(gettype($widget)!="string")
-        {
+        if (gettype($widget)!="string") {
             $widget = get_class($widget);            
         }
         $settings = $this->themeWidgets()[$widget];
 
-        if(isset($settings["folder"]))
-        {
-            $version = Utility::get($this->themeInfo(),"version","");
+        if (isset($settings["folder"])) {
+            $version = Utility::get($this->themeInfo(), "version", "");
             $assetUrl = $this->getReport()
-                        ->getResourceManager()
-                        ->publishAssetFolder(realpath(dirname(Utility::getClassPath($this))."/".$settings["folder"]),$version);
+                ->getResourceManager()
+                ->publishAssetFolder(
+                    realpath(
+                        dirname(Utility::getClassPath($this))."/".$settings["folder"]
+                    ),
+                    $version
+                );
             
             
-            $replacingCss = Utility::get($settings,"replacingCss",array());
-            $resources["replacingCss"] = $this->addingAssetUrl($assetUrl,$replacingCss);
+            $replacingCss = Utility::get($settings, "replacingCss", array());
+            $resources["replacingCss"] = $this->addingAssetUrl(
+                $assetUrl,
+                $replacingCss
+            );
                 
-            $css = Utility::get($settings,"css",array());
-            $resources["css"] = $this->addingAssetUrl($assetUrl,$css);
+            $css = Utility::get($settings, "css", array());
+            $resources["css"] = $this->addingAssetUrl($assetUrl, $css);
 
-            $replacingJs = Utility::get($settings,"replacingJs",array());
-            $resources["replacingJs"] = $this->addingAssetUrl($assetUrl,$replacingJs);
+            $replacingJs = Utility::get($settings, "replacingJs", array());
+            $resources["replacingJs"] = $this->addingAssetUrl($assetUrl, $replacingJs);
 
-            $js = Utility::get($settings,"js",array());
-            $resources["js"] = $this->addingAssetUrl($assetUrl,$js);
+            $js = Utility::get($settings, "js", array());
+            $resources["js"] = $this->addingAssetUrl($assetUrl, $js);
         }
         return $resources;
     }
     /**
-     * Get resources in short format and return full url to each component of resources
+     * Get resources in short format and return full url 
+     * to each component of resources
      * 
-     * @param string $assetUrl The url to asset folder
-     * @param array $resources Resources in short form
+     * @param string $assetUrl  The url to asset folder
+     * @param array  $resources Resources in short form
+     * 
      * @return array Resource in long form.
      */
-	protected function addingAssetUrl($assetUrl,$resources)
-	{
-		foreach($resources as &$resource)
-		{
-			if(gettype($resource)=="string")
-			{
-				$resource = $assetUrl."/".$resource;
-			}
-			else if(gettype($resource)=="array")
-			{
-				$resource = $this->addingAssetUrl($assetUrl,$resource);
-			}
-		}
-		return $resources;
-	}
+    protected function addingAssetUrl($assetUrl,$resources)
+    {
+        foreach ($resources as &$resource) {
+            if (gettype($resource)=="string") {
+                $resource = $assetUrl."/".$resource;
+            } else if (gettype($resource)=="array") {
+                $resource = $this->addingAssetUrl($assetUrl, $resource);
+            }
+        }
+        return $resources;
+    }
     /**
      * Return report that containing this theme
      * 

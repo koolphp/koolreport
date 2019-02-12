@@ -8,16 +8,6 @@ class DataStoreTest extends \Codeception\Test\Unit
      */
     protected $tester;
 
-    
-    protected function _before()
-    {
-        
-    }
-
-    protected function _after()
-    {
-    }
-
     public function testInitDataStore()
     {
         $store = new DataStore;
@@ -111,5 +101,27 @@ class DataStoreTest extends \Codeception\Test\Unit
             $result[] = $sub->sum("age");
         });
         $this->assertEquals($result,array(3,5));
+    }
+
+    public function testToJson()
+    {
+        $data = array(
+            array("name"=>"Peter","age"=>1),
+            array("name"=>"Peter","age"=>2),
+            array("name"=>"Michael","age"=>5),
+        );
+        $meta = array(
+            "columns"=>array(
+                "name"=>array("type"=>"string"),
+                "age"=>array("type"=>"number")
+            )
+        );
+        $store = new DataStore($data);
+
+        $this->assertEquals($store->toJson(),json_encode(array(
+            "meta"=>$meta,
+            "data"=>$data
+        )));
+
     }
 }

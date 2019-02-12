@@ -14,16 +14,6 @@ class PdoDataSourceTest extends \Codeception\Test\Unit
         "charset"=>"utf8"
     );
 
-    protected function _before()
-    {
-        
-    }
-
-    protected function _after()
-    {
-        
-    }
-
     public function testCreateSource()
     {
         $source = PdoDataSource::create($this->settings);

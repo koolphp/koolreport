@@ -2,10 +2,12 @@
 /**
  * This file contains class to pull data from CSV file
  *
- * @author KoolPHP Inc (support@koolphp.net)
- * @link https://www.koolphp.net
- * @copyright KoolPHP Inc
- * @license https://www.koolreport.com/license#mit-license
+ * @category  Core
+ * @package   KoolReport
+ * @author    KoolPHP Inc <support@koolphp.net>
+ * @copyright 2017-2028 KoolPHP Inc
+ * @license   MIT License https://www.koolreport.com/license#mit-license
+ * @link      https://www.koolphp.net
  */
 
 /*
@@ -22,35 +24,57 @@ namespace koolreport\datasources;
 use \koolreport\core\DataSource;
 use \koolreport\core\Utility;
 
+/**
+ * CSVDataSource helps to load data from csv file
+ *
+ * @category  Core
+ * @package   KoolReport
+ * @author    KoolPHP Inc <support@koolphp.net>
+ * @copyright 2017-2028 KoolPHP Inc
+ * @license   MIT License https://www.koolreport.com/license#mit-license
+ * @link      https://www.koolphp.net
+ */
 class CSVDataSource extends DataSource
 {
     /**
+     * The path to csv file
+     * 
      * @var string $filePath The path to csv file
      */
     protected $filePath;
     
     /**
+     * The seperator between field in file
+     * 
      * @var string $fieldSeparator The seperator between field in file
      */
     protected $fieldSeparator;
 
     /**
+     * The number of rows used to guess type of column
+     * 
      * @var integer The number of rows used to guess type of column
      */
     protected $precision;
 
     /**
+     * Set charset
+     * 
      * @var string $charset Set charset
      */
     protected $charset;
 
     /**
+     * Whether first row is data or columnName
+     * 
      * @var bool $firstRowData Whether first row is data or columnName
      */
     protected $firstRowData;
 
     /**
      * Init the datasource
+     * 
+     * @return null
      */
     protected function onInit()
     {
@@ -65,6 +89,7 @@ class CSVDataSource extends DataSource
      * Guess data type
      * 
      * @param mixed $value The value
+     * 
      * @return string The type of value
      */
     protected function guessType($value)
@@ -90,6 +115,8 @@ class CSVDataSource extends DataSource
 
     /**
      * Start piping data
+     * 
+     * @return null
      */
     public function start()
     {
@@ -103,9 +130,13 @@ class CSVDataSource extends DataSource
         if (($handle = fopen($this->filePath, "r")) !== false) {
             $row = fgetcsv($handle, 0, $this->fieldSeparator);
             //Convert to UTF8 if assign charset to utf8
-            $row = array_map(function($item){
-                return ($this->charset=="utf8" && is_string($item))?utf8_encode($item):$item;
-            },$row);
+            $row = array_map(
+                function ($item) {
+                    return ($this->charset=="utf8" && is_string($item))
+                        ?utf8_encode($item):$item;
+                },
+                $row
+            );
 
             if (is_array($row)) {
                 if (!$this->firstRowData) {
@@ -121,7 +152,9 @@ class CSVDataSource extends DataSource
                 $metaData = array("columns" => array());
                 for ($i = 0; $i < count($columnNames); $i++) {
                     $metaData["columns"][$columnNames[$i]] = array(
-                        "type" => (isset($row)) ? $this->guessType($row[$i]) : "unknown");
+                            "type" => (isset($row))
+                                ?$this->guessType($row[$i]) : "unknown"
+                        );
                 }
                 $this->sendMeta($metaData, $this);
                 $this->startInput(null);
@@ -131,9 +164,13 @@ class CSVDataSource extends DataSource
                 }
             }
             while (($row = fgetcsv($handle, 0, $this->fieldSeparator)) !== false) {
-                $row = array_map(function($item){
-                    return ($this->charset=="utf8" && is_string($item))?utf8_encode($item):$item;
-                },$row);    
+                $row = array_map(
+                    function ($item) {
+                        return ($this->charset=="utf8" && is_string($item))
+                            ?utf8_encode($item):$item;
+                    },
+                    $row
+                );    
                 $this->next(array_combine($columnNames, $row), $this);
             }
         } else {

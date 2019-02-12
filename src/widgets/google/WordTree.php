@@ -1,18 +1,29 @@
 <?php
 /**
- * This file is wrapper class for Google WordTree 
+ * This file is wrapper class for Google WordTree
  *
- * @author KoolPHP Inc (support@koolphp.net)
- * @link https://www.koolphp.net
- * @copyright KoolPHP Inc
- * @license https://www.koolreport.com/license#mit-license
+ * @category  Core
+ * @package   KoolReport
+ * @author    KoolPHP Inc <support@koolphp.net>
+ * @copyright 2017-2028 KoolPHP Inc
+ * @license   MIT License https://www.koolreport.com/license#mit-license
+ * @link      https://www.koolphp.net
  */
 
 namespace koolreport\widgets\google;
 
-
+/**
+ * Google WordTree
+ *
+ * @category  Core
+ * @package   KoolReport
+ * @author    KoolPHP Inc <support@koolphp.net>
+ * @copyright 2017-2028 KoolPHP Inc
+ * @license   MIT License https://www.koolreport.com/license#mit-license
+ * @link      https://www.koolphp.net
+ */
 class WordTree extends Chart
 {
-	protected $stability="current";
-	protected $package="wordtree";
+    protected $stability = "current";
+    protected $package = "wordtree";
 }

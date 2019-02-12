@@ -2,31 +2,33 @@
 /**
  * This file contains class to map data value to another.
  *
- * @author KoolPHP Inc (support@koolphp.net)
- * @link https://www.koolphp.net
- * @copyright KoolPHP Inc
- * @license https://www.koolreport.com/license#mit-license
+ * @category  Core
+ * @package   KoolReport
+ * @author    KoolPHP Inc <support@koolphp.net>
+ * @copyright 2017-2028 KoolPHP Inc
+ * @license   MIT License https://www.koolreport.com/license#mit-license
+ * @link      https://www.koolphp.net
  */
 
 /* Usage
-    ->pipe(new Map(array(
-        '{value}' => function($row, $metaData, $index, $mapState) {
-            return $newRows;
-            return ['{rows}' => $newRows, '{state}' => $newMapState];
-        },
-        '{meta}' => function($metaData) {
-            return $newMeta;
-        },
-        '{end}' => function($count, $mapState) {
-            $avg = Util::get($mapState, 'sum', []);
-            foreach ($avg as $i => $v) {
-                $avg[$i] = is_numeric($v) ? $v / $count : 'Average';
-            }
+->pipe(new Map(array(
+'{value}' => function($row, $metaData, $index, $mapState) {
+return $newRows;
+return ['{rows}' => $newRows, '{state}' => $newMapState];
+},
+'{meta}' => function($metaData) {
+return $newMeta;
+},
+'{end}' => function($count, $mapState) {
+$avg = Util::get($mapState, 'sum', []);
+foreach ($avg as $i => $v) {
+$avg[$i] = is_numeric($v) ? $v / $count : 'Average';
+}
 
-            $mapState['avg'] = $avg;
-            return $mapState;
-        },
-    )));
+$mapState['avg'] = $avg;
+return $mapState;
+},
+)));
  *
  *
  */
@@ -36,6 +38,16 @@ namespace koolreport\processes;
 use \koolreport\core\Process;
 use \koolreport\core\Utility as Util;
 
+/**
+ * This file contains class to map data value to another.
+ *
+ * @category  Core
+ * @package   KoolReport
+ * @author    KoolPHP Inc <support@koolphp.net>
+ * @copyright 2017-2028 KoolPHP Inc
+ * @license   MIT License https://www.koolreport.com/license#mit-license
+ * @link      https://www.koolphp.net
+ */
 class Map extends Process
 {
     protected $metaSent = false;
@@ -44,6 +56,11 @@ class Map extends Process
     protected $index = 0;
     protected $mapState = [];
 
+    /**
+     * Handle on initiation
+     *
+     * @return null
+     */
     public function onInit()
     {
         $func = Util::get($this->params, '{init}', null);
@@ -52,6 +69,14 @@ class Map extends Process
         }
     }
 
+    /**
+     * Handle on data recieved
+     * 
+     * @param array $metaData Metadata received
+     * @param Node  $source   The source sending data
+     * 
+     * @return null 
+     */
     public function receiveMeta($metaData, $source)
     {
         $this->streamingSource = $source;
@@ -62,6 +87,13 @@ class Map extends Process
         }
     }
 
+    /**
+     * Guess the type of value
+     * 
+     * @param mixed $value The value
+     * 
+     * @return string The type of value
+     */
     protected function guessType($value)
     {
         $map = array(
@@ -83,7 +115,13 @@ class Map extends Process
 
         return "unknown";
     }
-
+    /**
+     * Convert to 2D array
+     * 
+     * @param array $arr The array
+     * 
+     * @return array The coverted array
+     */
     protected function to2DArray($arr)
     {
         if (empty($arr) || !is_array($arr)) {
@@ -95,15 +133,27 @@ class Map extends Process
         return $arr;
     }
 
+    /**
+     * Handle on data input
+     *
+     * @param array $row The input data row
+     *
+     * @return null
+     */
     protected function onInput($row)
     {
         $func = Util::get($this->params, '{value}', null);
         if (is_callable($func)) {
-            $return = $func($row, $this->metaData, 
-                $this->index, $this->mapState);
-            
-            if (is_array($return) && (array_key_exists('{rows}', $return) || 
-                array_key_exists('{state}', $return))) {
+            $return = $func(
+                $row,
+                $this->metaData,
+                $this->index, 
+                $this->mapState
+            );
+
+            if (is_array($return) && (array_key_exists('{rows}', $return)
+                ||array_key_exists('{state}', $return))
+            ) {
                 $newRows = Util::get($return, '{rows}', []);
                 $this->mapState = Util::get($return, '{state}', $this->mapState);
             } else {
@@ -136,6 +186,13 @@ class Map extends Process
         $this->index++;
     }
 
+    /**
+     * Handle on input end
+     * 
+     * @param Node $source The source sending
+     * 
+     * @return null
+     */
     public function endInput($source)
     {
         if (!$this->metaSent) {
