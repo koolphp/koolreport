@@ -218,6 +218,7 @@ The KoolReport is licensed under MIT License.
 * [Statistics](https://www.koolreport.com/packages/statistics): Provide various statistical measures for your data [__Free__]
 * [Bootstrap3](https://www.koolreport.com/packages/bootstrap3): Create beautiful report with Bootstrap 3 [__Free__]
 * [Bootstrap4](https://www.koolreport.com/packages/bootstrap3): Create modern report with Bootstrap 4 [__Free__]
+* [CloudExport](https://www.koolreport.com/packages/cloudexport): Export your report to PDF, JPG, PNG and other formats using cloud services [__Free__]
 * [Excel](https://www.koolreport.com/packages/excel): Import and export data to Excel [__$9__]
 * [Cube](https://www.koolreport.com/packages/cube): Turn your data into two dimensions cross-tab table [__$9__]
 * [Pivot](https://www.koolreport.com/packages/pivot): Build multi-dimenstional pivot table [__$29__]
