@@ -157,7 +157,7 @@ class SQLSRVDataSource extends DataSource
         $search = Util::get($queryParams, 'search', '');
         $searchSql = ! empty($search) ? "WHERE $search" : "";
 
-        $order = Util::get($queryParams, 'order', '');
+        $order = Util::get($queryParams, 'order', '1');
         $orderSql = ! empty($order) ? "ORDER BY $order" : "";
             
         $start = (int) Util::get($queryParams, 'start', 0);

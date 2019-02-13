@@ -440,7 +440,7 @@ class Widget
             }
 
             if ($dataSource instanceof DataStore) {
-                $finalDataSource = $dataSource->clone();
+                $finalDataSource = $dataSource;
             } else if (($dataSource instanceof DataSource) || ($dataSource instanceof Process)) {
                 $finalDataSource = $this->onFurtherProcessRequest($dataSource)->pipe(new DataStore());
             } else {

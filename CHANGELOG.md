@@ -1,5 +1,9 @@
 # Change Log
 
+## Version 3.25.1
+
+1. `Utility`: Fix the symbolic path
+
 ## Version 3.25.0
 
 1. `Table`: Adding `css` and `cssStyle` options for group row.

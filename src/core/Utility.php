@@ -480,20 +480,21 @@ class Utility
      */
     static function getSymbolicPath($realpath)
     {
-        $root = $root = $_SERVER['DOCUMENT_ROOT'];
+        $root = $_SERVER['DOCUMENT_ROOT'];
         $script = $_SERVER['SCRIPT_FILENAME'];
         $root = str_replace('\\', '/', $root);
         $script = str_replace('\\', '/', $script);
         $realpath = str_replace('\\', '/', $realpath);
-
+        
         $dir = str_replace($root, '', $script);
         $pos = false;
-        while ($dir !== '') {
-            $dir = self::getDir($dir);
+        $dir = self::getDir($dir);
+        while (! empty($dir)) {
             $pos = strpos($realpath, $dir);
             if ($pos) {
                 break;
             }
+            $dir = self::getDir($dir);
         }
         if ($pos) {
             $realpath = $root . substr($realpath, $pos);

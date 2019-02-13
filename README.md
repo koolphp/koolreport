@@ -14,6 +14,7 @@
 
 # Changelog 
 
+* [Version 3.25.1 (Feb 13st, 2019)](https://www.koolreport.com/docs/koolreport/change_log/#version-3.25.1)
 * [Version 3.25.0 (Feb 11st, 2019)](https://www.koolreport.com/docs/koolreport/change_log/#version-3.25.0)
 * [Version 3.1.0 (Nov 17rd, 2018)](https://www.koolreport.com/docs/koolreport/change_log/#version-3.1.0)
 * [Version 3.0.0 (Nov 13rd, 2018)](https://www.koolreport.com/docs/koolreport/change_log/#version-3.0.0)
@@ -217,12 +218,12 @@ The KoolReport is licensed under MIT License.
 * [Statistics](https://www.koolreport.com/packages/statistics): Provide various statistical measures for your data [__Free__]
 * [Bootstrap3](https://www.koolreport.com/packages/bootstrap3): Create beautiful report with Bootstrap 3 [__Free__]
 * [Bootstrap4](https://www.koolreport.com/packages/bootstrap3): Create modern report with Bootstrap 4 [__Free__]
-* [Excel](https://www.koolreport.com/packages/excel): Import and export data to Excel [__$19__]
-* [Cube](https://www.koolreport.com/packages/cube): Turn your data into two dimensions cross-tab table [__$19__]
-* [Pivot](https://www.koolreport.com/packages/pivot): Build multi-dimenstional pivot table [__$49__]
-* [Export](https://www.koolreport.com/packages/export): Export your report to PDF, JPG, PNG and other formats [__$29__]
+* [Excel](https://www.koolreport.com/packages/excel): Import and export data to Excel [__$9__]
+* [Cube](https://www.koolreport.com/packages/cube): Turn your data into two dimensions cross-tab table [__$9__]
+* [Pivot](https://www.koolreport.com/packages/pivot): Build multi-dimenstional pivot table [__$29__]
+* [Export](https://www.koolreport.com/packages/export): Export your report to PDF, JPG, PNG and other formats [__$19__]
 * [Morris Chart](https://www.koolreport.com/packages/morris_chart): Use morris charts in your report [__$9__]
-* [Inputs](https://www.koolreport.com/packages/inputs): A simplest way to build dynamic reports [__$29__]
+* [Inputs](https://www.koolreport.com/packages/inputs): A simplest way to build dynamic reports [__$19__]
 * [BarCode](https://www.koolreport.com/packages/barcode): Generate BarCode and QRCode [__$9__]
 * [Sparklines](https://www.koolreport.com/packages/sparklines): Create tiny charts [__$9__]
 * [DataGrid](https://www.koolreport.com/packages/datagrid): Display data in table format, search, sort, group data and more.. [__$19__]
