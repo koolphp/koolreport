@@ -1,5 +1,10 @@
 # Change Log
 
+## Version 3.25.3
+
+1. `Table`: Fix Table warning in PHP 7.2+ when grouping is not set
+2. `GoogleCharts`: Remove auto change pointer on select event
+
 ## Version 3.25.1
 
 1. `Utility`: Fix the symbolic path

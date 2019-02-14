@@ -56,6 +56,8 @@ class Table extends Widget
     protected $group;
     protected $sorting;
 
+    protected $emptyValue;
+
     /**
      * Return the resource settings for table
      * 
@@ -81,6 +83,7 @@ class Table extends Widget
         $this->useLanguage();
         $this->useDataSource();
         $this->useAutoName("ktable");
+        $this->emptyValue = Utility::get($this->params, "emptyValue", 0);
         $this->clientEvents = Utility::get($this->params, "clientEvents");
         $this->columns = Utility::get($this->params, "columns", array());
 
@@ -154,8 +157,8 @@ class Table extends Widget
         $this->sorting = Utility::get($this->params, "sorting", array());
 
         $group = Utility::get($this->params, "grouping");
+        $this->group = array();
         if ($group) {
-            $this->group = array();
             foreach ($group as $cKey => $cValue) {
                 if (gettype($cValue) == "array") {
                     $this->group[$cKey] = $cValue;

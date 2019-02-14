@@ -76,15 +76,6 @@ class Chart extends Widget
         $this->title = Utility::get($this->params, "title");
         $this->pointerOnHover = Utility::get($this->params, "pointerOnHover");
         $this->mapsApiKey = Utility::get($this->params, "mapsApiKey", '');
-        if ($this->pointerOnHover === null) {
-            if (isset($this->clientEvents["itemSelect"])
-                || isset($this->clientEvents["rowSelect"])
-                || isset($this->clientEvents["columnSelect"])
-                || isset($this->clientEvents["select"])
-            ) {
-                $this->pointerOnHover = true;
-            }
-        }
 
         if (!$this->dataStore) {
             //Backward compatible with setting through "data"

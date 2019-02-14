@@ -117,7 +117,7 @@
                     $tdStyle = is_string($cssStyle)?$cssStyle:Utility::get($cssStyle, "td");
                     ?>
                         <td rv="<?php echo ($cKey!=="#")?$row[$cKey]:($i+$meta["columns"][$cKey]["start"]);?>" <?php echo ($tdStyle)?"style='$tdStyle'":""; ?> <?php if($tdClass){echo " class='".((gettype($tdClass)=="string")?$tdClass:$tdClass($row,$cKey))."'";} ?>>
-                            <?php echo Table::formatValue(($cKey!=="#")?$row[$cKey]:($i+$meta["columns"][$cKey]["start"]), $meta["columns"][$cKey], $row);?>
+                            <?php echo Table::formatValue(($cKey!=="#")?Utility::get($row, $cKey, $this->emptyValue):($i+$meta["columns"][$cKey]["start"]), $meta["columns"][$cKey], $row);?>
                         </td>
                     <?php
                 }
