@@ -195,6 +195,104 @@ class Table extends Widget
     }
 
     /**
+     * Group the level
+     * 
+     * @param array $meta           The metadata
+     * @param array $groupModel     The group model
+     * @param array $store          The store
+     * @param array $result         The previous result
+     * @param array $level          The level
+     * @param array $start          The starting position
+     * @param array $previousParams The previous parameters
+     * 
+     * @return array Result
+     */
+    static function groupLevel(
+        $meta, 
+        $groupModel, 
+        $store, 
+        &$result, 
+        $level = 0,
+        $start = 0, 
+        $previousParams = array()
+    ) {
+        $keys = array_keys($groupModel);
+        $store->breakGroup(
+            $keys[$level],
+            function ($store, $localStart) use ($meta, $groupModel, &$result, $keys, $level, $start, $previousParams) {
+                $by = $keys[$level];
+                $agroup = array_merge(
+                    $previousParams,
+                    array(
+                        "{" . $by . "}" => $store->get(0, $by),
+                        "{count}" => $store->count(),
+                    )
+                );
+                $previousParams["{" . $by . "}"] = $agroup["{" . $by . "}"];
+                $calculate = Utility::get($groupModel[$by], "calculate", array());
+                $css = Utility::get($groupModel[$by], "css");
+                $cssClass = Utility::get($groupModel[$by], "cssClass");
+                foreach ($calculate as $paramName => $def) {
+                    if (is_array($def)) {
+                        $method = strtolower($def[0]);
+                        if (in_array($method, array("sum", "count", "min", "max", "mode"))) {
+                            $agroup[$paramName] = Table::formatValue($store->$method($def[1]), $meta["columns"][$def[1]]);
+                        }
+
+                    } else if (is_callable($def)) {
+                        $agroup[$paramName] = $def($store);
+                    }
+                }
+                $startTemplate = Utility::get($groupModel[$by], "top");
+                $endTemplate = Utility::get($groupModel[$by], "bottom");
+
+                if ($startTemplate) {
+                    if (!isset($result[$start + $localStart])) {
+                        $result[$start + $localStart] = array();
+                    }
+                    $item = array(
+                        $start + $localStart,
+                        $start + $localStart + $agroup["{count}"],
+                        is_string($startTemplate) ? Utility::strReplace($startTemplate, $agroup) :
+                        (is_callable($startTemplate) ? $startTemplate($agroup) : $startTemplate),
+                        null, null,
+                    );
+                    if ($css) {
+                        $item[3] = gettype($css) == "string" ? $css : $css($agroup);
+                    }
+                    if ($cssClass) {
+                        $item[4] = gettype($cssClass) == "string" ? $cssClass : $cssClass($agroup);
+                    }
+                    array_push($result[$start + $localStart], $item);
+                }
+                if ($endTemplate) {
+                    if (!isset($result[$start + $localStart + $agroup["{count}"]])) {
+                        $result[$start + $localStart + $agroup["{count}"]] = array();
+                    }
+
+                    $item = array(
+                        $start + $localStart,
+                        $start + $localStart + $agroup["{count}"],
+                        is_string($endTemplate) ? Utility::strReplace($endTemplate, $agroup) :
+                        (is_callable($endTemplate) ? $endTemplate($agroup) : $endTemplate),
+                        null, null,
+                    );
+                    if ($css) {
+                        $item[3] = gettype($css) == "string" ? $css : $css($agroup);
+                    }
+                    if ($cssClass) {
+                        $item[4] = gettype($cssClass) == "string" ? $cssClass : $cssClass($agroup);
+                    }
+                    array_unshift($result[$start + $localStart + $agroup["{count}"]], $item);
+                }
+                if ($level < count($keys) - 1) {
+                    Table::groupLevel($meta, $groupModel, $store, $result, $level + 1, $start + $localStart, $previousParams);
+                }
+            }
+        );
+    }
+
+    /**
      * Generate groups for table grouping
      * 
      * @param array $meta The meta data of table
@@ -205,112 +303,13 @@ class Table extends Widget
     {
         if ($this->group) {
             $result = array();
-
             $sorts = array();
             foreach ($this->group as $by => $settings) {
                 $sorts[$by] = Utility::get($settings, "sort", "asc");
             }
             $sorts = array_merge($sorts, $this->sorting);
             $this->dataStore->sort($sorts);
-            
-            /**
-             * Group the level
-             * 
-             * @param array $meta           The metadata
-             * @param array $groupModel     The group model
-             * @param array $store          The store
-             * @param array $result         The previous result
-             * @param array $level          The level
-             * @param array $start          The starting position
-             * @param array $previousParams The previous parameters
-             * 
-             * @return array Result
-             */
-            function groupLevel(
-                $meta, 
-                $groupModel, 
-                $store, 
-                &$result, 
-                $level = 0,
-                $start = 0, 
-                $previousParams = array()
-            ) {
-                $keys = array_keys($groupModel);
-                $store->breakGroup(
-                    $keys[$level],
-                    function ($store, $localStart) use ($meta, $groupModel, &$result, $keys, $level, $start, $previousParams) {
-                        $by = $keys[$level];
-                        $agroup = array_merge(
-                            $previousParams,
-                            array(
-                                "{" . $by . "}" => $store->get(0, $by),
-                                "{count}" => $store->count(),
-                            )
-                        );
-                        $previousParams["{" . $by . "}"] = $agroup["{" . $by . "}"];
-                        $calculate = Utility::get($groupModel[$by], "calculate", array());
-                        $css = Utility::get($groupModel[$by], "css");
-                        $cssClass = Utility::get($groupModel[$by], "cssClass");
-                        foreach ($calculate as $paramName => $def) {
-                            if (is_array($def)) {
-                                $method = strtolower($def[0]);
-                                if (in_array($method, array("sum", "count", "min", "max", "mode"))) {
-                                    $agroup[$paramName] = Table::formatValue($store->$method($def[1]), $meta["columns"][$def[1]]);
-                                }
-
-                            } else if (is_callable($def)) {
-                                $agroup[$paramName] = $def($store);
-                            }
-                        }
-                        $startTemplate = Utility::get($groupModel[$by], "top");
-                        $endTemplate = Utility::get($groupModel[$by], "bottom");
-
-                        if ($startTemplate) {
-                            if (!isset($result[$start + $localStart])) {
-                                $result[$start + $localStart] = array();
-                            }
-                            $item = array(
-                                $start + $localStart,
-                                $start + $localStart + $agroup["{count}"],
-                                is_string($startTemplate) ? Utility::strReplace($startTemplate, $agroup) :
-                                (is_callable($startTemplate) ? $startTemplate($agroup) : $startTemplate),
-                                null, null,
-                            );
-                            if ($css) {
-                                $item[3] = gettype($css) == "string" ? $css : $css($agroup);
-                            }
-                            if ($cssClass) {
-                                $item[4] = gettype($cssClass) == "string" ? $cssClass : $cssClass($agroup);
-                            }
-                            array_push($result[$start + $localStart], $item);
-                        }
-                        if ($endTemplate) {
-                            if (!isset($result[$start + $localStart + $agroup["{count}"]])) {
-                                $result[$start + $localStart + $agroup["{count}"]] = array();
-                            }
-
-                            $item = array(
-                                $start + $localStart,
-                                $start + $localStart + $agroup["{count}"],
-                                is_string($endTemplate) ? Utility::strReplace($endTemplate, $agroup) :
-                                (is_callable($endTemplate) ? $endTemplate($agroup) : $endTemplate),
-                                null, null,
-                            );
-                            if ($css) {
-                                $item[3] = gettype($css) == "string" ? $css : $css($agroup);
-                            }
-                            if ($cssClass) {
-                                $item[4] = gettype($cssClass) == "string" ? $cssClass : $cssClass($agroup);
-                            }
-                            array_unshift($result[$start + $localStart + $agroup["{count}"]], $item);
-                        }
-                        if ($level < count($keys) - 1) {
-                            groupLevel($meta, $groupModel, $store, $result, $level + 1, $start + $localStart, $previousParams);
-                        }
-                    }
-                );
-            }
-            groupLevel($meta, $this->group, $this->dataStore, $result);
+            Table::groupLevel($meta, $this->group, $this->dataStore, $result);
             return $result;
         }
         return false;

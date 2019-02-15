@@ -3,6 +3,7 @@
 ## Version 3.25.4
 
 1. `DataStore`: Change `clone()` function name to `makeCopy()` to avoid reserved keywords `clone` in PHP 5.x
+2. `Table`: Avoid duplication of `groupLevel()` function
 
 ## Version 3.25.3
 
