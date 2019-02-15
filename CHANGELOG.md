@@ -1,5 +1,9 @@
 # Change Log
 
+## Version 3.25.4
+
+1. `DataStore`: Change `clone()` function name to `makeCopy()` to avoid reserved keywords `clone` in PHP 5.x
+
 ## Version 3.25.3
 
 1. `Table`: Fix Table warning in PHP 7.2+ when grouping is not set

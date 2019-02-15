@@ -1159,11 +1159,11 @@ class DataStore extends Node implements IteratorAggregate, ArrayAccess
     }
 
     /**
-     * Map Key Index
+     * Make a copy of this datastore
      * 
      * @return DataStore The clone of this datastore
      */
-    public function clone()
+    public function makeCopy()
     {
         return new DataStore($this->rows, $this->metaData);
     }
