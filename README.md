@@ -1,3 +1,24 @@
+# Immediate notice
+
+### As of May 2019, we have changed the project directory structure and published the core framework as well as all of our free extended packages to a new account: https://github.com/koolreport . Please expect all update to happen in the new account. Here's the list of all new repositories:
+
+1. [core framework](https://github.com/koolreport/core)
+2. [bootstrap3 package](https://github.com/koolreport/bootstrap3)
+3. [bootstrap4 package](https://github.com/koolreport/bootstrap4)
+4. [cache package](https://github.com/koolreport/cache)
+5. [cleandata package](https://github.com/koolreport/cleandata)
+6. [cloudexport package](https://github.com/koolreport/cloudexport)
+7. [codeigniter package](https://github.com/koolreport/codeigniter)
+8. [instant package](https://github.com/koolreport/instant)
+9. [laravel package](https://github.com/koolreport/laravel)
+10. [mongodb package](https://github.com/koolreport/mongodb)
+11. [querybuilder package](https://github.com/koolreport/querybuilder)
+12. [statistics package](https://github.com/koolreport/statistics)
+
+The core framework and all free packages are available on Packagist to be installed with Composer as well:
+
+[KoolReport packagist](https://packagist.org/users/koolreport/packages/)
+
 # KoolReport
 
 ### KoolReport is an intuitive and flexible Open-Source PHP Reporting Framework for faster and easier report delivery. It gives you full control of data process as well as data visualization. It is fast, simple and can be extended in many ways.
