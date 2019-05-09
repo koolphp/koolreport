@@ -1,6 +1,6 @@
 # Immediate notice
 
-### As of May 2019, we have changed the project directory structure and published the core framework and all of our free extended packages to a new account: https://github.com/koolreport . Please expect all updates to happen in the new account. Here's the list of all new repositories:
+### As of May 2019, we have changed the project directory structure and published the core framework and all of our free extended packages to a new account: https://github.com/koolreport . Please expect all future updates to happen in the new account. Here's the list of all new repositories:
 
 1. [core framework](https://github.com/koolreport/core)
 2. [bootstrap3 package](https://github.com/koolreport/bootstrap3)
@@ -15,9 +15,11 @@
 11. [querybuilder package](https://github.com/koolreport/querybuilder)
 12. [statistics package](https://github.com/koolreport/statistics)
 
-### The core framework and all free packages are available on Packagist to be installed with Composer as well:
+### The core framework and all free packages are available on Packagist to be installed and updated with Composer:
 
 * [KoolReport packagist](https://packagist.org/users/koolreport/packages/)
+
+### The licensed packages will be published to our private repository server to be installed and updated with Composer as well. The procedure is really similar to Private Packagist service. Our service should be available soon in late May or early June 2019.
 
 # KoolReport
 
