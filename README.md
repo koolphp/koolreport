@@ -14,6 +14,7 @@
 10. [mongodb package](https://github.com/koolreport/mongodb)
 11. [querybuilder package](https://github.com/koolreport/querybuilder)
 12. [statistics package](https://github.com/koolreport/statistics)
+13. [examples](https://github.com/koolreport/examples)
 
 ### The core framework and all free packages are available on Packagist to be installed and updated with Composer:
 
