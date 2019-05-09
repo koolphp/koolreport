@@ -1,6 +1,6 @@
 # Immediate notice
 
-### As of May 2019, we have changed the project directory structure and published the core framework as well as all of our free extended packages to a new account: https://github.com/koolreport . Please expect all update to happen in the new account. Here's the list of all new repositories:
+### As of May 2019, we have changed the project directory structure and published the core framework as well as all of our free extended packages to a new account: https://github.com/koolreport . Please expect all updates to happen in the new account. Here's the list of all new repositories:
 
 1. [core framework](https://github.com/koolreport/core)
 2. [bootstrap3 package](https://github.com/koolreport/bootstrap3)
