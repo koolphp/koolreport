@@ -15,7 +15,7 @@
 11. [querybuilder package](https://github.com/koolreport/querybuilder)
 12. [statistics package](https://github.com/koolreport/statistics)
 
-The core framework and all free packages are available on Packagist to be installed with Composer as well:
+### The core framework and all free packages are available on Packagist to be installed with Composer as well:
 
 * [KoolReport packagist](https://packagist.org/users/koolreport/packages/)
 
