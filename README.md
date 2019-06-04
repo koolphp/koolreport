@@ -1,27 +1,4 @@
-## _Notice_
-
-_As of May 2019, we have changed the project directory structure and published the core framework and all of our free extended packages to a new account: https://github.com/koolreport . Please expect all future updates to happen in the new account. Here's the list of all new repositories:_
-
-1. [core framework](https://github.com/koolreport/core)
-2. [bootstrap3 package](https://github.com/koolreport/bootstrap3)
-3. [bootstrap4 package](https://github.com/koolreport/bootstrap4)
-4. [cache package](https://github.com/koolreport/cache)
-5. [cleandata package](https://github.com/koolreport/cleandata)
-6. [cloudexport package](https://github.com/koolreport/cloudexport)
-7. [codeigniter package](https://github.com/koolreport/codeigniter)
-8. [instant package](https://github.com/koolreport/instant)
-9. [laravel package](https://github.com/koolreport/laravel)
-10. [mongodb package](https://github.com/koolreport/mongodb)
-11. [querybuilder package](https://github.com/koolreport/querybuilder)
-12. [statistics package](https://github.com/koolreport/statistics)
-13. [examples](https://github.com/koolreport/examples)
-
-_The core framework and all free packages are available on Packagist to be installed and updated with Composer:_
-
-* [KoolReport packagist](https://packagist.org/users/koolreport/packages/)
-
-_The licensed packages will be published to our private repository server to be installed and updated with Composer as well. The procedure is really similar to Private Packagist service. Our service should be available soon in late May or early __June 2019__._
-
+# _Notice_: We move our project to new repository at https://github.com/koolreport/core
 
 
 # KoolReport
