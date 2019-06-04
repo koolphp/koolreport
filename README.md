@@ -1,4 +1,12 @@
-# We move to new repository https://github.com/koolreport/core
+# Notice: Change Repository 
+
+Starting from __June 2019__, we continue to support KoolReport at new repository __https://github.com/koolreport/core__. To install the latest KoolReport version, please use
+
+```
+composer require koolreport/core
+```
+
+__*Thank you very much!*__
 
 
 # KoolReport
