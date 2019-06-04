@@ -1,4 +1,4 @@
-# _Notice_: We move our project to new repository at https://github.com/koolreport/core
+# We move to new repository https://github.com/koolreport/core
 
 
 # KoolReport
