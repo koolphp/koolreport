@@ -78,7 +78,7 @@
                     <?php 
                         $footerValue = "";
                         $method = strtolower(Utility::get($meta["columns"][$cKey], "footer"));
-                        if( in_array($method, array("sum","avg","min","max","mode")) ) {
+                        if( in_array($method, array("count","sum","avg","min","max","mode")) ) {
                             $footerValue = Table::formatValue($this->dataStore->$method($cKey), $meta["columns"][$cKey]);
                         }
                         $footerText = Utility::get($meta["columns"][$cKey],"footerText");
